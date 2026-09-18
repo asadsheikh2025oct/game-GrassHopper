@@ -79,7 +79,8 @@ canvas {
 .skin.active .dot { border-color: #fff; }
 .skin.locked { cursor: not-allowed; }
 .skin.locked .dot { filter: grayscale(1) brightness(0.5); box-shadow: none; }
-.opts { display: flex; gap: 8px; }
+.opts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.opt.on { background: rgba(255,211,110,0.25); border-color: #ffd36e; }
 .opt { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 10px; padding: 6px 10px; font-size: 0.72rem; cursor: pointer; }
 
 /* Accessibility: swap control sides, larger buttons */

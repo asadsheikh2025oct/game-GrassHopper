@@ -11,6 +11,7 @@ Built with plain HTML, CSS and JavaScript — no engine, no libraries, all art d
 | `index.html`, `style.css`, `game.js` | the game |
 | `editor.html` | paint your own level and test it in the game |
 | `validate-levels.js` | `node validate-levels.js` checks every level for pits, floating tiles and reachability |
+| `fix-platforms.js` | `node fix-platforms.js` lowers any leaf platform that is too high to jump onto from the direction of travel |
 | `sw.js`, `manifest.json`, `icon-*.png` | PWA: offline cache, install metadata, app icons |
 
 ## Editing levels
