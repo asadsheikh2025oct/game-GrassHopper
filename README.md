@@ -14,5 +14,5 @@ Built with plain HTML, CSS and JavaScript — no engine, no libraries, all art d
 | `sw.js`, `manifest.json`, `icon-*.png` | PWA: offline cache, install metadata, app icons |
 
 ## Editing levels
-Levels are text maps near the top of `game.js`; the legend is in the comments there (`#` ground, `o` orb, `e` Grump, `G` portal, …).
+Levels are text maps near the top of `game.js`; the legend is in the comments there (`#` ground, `w` water, `o` bug, `e` frog, `G` flower, …).
 After changing any file, bump `CACHE_VERSION` in `sw.js` so installed copies pick up the update.

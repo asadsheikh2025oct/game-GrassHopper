@@ -67,12 +67,12 @@
 <script>
 // ---------- palette: the same characters game.js understands ----------
 const TILES = [
-  ['.', 'Air', '#1a1d3a', '#fff'], ['#', 'Ground', '#3c3a55', '#63c27a'], ['=', 'One-way ledge', '#63c27a', '#111'],
+  ['.', 'Air', '#1a1d3a', '#fff'], ['#', 'Ground / leaf', '#6b4a2e', '#5cb85c'], ['w', 'Water (sink!)', '#4fa8e8', '#fff'], ['=', 'Leaf ledge', '#63c27a', '#111'],
   ['%', 'Crumbling block', '#6b5c3a', '#fff'], ['~', 'Bounce pad', '#ffd36e', '#111'], ['M', 'Moving (side)', '#5fe0ff', '#111'],
-  ['V', 'Moving (up/down)', '#5fe0ff', '#111'], ['B', 'Breakable (hidden orb)', '#8a7a3a', '#ffd36e'], ['^', 'Spikes', '#d9e6ff', '#111'],
-  ['o', 'Orb', '#ffd36e', '#111'], ['D', 'Double-jump orb', '#7df9ff', '#111'], ['H', 'Shield', '#8fb7ff', '#111'],
-  ['C', 'Checkpoint', '#c9a0ff', '#111'], ['e', 'Grump (walker)', '#9b5cff', '#fff'], ['f', 'Flit (flyer)', '#ff7a59', '#fff'],
-  ['S', 'Thorn (spiky)', '#3b2a4a', '#ffd36e'], ['P', 'Player start', '#43d17a', '#111'], ['G', 'Portal (goal)', '#8be9ff', '#111'], ['K', 'Grump King (boss)', '#7d3fd6', '#ffd36e'],
+  ['V', 'Moving (up/down)', '#5fe0ff', '#111'], ['B', 'Seed pod (hidden bug)', '#a67c52', '#ffd36e'], ['^', 'Brambles', '#5a3a2a', '#fff'],
+  ['o', 'Bug (points)', '#ff5252', '#111'], ['D', 'Double-jump seed', '#7df9ff', '#111'], ['H', 'Dew shield', '#8fb7ff', '#111'],
+  ['C', 'Checkpoint', '#c9a0ff', '#111'], ['e', 'Frog (hops)', '#6bbf4e', '#111'], ['f', 'Dragonfly', '#3aa0e0', '#fff'],
+  ['S', 'Toad (poison)', '#a5763f', '#fff'], ['P', 'Player start', '#43d17a', '#111'], ['G', 'Flower (goal)', '#ff7bb0', '#111'], ['K', 'Bullfrog King (boss)', '#4f8f3a', '#ffd36e'],
 ];
 const TILE_INFO = Object.fromEntries(TILES.map(t => [t[0], t]));
 const CELL = 22;
@@ -100,7 +100,7 @@ function draw() {
   const counts = { P: 0, G: 0, K: 0, o: 0 };
   for (const row of grid) for (const ch of row) if (ch in counts) counts[ch]++;
   const ok = counts.P === 1 && (counts.G + counts.K) === 1;
-  status.textContent = `${cols}×${rows} · orbs ${counts.o} · ${ok ? 'valid ✓' : 'needs exactly one P and one G/K'}`;
+  status.textContent = `${cols}×${rows} · bugs ${counts.o} · ${ok ? 'valid ✓' : 'needs exactly one P and one G/K'}`;
   status.style.color = ok ? '#8fdc7a' : '#ff8e53';
 }
 
