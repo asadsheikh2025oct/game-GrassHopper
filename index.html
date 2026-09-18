@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Hop: Glowlands</title>
+  <meta name="theme-color" content="#07091a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hop">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="stage">
+    <!-- The whole game is drawn on this canvas -->
+    <canvas id="game" width="640" height="360"></canvas>
+
+    <!-- On-screen buttons for phones (only shown on touch screens) -->
+    <div class="touch left">
+      <button class="pad" data-key="left">◀</button>
+      <button class="pad" data-key="right">▶</button>
+    </div>
+    <div class="touch right">
+      <button class="pad jump" data-key="jump">▲</button>
+    </div>
+
+    <div class="topbtns">
+      <button id="pause-btn" class="mute" title="Pause (P)">⏸</button>
+      <button id="mute-btn" class="mute" title="Music on/off (M)">🔊</button>
+    </div>
+
+    <!-- Shown on phones held upright: the game is designed for landscape -->
+    <div id="rotate" class="rotate">
+      <div class="phone">📱</div>
+      <p><strong>Rotate your phone</strong><br>Hop plays in landscape</p>
+    </div>
+
+    <!-- Message box: title / level complete / game over -->
+    <div id="overlay" class="overlay">
+      <div class="card">
+        <h1 id="ov-title">HOP</h1>
+        <p id="ov-sub" class="sub">Glowlands</p>
+        <p id="ov-text" class="pre">Run, jump, gather the glowing orbs and reach the portal.<br>Bounce on Grumps to squash them!</p>
+        <div id="level-select" class="levels"></div>
+        <div class="skins-row"><span class="label">Skin · <span id="orb-total">0</span> orbs</span><div id="skin-select" class="skins"></div></div>
+        <div class="opts">
+          <button id="opt-lefty" class="opt">Right-handed</button>
+          <button id="opt-size" class="opt">Normal buttons</button>
+        </div>
+        <button id="ov-btn" class="big-btn">Play</button>
+        <button id="install-btn" class="opt" style="display:none">⬇ Install app</button>
+        <p class="tiny">Keyboard: ← → or A D to move · Space / ↑ / W to jump · <a href="editor.html" target="_blank" style="color:#ffd36e">Level editor</a> <a id="exit-custom" href="#" style="color:#ff8e53; display:none">· Exit custom level</a></p>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+  <script>
+    // Progressive Web App: register the service worker (offline play) and offer the install prompt
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+    let installPrompt = null;
+    const installBtn = document.getElementById("install-btn");
+    window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installPrompt = e; installBtn.style.display = "inline-block"; });
+    installBtn.addEventListener("click", async () => { if (!installPrompt) return; installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; installBtn.style.display = "none"; });
+    window.addEventListener("appinstalled", () => { installBtn.style.display = "none"; });
+
+    // On phones: go fullscreen and lock to landscape when the player taps Play (needs a user gesture; iOS ignores it)
+    function goLandscape() {
+      if (!matchMedia("(pointer: coarse)").matches) return;
+      const el = document.documentElement;
+      const fs = el.requestFullscreen ? el.requestFullscreen({ navigationUI: "hide" }) : Promise.reject();
+      fs.then(() => screen.orientation && screen.orientation.lock && screen.orientation.lock("landscape")).catch(() => {});
+    }
+    document.getElementById("ov-btn").addEventListener("click", goLandscape);
+    document.getElementById("level-select").addEventListener("click", goLandscape);
+  </script>
+</body>
+</html>

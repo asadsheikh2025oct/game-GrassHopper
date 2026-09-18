@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hop Level Editor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0e1024; color: #eee; font-family: "Trebuchet MS", system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    header { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 14px; background: #171a3a; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    header h1 { font-size: 1.1rem; color: #ffd36e; letter-spacing: 3px; margin-right: 10px; }
+    button, input { font: inherit; }
+    button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #fff; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+    button.primary { background: linear-gradient(135deg, #ffd36e, #ff8e53); color: #2b1a0a; font-weight: 700; border: none; }
+    input[type=number] { width: 60px; background: #0e1024; color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 6px; padding: 5px; }
+    main { display: flex; flex: 1; min-height: 0; }
+    aside { width: 190px; padding: 10px; background: #12152e; overflow-y: auto; border-right: 1px solid rgba(255,255,255,0.1); }
+    aside h2 { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; margin: 8px 0 6px; }
+    .tile { display: flex; align-items: center; gap: 8px; padding: 5px 6px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; }
+    .tile:hover { background: rgba(255,255,255,0.06); }
+    .tile.active { background: rgba(255,211,110,0.2); outline: 1px solid #ffd36e; }
+    .sw { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; font-weight: 700; font-size: 0.75rem; color: #111; flex: none; }
+    .grid-wrap { flex: 1; overflow: auto; background: #06081a; position: relative; }
+    canvas { display: block; image-rendering: pixelated; cursor: crosshair; }
+    footer { padding: 8px 14px; background: #171a3a; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    textarea { width: 100%; height: 160px; background: #06081a; color: #9fd; font-family: Consolas, monospace; font-size: 11px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; white-space: pre; }
+    dialog { background: #171a3a; color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 16px; width: min(90vw, 800px); }
+    dialog::backdrop { background: rgba(0,0,0,0.6); }
+    .row { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; }
+    .hint { opacity: 0.6; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HOP EDITOR</h1>
+    <label>Width <input id="w" type="number" min="20" max="300" value="60"></label>
+    <label>Height <input id="h" type="number" min="11" max="30" value="11"></label>
+    <button id="resize">Resize</button>
+    <button id="clear">Clear</button>
+    <button id="fill-floor">Add floor</button>
+    <span style="flex:1"></span>
+    <button id="import">Import text</button>
+    <button id="export">Export text</button>
+    <button id="test" class="primary">▶ Test in game</button>
+  </header>
+  <main>
+    <aside>
+      <h2>Paint with</h2>
+      <div id="palette"></div>
+      <h2>How to</h2>
+      <p class="hint" style="font-size:0.75rem; line-height:1.4">Click or drag to paint. Right-click to erase. Every level needs one <b>P</b> (start) and one <b>G</b> (portal) or <b>K</b> (boss). Keep gaps ≤ 5 tiles and climbs ≤ 3 tiles per jump.</p>
+    </aside>
+    <div class="grid-wrap"><canvas id="grid"></canvas></div>
+  </main>
+  <footer>
+    <span id="status">Ready</span>
+    <span class="hint">Tip: the game opens in a new tab with your level. Come back here to keep editing.</span>
+  </footer>
+
+  <dialog id="dlg">
+    <h3 id="dlg-title">Level text</h3>
+    <p class="hint" style="font-size:0.8rem; margin:6px 0">Paste this into the <code>map: [...]</code> of a level in game.js, or paste text here to import.</p>
+    <textarea id="dlg-text"></textarea>
+    <div class="row"><button id="dlg-copy">Copy</button><button id="dlg-load" class="primary">Load into editor</button><button id="dlg-close">Close</button></div>
+  </dialog>
+
+<script>
+// ---------- palette: the same characters game.js understands ----------
+const TILES = [
+  ['.', 'Air', '#1a1d3a', '#fff'], ['#', 'Ground', '#3c3a55', '#63c27a'], ['=', 'One-way ledge', '#63c27a', '#111'],
+  ['%', 'Crumbling block', '#6b5c3a', '#fff'], ['~', 'Bounce pad', '#ffd36e', '#111'], ['M', 'Moving (side)', '#5fe0ff', '#111'],
+  ['V', 'Moving (up/down)', '#5fe0ff', '#111'], ['B', 'Breakable (hidden orb)', '#8a7a3a', '#ffd36e'], ['^', 'Spikes', '#d9e6ff', '#111'],
+  ['o', 'Orb', '#ffd36e', '#111'], ['D', 'Double-jump orb', '#7df9ff', '#111'], ['H', 'Shield', '#8fb7ff', '#111'],
+  ['C', 'Checkpoint', '#c9a0ff', '#111'], ['e', 'Grump (walker)', '#9b5cff', '#fff'], ['f', 'Flit (flyer)', '#ff7a59', '#fff'],
+  ['S', 'Thorn (spiky)', '#3b2a4a', '#ffd36e'], ['P', 'Player start', '#43d17a', '#111'], ['G', 'Portal (goal)', '#8be9ff', '#111'], ['K', 'Grump King (boss)', '#7d3fd6', '#ffd36e'],
+];
+const TILE_INFO = Object.fromEntries(TILES.map(t => [t[0], t]));
+const CELL = 22;
+let cols = 60, rows = 11, grid = [], brush = '#';
+const canvas = document.getElementById('grid'), ctx = canvas.getContext('2d');
+const status = document.getElementById('status');
+
+function newGrid(c, r, keep) {
+  const g = Array.from({ length: r }, (_, y) => Array.from({ length: c }, (_, x) => (keep && grid[y] && grid[y][x]) || '.'));
+  cols = c; rows = r; grid = g;
+  canvas.width = cols * CELL; canvas.height = rows * CELL;
+  draw();
+}
+
+function draw() {
+  ctx.fillStyle = '#0b0e22'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+    const ch = grid[y][x], info = TILE_INFO[ch] || TILE_INFO['.'];
+    if (ch !== '.') { ctx.fillStyle = info[2]; ctx.fillRect(x * CELL + 1, y * CELL + 1, CELL - 2, CELL - 2); ctx.fillStyle = info[3]; ctx.font = 'bold 11px monospace'; ctx.textAlign = 'center'; ctx.fillText(ch, x * CELL + CELL / 2, y * CELL + CELL / 2 + 4); }
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.strokeRect(x * CELL + 0.5, y * CELL + 0.5, CELL, CELL);
+  }
+  // column numbers every 10
+  ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.font = '10px monospace'; ctx.textAlign = 'left';
+  for (let x = 0; x < cols; x += 10) ctx.fillText(x, x * CELL + 2, 10);
+  const counts = { P: 0, G: 0, K: 0, o: 0 };
+  for (const row of grid) for (const ch of row) if (ch in counts) counts[ch]++;
+  const ok = counts.P === 1 && (counts.G + counts.K) === 1;
+  status.textContent = `${cols}×${rows} · orbs ${counts.o} · ${ok ? 'valid ✓' : 'needs exactly one P and one G/K'}`;
+  status.style.color = ok ? '#8fdc7a' : '#ff8e53';
+}
+
+// ---------- painting ----------
+let painting = false, eraseMode = false;
+function paintAt(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((e.clientX - rect.left) / CELL), y = Math.floor((e.clientY - rect.top) / CELL);
+  if (x < 0 || y < 0 || x >= cols || y >= rows) return;
+  const ch = eraseMode ? '.' : brush;
+  if (ch === 'P' || ch === 'G' || ch === 'K') for (const row of grid) for (let i = 0; i < row.length; i++) if (row[i] === ch) row[i] = '.';   // only one of these
+  grid[y][x] = ch; draw();
+}
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+canvas.addEventListener('pointerdown', e => { painting = true; eraseMode = e.button === 2; paintAt(e); });
+canvas.addEventListener('pointermove', e => { if (painting) paintAt(e); });
+document.addEventListener('pointerup', () => painting = false);
+
+// ---------- palette UI ----------
+const pal = document.getElementById('palette');
+for (const [ch, name, bg, fg] of TILES) {
+  const d = document.createElement('div'); d.className = 'tile' + (ch === brush ? ' active' : '');
+  d.innerHTML = `<span class="sw" style="background:${bg};color:${fg}">${ch === '.' ? '' : ch}</span>${name}`;
+  d.onclick = () => { brush = ch; document.querySelectorAll('.tile').forEach(t => t.classList.remove('active')); d.classList.add('active'); };
+  pal.appendChild(d);
+}
+
+// ---------- toolbar ----------
+document.getElementById('resize').onclick = () => newGrid(+document.getElementById('w').value, +document.getElementById('h').value, true);
+document.getElementById('clear').onclick = () => { if (confirm('Clear the whole level?')) newGrid(cols, rows, false); };
+document.getElementById('fill-floor').onclick = () => { for (const y of [rows - 2, rows - 1]) for (let x = 0; x < cols; x++) grid[y][x] = '#'; draw(); };
+
+const dlg = document.getElementById('dlg'), dlgText = document.getElementById('dlg-text');
+const toText = () => grid.map(r => '      "' + r.join('') + '",').join('\n');
+document.getElementById('export').onclick = () => { dlgText.value = toText(); dlg.showModal(); };
+document.getElementById('import').onclick = () => { dlgText.value = ''; dlg.showModal(); dlgText.focus(); };
+document.getElementById('dlg-close').onclick = () => dlg.close();
+document.getElementById('dlg-copy').onclick = () => { navigator.clipboard.writeText(dlgText.value); status.textContent = 'Copied to clipboard'; };
+document.getElementById('dlg-load').onclick = () => {
+  const lines = dlgText.value.split('\n').map(l => l.trim().replace(/^"|",?$/g, '')).filter(l => l.length);
+  if (!lines.length) return;
+  const w = Math.max(...lines.map(l => l.length));
+  grid = lines.map(l => l.padEnd(w, '.').split('')); cols = w; rows = lines.length;
+  document.getElementById('w').value = cols; document.getElementById('h').value = rows;
+  canvas.width = cols * CELL; canvas.height = rows * CELL; draw(); dlg.close(); save();
+};
+
+// ---------- test in game: hand the map to index.html through localStorage ----------
+document.getElementById('test').onclick = () => {
+  localStorage.setItem('hop-custom-level', JSON.stringify(grid.map(r => r.join(''))));
+  localStorage.setItem('hop-play-custom', '1');          // the game reads this flag on load
+  const w = window.open('index.html', 'hop-test'); if (!w) location.href = 'index.html';
+};
+
+// ---------- autosave the work in progress ----------
+function save() { localStorage.setItem('hop-editor', JSON.stringify(grid.map(r => r.join('')))); }
+setInterval(save, 2000);
+const saved = JSON.parse(localStorage.getItem('hop-editor') || 'null');
+if (saved && saved.length) { grid = saved.map(r => r.split('')); cols = grid[0].length; rows = grid.length; document.getElementById('w').value = cols; document.getElementById('h').value = rows; canvas.width = cols * CELL; canvas.height = rows * CELL; draw(); }
+else { newGrid(60, 11, false); for (const y of [9, 10]) for (let x = 0; x < cols; x++) grid[y][x] = '#'; grid[8][2] = 'P'; grid[8][cols - 3] = 'G'; draw(); }
+</script>
+</body>
+</html>

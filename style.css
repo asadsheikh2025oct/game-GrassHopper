@@ -1,0 +1,109 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%; background: #07091a; color: #fff;
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  overflow: hidden; -webkit-user-select: none; user-select: none; touch-action: none;
+}
+
+/* Keep the 16:9 canvas as large as possible, centred */
+.stage { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+canvas {
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  background: #07091a;
+}
+
+/* ===== Touch controls ===== */
+.touch { position: absolute; bottom: calc(env(safe-area-inset-bottom) + 16px); display: none; gap: 12px; }
+.touch.left  { left: 16px; }
+.touch.right { right: 16px; }
+.pad {
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.45); background: rgba(10,12,40,0.45);
+  color: #fff; font-size: 1.6rem; touch-action: none; backdrop-filter: blur(4px);
+}
+.pad.jump { width: 80px; height: 80px; border-color: #ffd36e; }
+.pad:active, .pad.down { background: rgba(255,255,255,0.35); }
+@media (pointer: coarse) { .touch { display: flex; } }
+
+/* ===== Overlay ===== */
+.overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(4,6,24,0.55); padding: 20px;
+}
+.overlay.hidden { display: none; }
+.card {
+  background: linear-gradient(160deg, #1c1f4a, #121433);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px; padding: 26px 28px; text-align: center;
+  max-width: 380px; display: flex; flex-direction: column; gap: 12px; align-items: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(120,100,255,0.15);
+}
+.card h1 { font-size: 2.6rem; letter-spacing: 6px; color: #ffd36e; text-shadow: 0 0 18px rgba(255,211,110,0.6); }
+.sub { margin-top: -10px; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; }
+.tiny { font-size: 0.68rem; opacity: 0.45; }
+.big-btn {
+  background: linear-gradient(135deg, #ffd36e, #ff8e53); color: #2b1a0a; border: none;
+  border-radius: 14px; padding: 12px 40px; font-size: 1.1rem; font-weight: 700; cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255,160,80,0.35);
+}
+.big-btn:active { transform: translateY(1px); }
+
+/* Level select chips */
+.levels { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.levels:empty { display: none; }
+.lvl {
+  width: 48px; height: 48px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1;
+  border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); color: #fff; font-weight: 700;
+}
+.lvl small { font-size: 0.6rem; letter-spacing: -1px; color: #ffd36e; }
+.lvl.active small { color: #7a4a00; }
+.lvl.locked { opacity: 0.3; cursor: not-allowed; }
+.lvl.active { background: #ffd36e; color: #2b1a0a; border-color: #ffd36e; }
+
+/* Top buttons: pause + mute (top centre, above the canvas HUD) */
+.topbtns { position: absolute; top: calc(env(safe-area-inset-top) + 10px); left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 5; }
+.mute {
+  width: 36px; height: 36px; border-radius: 50%; font-size: 1rem; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.3); background: rgba(10,12,40,0.45); color: #fff;
+}
+.pre { white-space: pre-line; }
+
+/* ===== Skins & options on the title card ===== */
+.skins-row { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; }
+.skins { display: flex; gap: 8px; }
+.skin { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; color: #fff; padding: 2px; border-radius: 10px; }
+.skin .dot { width: 26px; height: 26px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); border: 2px solid transparent; }
+.skin small { font-size: 0.6rem; opacity: 0.7; }
+.skin.active .dot { border-color: #fff; }
+.skin.locked { cursor: not-allowed; }
+.skin.locked .dot { filter: grayscale(1) brightness(0.5); box-shadow: none; }
+.opts { display: flex; gap: 8px; }
+.opt { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 10px; padding: 6px 10px; font-size: 0.72rem; cursor: pointer; }
+
+/* Accessibility: swap control sides, larger buttons */
+.stage.lefty .touch.left  { left: auto; right: 16px; }
+.stage.lefty .touch.right { right: auto; left: 16px; }
+.stage.bigbtn .pad { width: 84px; height: 84px; font-size: 2rem; }
+.stage.bigbtn .pad.jump { width: 104px; height: 104px; }
+
+/* ===== "Rotate your phone" screen: only on touch devices held upright ===== */
+.rotate { display: none; position: absolute; inset: 0; z-index: 20; background: #07091a; color: #fff; text-align: center; flex-direction: column; align-items: center; justify-content: center; gap: 12px; font-size: 1.1rem; line-height: 1.5; }
+.rotate .phone { font-size: 4rem; animation: turn 1.6s ease-in-out infinite; }
+@keyframes turn { 0%, 20% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+@media (pointer: coarse) and (orientation: portrait) { .rotate { display: flex; } }
+
+/* Short landscape phones: make the title card compact and scrollable so Play is always reachable */
+.overlay { overflow-y: auto; }
+.card { max-height: 100%; overflow-y: auto; }
+@media (max-height: 460px) {
+  .card { padding: 12px 18px; gap: 6px; border-radius: 16px; }
+  .card h1 { font-size: 1.6rem; letter-spacing: 3px; }
+  .sub { margin-top: -4px; }
+  #ov-text { font-size: 0.8rem; }
+  .lvl { width: 38px; height: 38px; font-size: 0.8rem; }
+  .skin .dot { width: 20px; height: 20px; }
+  .big-btn { padding: 8px 28px; font-size: 1rem; }
+  .tiny { display: none; }
+}
