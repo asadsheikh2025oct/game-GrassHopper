@@ -45,7 +45,7 @@ const LEVELS = [
     ],
   },
   {
-    name: 'Dewy Garden', track: 0,
+    name: 'Dewy Garden', track: 1,
     theme: { sky: ['#9fd8ff', '#f3fbff'], sun: '#fffbd6', clouds: true, far: '#b9e3b0', mid: '#86c67e', ground: '#5f4630', groundTop: '#66c46a', groundDots: '#4a3524', orb: '#ff5252', hazard: '#5f4630', portal: '#ffd93d', bug: 'ladybug', water: '#5bb5f0', flowers: ['#ffd93d', '#ffffff', '#ff9ecb', '#9ad0ff'], leaf: '#58b862', leafDark: '#3b8a44' },
     map: [
       "..........................................................................................................................",
@@ -64,7 +64,7 @@ const LEVELS = [
     ],
   },
   {
-    name: 'Pond Shore', track: 1,
+    name: 'Pond Shore', track: 2,
     theme: { sky: ['#8fd3ff', '#dff5ff'], sun: '#fff3a8', clouds: true, far: '#9fd49c', mid: '#6fb86b', ground: '#5a4a3a', groundTop: '#7cc36a', groundDots: '#43362a', orb: '#ff5252', hazard: '#5a4a3a', portal: '#ffffff', bug: 'ladybug', water: '#3f9fe0', flowers: ['#ffffff', '#ff9ecb', '#ffd93d'], leaf: '#4fae5c', leafDark: '#347a3f' },
     map: [
       "...............................................................................................................",
@@ -83,7 +83,7 @@ const LEVELS = [
     ],
   },
   {
-    name: 'Lily Pond', track: 1,
+    name: 'Lily Pond', track: 3,
     theme: { sky: ['#1f3d2b', '#3f7a52'], stars: true, far: '#2b5a3a', mid: '#356b45', ground: '#3d3122', groundTop: '#4a9a55', groundDots: '#2c2318', orb: '#ffe066', hazard: '#3d3122', portal: '#e0b0ff', bug: 'firefly', water: '#2d6f9e', flowers: ['#e0b0ff', '#ffe066', '#ffffff'], leaf: '#3f8f4a', leafDark: '#2b6633', rays: true },
     map: [
       "##################################################################################################################",
@@ -103,7 +103,7 @@ const LEVELS = [
     ],
   },
   {
-    name: 'Sunset Field', track: 2,
+    name: 'Sunset Field', track: 4,
     theme: { sky: ['#ff9a6b', '#ffe0a8'], stars: true, sun: '#ffd36e', far: '#c98a5a', mid: '#8a6a3a', ground: '#5c3d2b', groundTop: '#b8a04a', groundDots: '#432c1f', orb: '#ffe066', hazard: '#4a3a2a', portal: '#ff5e8a', bug: 'firefly', water: '#6f8fc0', flowers: ['#ff5e8a', '#ffd36e', '#ff8a5c'], leaf: '#8fb04a', leafDark: '#5f7a2e' },
     map: [
       "...........................................................................................................................",
@@ -122,7 +122,7 @@ const LEVELS = [
     ],
   },
   {
-    name: 'Tall Grass', track: 2,
+    name: 'Tall Grass', track: 5,
     theme: { sky: ['#6fc3ff', '#f0fbff'], sun: '#fff7c2', clouds: true, far: '#a6dea1', mid: '#79c273', ground: '#5a4632', groundTop: '#5cb85c', groundDots: '#43341f', orb: '#ff5252', hazard: '#5a4632', portal: '#ffd93d', bug: 'ladybug', water: '#4fa8e8', flowers: ['#ffd93d', '#ff7bb0', '#ffffff'], leaf: '#4caf50', leafDark: '#357a38' },
     map: [
       "..........................................................................................",
@@ -144,7 +144,7 @@ const LEVELS = [
     ],
   },
   {
-    name: 'The Bullfrog King', track: 3, boss: true,
+    name: 'The Bullfrog King', track: 6, boss: true,
     theme: { sky: ['#ff8c6b', '#ffdca8'], stars: true, sun: '#ffd36e', far: '#b87a5a', mid: '#7a5a3a', ground: '#4e3a2a', groundTop: '#8fb04a', groundDots: '#3a2a1e', orb: '#ffe066', hazard: '#4a3a2a', portal: '#ff5e8a', bug: 'firefly', water: '#5a7fb0', flowers: ['#ff5e8a', '#ffd36e'], leaf: '#8fb04a', leafDark: '#5f7a2e' },
     map: [
       "#............................#",
@@ -257,44 +257,95 @@ const Ambient = {
 
 
 // ---------- 3b. Procedural music (a small step sequencer) ----------
-// Notes are MIDI numbers (60 = middle C). null = rest. 32 steps = 2 bars of 16ths.
+// Patterns are written as note names, one token per 16th note ("-" = rest). Bass is one token per beat,
+// arp one per 8th, drums one character per 16th (k kick, s snare, h hat, K/S = kick/snare + hat).
+const noteNum = t => { const m = t.toLowerCase().match(/^([a-g])(#|b)?(\d)$/); if (!m) throw new Error('bad note ' + t); return 12 * (+m[3] + 1) + { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 }[m[1]] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0); };
+const N = str => str.trim().split(/\s+/).map(t => t === '-' ? null : noteNum(t));
 const TRACKS = [
-  { // Dusk Meadow - warm and bouncy
-    bpm: 120, wave: "triangle", bassWave: "square", filter: 2200,
-    bass:   [45,45,45,45, 41,41,41,41, 48,48,48,48, 43,43,43,43, 45,45,45,45, 41,41,41,41, 48,48,48,48, 43,43,43,43],
-    melody: [69,null,72,null, 74,null,76,null, 74,null,72,null, 69,null,null,null, 72,null,74,null, 76,null,79,null, 76,null,74,null, 72,null,null,null],
-  },
-  { // Crystal Caves - slow and mysterious
-    bpm: 96, wave: "sine", bassWave: "triangle", filter: 1200,
-    bass:   [38,38,38,38, 41,41,41,41, 36,36,36,36, 43,43,43,43, 38,38,38,38, 41,41,41,41, 36,36,36,36, 45,45,45,45],
-    melody: [62,null,null,65, null,null,69,null, null,null,67,null, null,null,65,null, 62,null,null,65, null,null,72,null, null,null,70,null, 67,null,65,null],
-  },
-  { // Dawn Islands - bright and quick
-    bpm: 132, wave: "square", bassWave: "triangle", filter: 3000,
-    bass:   [36,36,36,36, 40,40,40,40, 45,45,45,45, 43,43,43,43, 36,36,36,36, 40,40,40,40, 45,45,45,45, 43,43,43,43],
-    melody: [72,null,76,null, 79,null,76,null, 74,null,77,null, 81,null,77,null, 76,null,79,null, 84,null,79,null, 77,null,76,null, 74,null,72,null],
-  },
-  { // Boss - fast and tense
-    bpm: 150, wave: "sawtooth", bassWave: "square", filter: 1800,
-    bass:   [40,40,40,40, 40,40,40,40, 43,43,43,43, 46,46,46,46, 40,40,40,40, 40,40,40,40, 38,38,38,38, 39,39,39,39],
-    melody: [64,null,64,67, null,64,null,70, 67,null,64,null, 62,null,64,null, 64,null,64,67, null,64,null,70, 71,null,70,null, 67,null,64,null],
-  },
+  { name: 'Morning Hop', bpm: 118, wave: 'triangle', bassWave: 'square', arpWave: 'triangle', filter: 2400, drums: 'k.h.s.h.k.h.s.h.',
+    bass: N('c3 c3 c3 g2   g2 g2 g2 b2   a2 a2 a2 e3   f2 f2 f2 g2'),
+    arp:  N('c4 e4 g4 e4 c4 e4 g4 e4   g3 b3 d4 b3 g3 b3 d4 b3   a3 c4 e4 c4 a3 c4 e4 c4   f3 a3 c4 a3 f3 a3 c4 a3'),
+    melody: N(`e5 - g5 - c6 - - - b5 - g5 - e5 - - -
+               d5 - g5 - b5 - - - a5 - g5 - d5 - - -
+               c5 - e5 - a5 - - - g5 - e5 - c5 - - -
+               f5 - a5 - c6 - - - d6 - b5 - g5 - - -`) },
+  { name: 'Dewdrops', bpm: 100, wave: 'sine', bassWave: 'triangle', arpWave: 'sine', arpVol: 0.03, filter: 1800, drums: 'k.......s.....h.', swing: 0.15,
+    bass: N('f2 f2 f2 c3   c3 c3 c3 e3   d3 d3 d3 a2   bb2 bb2 bb2 c3'),
+    arp:  N('f5 a5 c6 a5 f5 a5 c6 a5   e5 g5 c6 g5 e5 g5 c6 g5   d5 f5 a5 f5 d5 f5 a5 f5   d5 f5 bb5 f5 e5 g5 c6 g5'),
+    melody: N(`a5 - - - c6 - a5 - - - f5 - - - - -
+               g5 - - - bb5 - g5 - - - e5 - - - - -
+               f5 - - - a5 - - - d6 - c6 - a5 - - -
+               bb5 - - - d6 - - - c6 - - - - - - -`) },
+  { name: 'Pond Shore', bpm: 112, wave: 'triangle', bassWave: 'triangle', arpWave: 'square', arpVol: 0.028, filter: 2000, drums: 'k...s...k.k.s...',
+    bass: N('d3 d3 a2 a2   g2 g2 d3 d3   d3 d3 a2 a2   c3 c3 a2 a2'),
+    arp:  N('- f4 - f4 - f4 - f4   - b4 - b4 - b4 - b4   - f4 - f4 - f4 - f4   - e4 - e4 - e4 - e4'),
+    melody: N(`- - - - a5 - f5 - - - d5 - - - - -
+               - - - - b5 - g5 - - - d5 - e5 - f5 -
+               a5 - - - c6 - a5 - - - f5 - - - - -
+               g5 - e5 - c5 - - - e5 - - - d5 - - -`) },
+  { name: 'Under the Lilies', bpm: 88, wave: 'sine', bassWave: 'triangle', filter: 1400, drums: 'k.......s.....h.', echo: 0.34,
+    bass: N('a2 a2 a2 a2   f2 f2 f2 f2   c3 c3 c3 c3   e3 e3 e3 e3'),
+    melody: N(`e5 - - - a5 - - - c6 - b5 - a5 - - -
+               c5 - - - f5 - - - a5 - g5 - f5 - - -
+               e5 - - - g5 - - - c6 - - - d6 - - -
+               b5 - - - e6 - - - d6 - b5 - g#5 - - -`) },
+  { name: 'Golden Hour', bpm: 100, wave: 'triangle', bassWave: 'triangle', arpWave: 'triangle', arpVol: 0.03, filter: 2000, drums: 'k.h.s.h.k.h.s.h.', swing: 0.2,
+    bass: N('g2 g2 d3 d3   e2 e2 b2 b2   c3 c3 g2 g2   d3 d3 a2 a2'),
+    arp:  N('g4 b4 d5 b4 g4 b4 d5 b4   e4 g4 b4 g4 e4 g4 b4 g4   c4 e4 g4 e4 c4 e4 g4 e4   d4 f#4 a4 f#4 d4 f#4 a4 f#4'),
+    melody: N(`b5 - - - d6 - b5 - g5 - - - - - - -
+               g5 - - - b5 - g5 - e5 - - - - - - -
+               e5 - - - g5 - c6 - b5 - - - a5 - - -
+               a5 - - - f#5 - - - d5 - - - - - - -`) },
+  { name: 'Tall Grass Scramble', bpm: 140, wave: 'square', bassWave: 'square', filter: 2600, drums: 'K.h.S.h.K.hhS.h.',
+    bass: N('e3 e3 e3 g3   a2 a2 a2 b2   e3 e3 e3 d3   c3 c3 b2 b2'),
+    melody: N(`e5 g5 a5 - b5 - a5 g5 e5 - - - d5 - e5 -
+               g5 a5 b5 - d6 - b5 a5 g5 - - - a5 - b5 -
+               e6 - d6 - b5 - a5 - g5 - a5 - g5 - e5 -
+               d5 - e5 - g5 - a5 - b5 - - - - - - -`) },
+  { name: 'The Bullfrog King', bpm: 150, wave: 'sawtooth', bassWave: 'square', filter: 1800, drums: 'K.h.S.h.K.h.S.hh',
+    bass: N('e2 e2 g2 bb2   e2 e2 d2 eb2   e2 e2 g2 bb2   c2 c2 d2 eb2'),
+    melody: N(`e4 - e4 g4 - e4 - bb4 g4 - e4 - d4 - e4 -
+               e4 - e4 g4 - e4 - bb4 b4 - bb4 - g4 - e4 -
+               e5 - e5 g5 - e5 - bb5 g5 - e5 - d5 - e5 -
+               c5 - d5 - eb5 - e5 - g5 - bb5 - b5 - - -`) },
 ];
+// The title-screen tune: gentle and hummable, loops under the menu
+const TITLE_TRACK = { name: 'Hop! (title)', bpm: 108, wave: 'triangle', bassWave: 'triangle', arpWave: 'sine', arpVol: 0.03, filter: 2200, drums: 'k.h...h.s.h...h.',
+  bass: N('c3 c3 g2 g2   a2 a2 e2 e2   f2 f2 c3 c3   g2 g2 g2 g2'),
+  arp:  N('c5 e5 g5 e5 c5 e5 g5 e5   a4 c5 e5 c5 a4 c5 e5 c5   f4 a4 c5 a4 f4 a4 c5 a4   g4 b4 d5 b4 g4 b4 d5 b4'),
+  melody: N(`g5 - - - e5 - g5 - c6 - - - - - - -
+             a5 - - - e5 - a5 - b5 - - - - - - -
+             c6 - - - a5 - f5 - g5 - - - e5 - - -
+             d5 - - - g5 - - - c5 - - - - - - -`) };
 const midiToHz = n => 440 * Math.pow(2, (n - 69) / 12);
 
 const Music = {
   timer: null, step: 0, nextTime: 0, track: null, noise: null, gain: null,
   muted: localStorage.getItem("hop-muted") === "1",
-  start(i) {
+  start(i) {                                                            // a level's own tune + ambience
+    const ti = (LEVELS[i].track ?? i) % TRACKS.length;
+    this.play(TRACKS[ti]);
+    Ambient.start(['meadow', 'meadow', 'pond', 'pond', 'sunset', 'sunset', 'boss'][ti]);
+  },
+  startTitle() { this.play(TITLE_TRACK); },                              // the menu tune (no ambience)
+  play(track) {
     this.stop();
     if (!Sfx.ctx) return;
-    this.track = TRACKS[(LEVELS[i].track ?? i) % TRACKS.length];
+    this.track = track;
     this.step = 0; this.nextTime = Sfx.ctx.currentTime + 0.05;
     this.noise = Sfx.noise;
     if (!this.gain) { this.gain = Sfx.ctx.createGain(); this.gain.connect(Sfx.bus); }
     this.gain.gain.value = 1;
     this.timer = setInterval(() => this.schedule(), 25);
-    Ambient.start(['meadow', 'pond', 'sunset', 'boss'][(LEVELS[i].track ?? i) % 4]);
+  },
+  // Console-style start-up jingle: a quick rising arpeggio, a bright chord that blooms, then two little hops.
+  jingle() {
+    if (!Sfx.ctx || this.muted) return; const S = Sfx;
+    S.tone(120, 40, 0.25, 'sine', 0.3); S.hiss(0.3, 0.12, 2000, 9000);
+    [523, 659, 784, 1047, 1319].forEach((f, i) => S.tone(f, f, 0.22, 'triangle', 0.13, i * 0.09));
+    [523, 659, 784, 1047].forEach(f => S.tone(f, f * 1.003, 1.4, 'triangle', 0.075, 0.5));
+    S.tone(1568, 1568, 0.5, 'sine', 0.05, 0.55); S.tone(2093, 2093, 0.9, 'sine', 0.03, 0.7);
+    S.tone(300, 700, 0.14, 'square', 0.06, 1.45); S.tone(400, 950, 0.16, 'square', 0.06, 1.75);
   },
   stop() { clearInterval(this.timer); this.timer = null; Ambient.stop(); },
   duck(level, seconds) {                                                 // dip the music for a big moment, then swell back
@@ -309,17 +360,30 @@ const Music = {
   schedule() {
     const ctxA = Sfx.ctx, t = this.track, stepLen = 60 / t.bpm / 4;
     while (this.nextTime < ctxA.currentTime + 0.1) {
-      if (!this.muted) this.playStep(this.step % 32, this.nextTime, stepLen);
+      if (!this.muted) this.playStep(this.step, this.nextTime, stepLen);
       this.nextTime += stepLen; this.step++;
     }
   },
-  playStep(i, when, stepLen) {
-    const t = this.track, ctxA = Sfx.ctx;
-    const bass = t.bass[i], mel = t.melody[i];
+  playStep(step, when, stepLen) {
+    const t = this.track, i = step % t.melody.length;
+    if (t.swing && i % 2 === 1) when += stepLen * t.swing;                 // push the off-beats for a lilt
+    const bass = t.bass[Math.floor(i / 4) % t.bass.length], mel = t.melody[i];
     if (i % 4 === 0 && bass !== null) this.note(midiToHz(bass), when, stepLen * 3.5, t.bassWave, 0.10, 600);
-    if (mel !== null) this.note(midiToHz(mel), when, stepLen * 1.8, t.wave, 0.07, t.filter);
-    if (i % 8 === 0) this.kick(when);
-    if (i % 4 === 2) this.hat(when);
+    if (mel !== null) {
+      this.note(midiToHz(mel), when, stepLen * 1.8, t.wave, 0.07, t.filter);
+      if (t.echo) this.note(midiToHz(mel), when + t.echo, stepLen * 1.5, t.wave, 0.025, t.filter);   // a soft repeat, like a cave echo
+    }
+    if (t.arp && i % 2 === 0) { const a = t.arp[(i / 2) % t.arp.length]; if (a !== null) this.note(midiToHz(a), when, stepLen * 1.6, t.arpWave || 'sine', t.arpVol || 0.035, t.filter); }
+    const d = t.drums ? t.drums[i % t.drums.length] : '.';
+    if (d === 'k' || d === 'K') this.kick(when);
+    if (d === 's' || d === 'S') this.snare(when);
+    if (d === 'h' || d === 'K' || d === 'S') this.hat(when);
+  },
+  snare(when) {
+    const ctxA = Sfx.ctx, src = ctxA.createBufferSource(), g = ctxA.createGain(), f = ctxA.createBiquadFilter();
+    src.buffer = this.noise; f.type = 'bandpass'; f.frequency.value = 1800; f.Q.value = 0.8;
+    g.gain.setValueAtTime(0.09, when); g.gain.exponentialRampToValueAtTime(0.001, when + 0.12);
+    src.connect(f).connect(g).connect(this.gain); src.start(when); src.stop(when + 0.13);
   },
   note(freq, when, dur, wave, vol, cutoff) {
     const ctxA = Sfx.ctx, osc = ctxA.createOscillator(), g = ctxA.createGain(), f = ctxA.createBiquadFilter();
@@ -1635,6 +1699,7 @@ function showOverlay(title, sub, text, btn, onClick) {
   ovBtn.onclick = onClick;
   buildLevelSelect();
   overlay.classList.remove('hidden');
+  if (!journey) Music.startTitle();
 }
 function buildSkinSelect() {
   skinSel.innerHTML = '';
@@ -1876,6 +1941,17 @@ document.addEventListener("keydown", e => {
 document.getElementById('pause-btn').addEventListener('click', () => setPaused(!paused));
 skipBtn.addEventListener('click', skipAhead);
 document.addEventListener('pointerdown', () => { userTapped = true; }, { once: true });
+// Start-up screen. Browsers only allow sound after a tap, so the "console boot" jingle plays on the first tap,
+// then the title card slides in with its own tune.
+const splash = document.getElementById('splash');
+function launch() {
+  if (!splash || splash.classList.contains('go')) return;
+  userTapped = true; Sfx.init(); Music.jingle();
+  splash.classList.add('go');
+  setTimeout(() => { splash.remove(); }, 1900);
+  setTimeout(() => { if (!running) Music.startTitle(); }, 2300);
+}
+if (splash) { splash.addEventListener('pointerdown', e => { e.preventDefault(); launch(); }); document.addEventListener('keydown', e => { if (splash.isConnected && !e.repeat) launch(); }); }
 canvas.addEventListener('pointerdown', () => { if (paused) setPaused(false); else if (ending && ending.t > 1.5) finishEnding(); else if (journey && journey.t > 1.2) journey.skip = true; });          // tap anywhere to resume / skip the ending
 document.addEventListener('keydown', e => { if (ending && ending.t > 1.5 && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) finishEnding(); if (journey && journey.t > 1.2 && (e.key === ' ' || e.key === 'Enter')) journey.skip = true; });
 document.addEventListener("visibilitychange", () => {                                    // auto-pause when the app goes to the background

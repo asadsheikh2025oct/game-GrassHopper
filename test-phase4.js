@@ -95,7 +95,7 @@ window.phase4 = function () {
   {
     const wasMuted = Music.muted; if (Music.muted) Music.toggle();
     const bpms = [], beds = []; for (let li = 0; li < LEVELS.length; li++) { journey = null; startLevel(li); bpms.push(Music.track.bpm); beds.push(Ambient.kind); Music.stop(); }
-    rec('Audio', '30 music track and ambient bed per world', JSON.stringify(bpms) === JSON.stringify([120, 120, 96, 96, 132, 132, 150]) && JSON.stringify(beds) === JSON.stringify(['meadow', 'meadow', 'pond', 'pond', 'sunset', 'sunset', 'boss']), `bpm ${bpms.join(',')} | beds ${beds.join(',')}`);
+    rec('Audio', '30 a different music track for every level, ambient bed per world', JSON.stringify(bpms) === JSON.stringify([118, 100, 112, 88, 100, 140, 150]) && new Set(LEVELS.map(L => TRACKS[L.track].name)).size === 7 && JSON.stringify(beds) === JSON.stringify(['meadow', 'meadow', 'pond', 'pond', 'sunset', 'sunset', 'boss']), `bpm ${bpms.join(',')} | beds ${beds.join(',')}`);
     startLevel(0); const running1 = !!Music.timer && Ambient.timers.length > 0; step(130); orbs.forEach(o => o.taken = true); collected = totalOrbs; put(portal.x, portal.y + 10); step(150, 1 / 60 * 0.35); const journeyMusic = !!Music.timer; journey = null; Music.stop(); const stopped = Music.timer === null && Ambient.timers.length === 0;
     rec('Audio', '30 music + ambience start with a level, continue into the journey, stop on request', running1 && journeyMusic && stopped, `running=${running1}, in journey=${journeyMusic}, stopped=${stopped}`);
     const freqs = []; const origTone = Sfx.tone; Sfx.tone = function (a, ...rest) { freqs.push(Math.round(a)); return origTone.call(this, a, ...rest); };

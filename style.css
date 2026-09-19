@@ -185,3 +185,21 @@ html, body { font-family: Fredoka, "Trebuchet MS", "Segoe UI", system-ui, sans-s
 
 .card { scrollbar-width: none; }
 .card::-webkit-scrollbar { display: none; }
+
+/* ===== Start-up screen ===== */
+.splash {
+  position: absolute; inset: 0; z-index: 15; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  background: radial-gradient(ellipse at 50% 40%, #7ec8ff 0%, #5cb85c 70%, #2f6b31 100%); color: #fff4e0; cursor: pointer; touch-action: none;
+  transition: opacity 0.7s ease 1.1s, visibility 0s linear 1.9s;
+}
+.splash .logo { width: 128px; height: 128px; border-radius: 28px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); animation: splash-breathe 2.4s ease-in-out infinite; }
+.splash h1 { margin: 12px 0 0; font-size: 3rem; letter-spacing: 8px; color: #ffe9a8; text-shadow: 0 3px 0 #4a2e18, 0 6px 14px rgba(0,0,0,0.4); }
+.splash .tap { margin: 0; font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.85; animation: splash-blink 1.4s ease-in-out infinite; }
+@keyframes splash-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes splash-blink { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+/* after the tap: the logo hops twice in time with the jingle, then the screen fades to the title card */
+.splash.go { opacity: 0; visibility: hidden; }
+.splash.go .logo { animation: splash-hop 0.9s cubic-bezier(0.3, 0, 0.2, 1) 0.45s 2; }
+.splash.go .tap { animation: none; opacity: 0; }
+@keyframes splash-hop { 0%, 100% { transform: translateY(0) scale(1); } 20% { transform: translateY(0) scale(1.1, 0.85); } 55% { transform: translateY(-60px) scale(0.95, 1.08); } 85% { transform: translateY(0) scale(1.08, 0.9); } }
+@media (max-height: 460px) { .splash .logo { width: 88px; height: 88px; } .splash h1 { font-size: 2rem; margin-top: 6px; } }
