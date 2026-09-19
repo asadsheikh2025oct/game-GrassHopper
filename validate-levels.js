@@ -38,3 +38,27 @@ for (const L of LEVELS) {
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) if (map[r][c] === 'o') { orbsTotal++; const near = [...seen].some(sp => { const [c2, r2] = sp.split(',').map(Number); return Math.abs(c - c2) <= 5 && (r2 - r) <= 4 && (r2 - r) >= -1; }); if (!near) orbsFar++; }
   console.log(`${L.name.padEnd(16)} ${R}x${C} | goal reachable: ${goalOk} | orbs: ${orbsTotal} (${orbsFar} maybe unreachable) | problems: ${problems.length ? problems.join('; ') : 'none'}`);
 }
+
+// ---------- low-ceiling traps: a leaf close above ground you must jump from ----------
+// Rise available under a leaf = rows of air between its underside and the walking surface.
+// A pit/puddle needs ~2 rows of rise (3+ wide), a step-up of k rows needs k rows. Flag when the leaf does not allow it.
+for (const L of LEVELS) {
+  const len = Math.max(...L.map.map(r => r.length)); const map = L.map.map(r => r.padEnd(len, '.'));
+  const R = map.length, C = len;
+  const solid = (c, r) => r >= 0 && r < R && c >= 0 && c < C && '#%B'.includes(map[r][c]);
+  const surfaceOf = (c, from) => { for (let r = from; r < R; r++) { const ch = map[r][c]; if ('#%='.includes(ch)) return { row: r, kind: 'ground' }; if (ch === 'w') return { row: r, kind: 'water' }; } return { row: R, kind: 'pit' }; };
+  const traps = [];
+  for (let r = 1; r < R - 2; r++) for (let c = 0; c < C; c++) {
+    if (map[r][c] !== '#' || solid(c, r + 1)) continue;
+    const here = surfaceOf(c, r + 1); if (here.kind !== 'ground') continue;
+    const gap = here.row - (r + 1); if (gap > 3) continue;
+    for (let d = 1; d <= 5; d++) {
+      const cc = c + d; if (cc >= C) break;
+      const s2 = surfaceOf(cc, r + 1);
+      if (s2.kind === 'ground' && s2.row < here.row) { const k = here.row - s2.row; if (k >= gap) { traps.push({ col: c, row: r, gap, what: k + '-row step-up at col ' + cc }); } break; }
+      if (s2.kind !== 'ground') { let w = 0; while (cc + w < C && surfaceOf(cc + w, r + 1).kind !== 'ground') w++; if (w >= 3 && gap <= 2 || w >= 4 && gap <= 3) traps.push({ col: c, row: r, gap, what: w + '-wide ' + s2.kind + ' at col ' + cc }); break; }
+    }
+  }
+  const uniq = traps.filter((t, i) => !traps.slice(0, i).some(u => Math.abs(u.col - t.col) < 4 && u.what === t.what));
+  if (uniq.length) console.log(`${L.name.padEnd(16)} LOW-CEILING: ` + uniq.map(t => `leaf at col ${t.col} row ${t.row} allows ${t.gap} rows of rise but ${t.what} needs more`).join('; '));
+}

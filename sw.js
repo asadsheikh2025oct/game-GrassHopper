@@ -1,6 +1,6 @@
 // Service worker: caches the whole game so it loads instantly and works offline.
 // Bump CACHE_VERSION whenever you change the game files so players get the new version.
-const CACHE_VERSION = 'hop-v13';
+const CACHE_VERSION = 'hop-v16';
 const FILES = ['./', './index.html', './style.css', './game.js', './editor.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {

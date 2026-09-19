@@ -9,8 +9,8 @@
 const TILE = 32;
 const W = 640, H = 360;
 const GRAVITY      = 1700;
-const RUN_SPEED    = 240;
-const JUMP_SPEED   = 660;
+const RUN_SPEED    = 250;
+const JUMP_SPEED   = 680;
 const STOMP_BOUNCE = 400;
 const COYOTE_TIME  = 0.10;     // still allowed to jump shortly after leaving a ledge
 const JUMP_BUFFER  = 0.12;     // jump pressed slightly before landing still counts
@@ -34,9 +34,9 @@ const LEVELS = [
       "...............................................................................................................",
       "...............................................................................................................",
       "....................................o.o......................o.o................o.o..f.........................",
-      "....................................####f...........o.o.........................####..............o.o..........",
-      "....................o.o.........o.o.................####....................o.o...........BB......####.........",
-      "........o.o.o.......####.H..............====o..............................C...................................",
+      "........................o.o.........####f...........o.o.........................####..............o.o..........",
+      "........................####....o.o.................####....................o.o...........BB......####.........",
+      "........o.o.o.................H.........====o..............................C...................................",
       "................................###.........................e.~............####.........o.o.o.o.o..............",
       "..P.......####.e.........C..#######################.......C.#####ww#####################......C..######.....G..",
       "###################www#############################...###########ww############################################",
@@ -51,10 +51,10 @@ const LEVELS = [
       "..........................................................................................................................",
       "..........................................................................................................................",
       "..........................................................................................................................",
-      "..............................................o.o.o.o.....................................................................",
-      "...........o.o............................o.of........................o.o...........................f.....................",
-      "................o.o.BB.....o.o............####..M.........o.o.........####.f..................o.o.......o.o...............",
-      "................####.....C.====.........................H.####..V...........o.o........BB.....####......####..............",
+      "..........................................o.ofo.o.o.o.....................................................................",
+      "...........o.o............................####............o.o.........o.o...........................f.....................",
+      "................o.o.BB.....o.o..................M.........####........####.f..................o.o.......o.o...............",
+      "................####.....C.====.........................H.......V...........o.o........BB.....####......####..............",
       "......D................####......o.o................................e.......====..........................................",
       "..........~....e....############......e.C...................#####www#######...........o.o.S.........Ce....................",
       "..P.....####www#################wwwww######..............#%%%%###www###########....C.....#####...########ww######G........",
@@ -70,12 +70,12 @@ const LEVELS = [
       "...............................................................................................................",
       "...............................................................................................................",
       "...............................................................................................................",
-      "..................................................................o.o..........................................",
-      "......................o.o.....................o.o...f.............####..............o.o........................",
-      "....................f.####.....o.o.o.o........####..................................####f......................",
-      "..........D....o.o.o..............M....................o.o.o............o.o.o.o............V........o.o........",
-      ".........o.o...=====.......eC.H........................=====...e....S...M...........................====.......",
-      ".............e.............######.......Ce..................o.o######.........C................................",
+      "...........................................o.o....................o.o..........................................",
+      "......................o.o..................####.....f.............####..............o.o........................",
+      "....................f.####.....o.o.o.o..............................................####f......................",
+      "..........D....o.o.o..............M.....................................o.o.o.o............V........o.o........",
+      ".........o.o...=====.......eC.H........................o.o.o...e....S...M...........................====.......",
+      ".............e.............######.......Ce...........=======o.o######.........C................................",
       "..P.........###wwwww####www######wwwwww###wwww..........####www######wwwwww####wwww............#####www.....G..",
       "########wwww###wwwww####www######wwwwww###wwww#####wwwww####www######wwwwww####wwww#######wwwww#####www########",
       "########wwww#######################################wwwww##################################wwwww################",
@@ -91,10 +91,10 @@ const LEVELS = [
       "..................................................................................................................",
       "........................................................########################....BB###############.............",
       "..........................................................o.o.o...................................................",
-      "........................o.o.................o.o...........=====.............o.o...............o.o.................",
-      "........................####....M...........====....o.o.o...................####..............====........o.o.o...",
-      "..................o.o.o.............o.o.o...........#####.............o.o.o.......V.....o.o.o.............#####...",
-      "..................#####.......f.....#####..............e......H.......#####CS...........#####.....f...............",
+      "..................o.o.o.o.o.........o.o.o...o.o...........=====.............o.o...............o.o.................",
+      "..................#####.####....M...#####...====..o.o.o.....................####..............====........o.o.o...",
+      "..................................................#####...............o.o.o.......V.....o.o.o.............#####...",
+      "..............................f........................e......H.......#####CS...........#####.....f...............",
       "......D.............e..S...C..........e.C..............####....######wwwww########.......C..e.....................",
       "..P.................####www######....########wwww##########....######wwwww############www#########..........e...SG",
       "##########wwww##########www######....########wwww##########....#######################www#########################",
@@ -109,12 +109,12 @@ const LEVELS = [
       "...........................................................................................................................",
       "...........................................................................................................................",
       "...........................................................................................................................",
-      ".............................................o.o.o.o.......................................................................",
-      "......................f.............o.o...............................o.o.......f..................o.o....o.o..............",
-      "..................o.o........o.o....####.......M..f...o.o.............####...........o.o............f.....####.............",
-      "..................####..BB...====.....................####....o.o..........o.o.......####...V..............................",
-      "......o.o...............C....e...S........................H...====................C........................................",
-      "...........^^...e.....###....#######...C....e.^^..................S.......e...^^.###....e.......^^.C....~.....S............",
+      "...................BB...............o.o......o.o.o.o.................................o.o...................................",
+      "...................o.of.............####..............................o.o.......f....####..........o.o....o.o..............",
+      "..................####.......o.o...............M..f...................####..........................f.....####.............",
+      ".............................====.............................o.o..........o.o..............V..............................",
+      "......o.o...............C....e...S.......................oHo..====................C........................................",
+      "...........^^...e.....###....#######...C....e............###......S.......e...^^.###....e.......^^.C....~.....S............",
       "..P......####www#########....####%%%%###wwww######..........e.....####www################wwwww######....#######.....G......",
       "#############www#########....###########wwww###########.....##########www################wwwww######....###################",
       "#########################....##########################.....########################################....###################",
@@ -129,18 +129,18 @@ const LEVELS = [
       "............................................................o.o.o.o.......................",
       "....................................................................o.o.o.o...........G...",
       "............................................................M..........S..C..V....########",
-      "..............................................o.o.o.o.=====.........#######.......########",
+      "...........................................o.o.o.o..=======.........#######.......########",
       "....................................................................#######...............",
-      "..............................................#######.....................................",
-      "....................................o.o.o.o...#######.....................................",
-      "......................................e..C................................................",
-      "..............................f.....#######........................V......................",
-      "..........................o.o.o.o...#######...............................................",
-      "..........................C...............................o.o.o.o.o.......................",
-      "....o.o.o.................#######.............................D...........................",
-      "..P.......e.....S.........#######.........................#########.......................",
-      "#####################.....................................#########.......................",
-      "#####################.....................................................................",
+      "...........................................#######........................................",
+      "..................................o.o.o.o..#######........................................",
+      "....................................e..C..................................................",
+      "..............................f...#######..........................V......................",
+      ".........................o.o.o.o..#######.................................................",
+      ".........................C................................o.o.o.o.o.......................",
+      "....o.o.o................#######..............................D...........................",
+      "..P.......e.....S........#######..........................#########.......................",
+      "######################....................................#########.......................",
+      "######################....................................................................",
     ],
   },
   {
@@ -353,6 +353,7 @@ let butterflies = [], petals = [], nextButterfly = 4, nextPetal = 0;            
 const hintsSeen = JSON.parse(localStorage.getItem('hop-hints') || '{}');
 let hint = null, slowmo = 0;
 let ending = null;                                     // { t, swarm[], summary } while the finale plays
+let journey = null;                                    // the between-levels map scene
 // Stuck-assist: count deaths since the last checkpoint. After 3 the jump window widens and frogs slow down a little;
 // after 6 we offer a one-time skip to the next checkpoint. Nothing is announced for the first part.
 let deathsHere = 0, skipOffered = false, skipTimer = 0;
@@ -364,7 +365,7 @@ function offerSkip() {
 function skipAhead() {
   const p = player, ahead = checkpoints.filter(c => c.x > p.startX + 10).sort((a, b) => a.x - b.x)[0];
   skipBtn.style.display = 'none'; skipTimer = 0; skipOffered = true; deathsHere = 0;
-  if (ahead) { ahead.lit = true; p.startX = ahead.x - 5; p.startY = ahead.y + TILE - p.h; }
+  if (ahead) { ahead.lit = true; p.startX = ahead.gx - 5; p.startY = ahead.gy + TILE - p.h; }
   else if (portal) { p.startX = portal.x - 80; p.startY = portal.y + portal.h - p.h; }
   p.x = p.startX; p.y = p.startY; p.vx = 0; p.vy = 0; p.dead = 0; p.sinking = 0; p.invuln = 2;
   camX = Math.max(0, Math.min(LEVEL_W - W, p.x - W / 2)); fade = 1; Sfx.checkpoint();
@@ -501,7 +502,7 @@ function loadLevel(i) {
     if (ch === 'D') powerups.push({ type: 'double', x: x + 6, y: y + 6, w: 20, h: 20, taken: false, seed: Math.random() * 6 });
     if (ch === 'H') powerups.push({ type: 'shield', x: x + 6, y: y + 6, w: 20, h: 20, taken: false, seed: Math.random() * 6 });
     if (ch === '~') pads.push({ x, y: y + 18, w: TILE, h: 14, anim: 0 });
-    if (ch === 'C') checkpoints.push({ x: x + 8, y, w: 16, h: TILE, lit: false });
+    if (ch === 'C') checkpoints.push({ x: x + 4, y: y - TILE * 4, w: 24, h: TILE * 5, lit: false, gx: x + 8, gy: y });   // trigger is a tall column so hopping over it still counts
     if (ch === '%') crumbles[c + ',' + r] = { state: 'solid', t: 0 };
     if (ch === 'M') movers.push({ ox: x, oy: y, x, y, px: x, py: y, w: TILE * 3, h: 14, axis: 'x', range: TILE * 3, speed: 1.2, seed: c });
     if (ch === 'V') movers.push({ ox: x, oy: y, x, y, px: x, py: y, w: TILE * 2, h: 14, axis: 'y', range: TILE * 2.5, speed: 1.0, seed: c });
@@ -580,6 +581,7 @@ function dust(x, y) {
 
 // ---------- 8. Update ----------
 function update(dt) {
+  if (journey) { time += dt; updateJourney(dt); return; }
   time += dt;
   if (banner > 0) banner -= dt;
   if (fade > 0) fade = Math.max(0, fade - dt * 1.5);
@@ -619,6 +621,7 @@ function update(dt) {
     let target = 0;
     if (keys.left)  { target = -RUN_SPEED; p.facing = -1; }
     if (keys.right) { target =  RUN_SPEED; p.facing =  1; }
+    p.knock = Math.max(0, (p.knock || 0) - dt); if (p.knock > 0) target = p.vx;   // knocked back: no steering for a moment
     if (p.onGround && target !== 0 && Math.sign(target) !== Math.sign(p.vx) && Math.abs(p.vx) > 140 && p.skid <= 0) {   // turning around fast: skid
       p.skid = 0.18; dust(p.x + p.w / 2, p.y + p.h);
     }
@@ -675,9 +678,9 @@ function update(dt) {
     // checkpoints
     for (const c of checkpoints) {
       if (!c.lit && overlaps(p, c)) {
-        c.lit = true; p.startX = c.x - 5; p.startY = c.y + TILE - p.h; showHint('checkpoint', c.x + 8, c.y - 6);
-        deathsHere = 0; skipOffered = false;
-        Sfx.checkpoint(); burst(c.x + 8, c.y + 8, 14, theme.orb, 120, 0.7, 3);
+        c.lit = true; p.startX = c.gx - 5; p.startY = c.gy + TILE - p.h; showHint('checkpoint', c.gx + 8, c.gy - 6);
+        deathsHere = 0; skipOffered = false; lives = maxLives();                 // fresh hearts for the next stretch
+        Sfx.checkpoint(); burst(c.gx + 8, c.gy + 8, 14, theme.orb, 120, 0.7, 3);
       }
     }
     if (p.onGround && !p.wasGround) { p.sx = 1.3; p.sy = 0.7; dust(p.x + p.w / 2, p.y + p.h); leafBounce = { x: p.x + p.w / 2, y: p.y + p.h, t: 0.5 }; }   // land squash + leaf dip
@@ -718,7 +721,7 @@ function update(dt) {
       u.taken = true; Sfx.power(); burst(u.x + 10, u.y + 10, 14, u.type === 'double' ? '#7df9ff' : '#8fb7ff', 130, 0.6, 3);
       if (u.type === 'double') { p.hasDouble = true; showHint('double', 0, 0, () => ({ x: p.x + p.w / 2, y: p.y - 6 })); } else { p.shield = true; showHint('shield', 0, 0, () => ({ x: p.x + p.w / 2, y: p.y - 6 })); }
     }
-    if (p.invuln <= 0) for (const s of spikes) if (overlaps(p, s)) { hurt(); break; }
+    if (p.invuln <= 0) for (const s of spikes) if (overlaps(p, s)) { hurt(false, s.x + s.w / 2); break; }
 
     for (const e of enemies) {
       if (!e.alive || p.dead > 0) continue;
@@ -729,7 +732,7 @@ function update(dt) {
           Sfx.stomp(); burst(e.x + e.w / 2, e.y + e.h / 2, 12, '#7bc96f', 140, 0.5);
           if (!hintsSeen.firstStomp) { hintsSeen.firstStomp = 1; localStorage.setItem('hop-hints', JSON.stringify(hintsSeen)); slowmo = 0.55; }   // savour the first squash
           shake = 4; buzz(30);
-        } else if (p.invuln <= 0) { hurt(); }
+        } else if (p.invuln <= 0) { hurt(false, e.x + e.w / 2); }
       }
     }
 
@@ -860,10 +863,10 @@ function bossCollide(p, prevBottom) {
     }
   } else if (stomping) {
     p.vy = -STOMP_BOUNCE; p.jumping = false;                             // bounce off while he is dazed
-  } else if (p.invuln <= 0) { hurt(); }
+  } else if (p.invuln <= 0) { hurt(false, b.x + b.w / 2); }
 }
 
-function hurt(fell = false) {
+function hurt(fell = false, fromX = null) {                             // fell: pit/water (always back to the lantern); fromX: where the hit came from
   const p = player;
   if (p.dead > 0) return;
   if (p.shield && !fell) {                                               // shield takes the hit instead
@@ -872,7 +875,14 @@ function hurt(fell = false) {
     return;
   }
   lives--;
-  p.dead = 0.9; p.vx = 0;
+  if (!fell && lives > 0) {                                              // a hit costs a heart and knocks you back - you keep playing
+    if (fromX === null) fromX = p.x + p.w / 2 - p.facing * 10;
+    p.vx = (p.x + p.w / 2 >= fromX ? 1 : -1) * 260; p.vy = -330; p.knock = 0.3; p.invuln = 1.6; p.jumping = false;
+    p.sx = 1.25; p.sy = 0.75; Sfx.hurt(); shake = 6; buzz(60);
+    burst(p.x + p.w / 2, p.y + p.h / 2, 10, skin().body, 140, 0.5);
+    return;
+  }
+  p.dead = 0.9; p.vx = 0;                                                // fell in / drowned / out of hearts: back to the lantern
   Sfx.hurt(); shake = 9; buzz(80);
   if (!fell) burst(p.x + p.w / 2, p.y + p.h / 2, 18, skin().body, 180, 0.7);
   p.sinking = 0;
@@ -880,6 +890,7 @@ function hurt(fell = false) {
 
 // ---------- 9. Drawing ----------
 function draw() {
+  if (journey) { drawJourney(); return; }
   drawBackground();
   ctx.save();
   const sx = shake > 0 ? (Math.random() - 0.5) * shake * 2 : 0, sy = shake > 0 ? (Math.random() - 0.5) * shake * 2 : 0;
@@ -1227,8 +1238,8 @@ function drawPad(pad) {                                                  // spri
   ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx - 5, base - 13 * squish, 2, 0, Math.PI * 2); ctx.arc(cx + 5, base - 12 * squish, 2, 0, Math.PI * 2); ctx.fill();
 }
 function drawLantern(c) {                                                // checkpoint: a dandelion that lights up
-  const cx = c.x + 8, top = c.y + 6;
-  ctx.strokeStyle = theme.leafDark; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx, c.y + TILE); ctx.lineTo(cx, top + 6); ctx.stroke();
+  const cx = c.gx + 8, top = c.gy + 6;
+  ctx.strokeStyle = theme.leafDark; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx, c.gy + TILE); ctx.lineTo(cx, top + 6); ctx.stroke();
   if (c.lit) { const g = ctx.createRadialGradient(cx, top, 2, cx, top, 26); g.addColorStop(0, theme.orb + 'aa'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(cx - 26, top - 26, 52, 52); }
   ctx.strokeStyle = c.lit ? '#fff' : 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1;
   for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2 + (c.lit ? time : 0); ctx.beginPath(); ctx.moveTo(cx, top); ctx.lineTo(cx + Math.cos(a) * 9, top + Math.sin(a) * 9); ctx.stroke(); }
@@ -1532,7 +1543,7 @@ Time ${fmtTime(levelTime)}`, 'Play Again', () => startLevel(0)); return; }
   const summary = `${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}   Bugs ${collected} / ${totalOrbs}\nTime ${fmtTime(levelTime)}${assistOn() ? '  (assists on: time not saved)' : newBest ? '  ✨ New best!' : prevBest ? `  (best ${fmtTime(prevBest)})` : ''}`;
   if (next < LEVELS.length) {
     unlocked = Math.max(unlocked, next + 1); localStorage.setItem('hop-unlocked', unlocked);
-    showOverlay('Level Clear!', LEVELS[levelIndex].name, summary, 'Next Level', () => startLevel(next));
+    startJourney(levelIndex, next, stars);                               // the meadow map: hop to the next stop
   } else {
     showOverlay('The meadow is safe!', 'All seven levels complete', summary, 'Play Again', () => startLevel(0));
   }
@@ -1628,6 +1639,134 @@ function buildSkinSelect() {
   });
   document.getElementById('orb-total').textContent = totalOrbsEver;
 }
+// =====================================================================
+//  JOURNEY SCENE: the whole meadow at a glance, the grasshopper hops to the next stop,
+//  and the Bullfrog King waits at the end of the path looking fierce.
+// =====================================================================
+const J_STOPS = 7;
+function jStop(i) {                                                      // stop positions on the big map (canvas space)
+  const t = (i + 0.5) / J_STOPS;
+  return { x: 46 + t * (W - 92), y: 232 + Math.sin(t * Math.PI * 2.2 + 0.4) * 44 };
+}
+function startJourney(from, to, stars) {
+  const p = player;
+  journey = { from, to, stars, t: 0, hop: 0, skip: false, croakT: 2.2, puff: 0, sparks: [], clouds: [] };
+  for (let i = 0; i < 6; i++) journey.clouds.push({ x: Math.random() * W, y: 30 + Math.random() * 80, s: 0.7 + Math.random() * 0.8, v: 6 + Math.random() * 8 });
+  const a = jStop(from); p.x = a.x - p.w / 2; p.y = a.y - p.h; p.vx = 0; p.vy = 0; p.facing = 1; p.onGround = true; p.sx = p.sy = 1; p.run = 0; p.dead = 0; p.sinking = 0; p.invuln = 0;
+  running = true; cancelAnimationFrame(frameReq); lastTime = performance.now(); frameReq = requestAnimationFrame(loop);
+  Sfx.init(); Music.start(from);                                          // keep the world's tune going under the map
+  Music.duck(0.5, 1.5);
+}
+// timeline (seconds): 0-1.1 celebrate the cleared stop · 1.1-3.6 three hops along the path · 3.6-5.2 land, name the next level · then go
+function updateJourney(dt) {
+  const j = journey, p = player, a = jStop(j.from), b = jStop(j.to);
+  j.t += dt;
+  for (const c of j.clouds) { c.x += c.v * dt; if (c.x > W + 80) c.x = -80; }
+  for (const q of j.sparks) { q.t += dt; q.y -= 18 * dt; }
+  j.sparks = j.sparks.filter(q => q.t < 1);
+  if (j.t < 1.1) {                                                       // bloom + stars pop
+    if (Math.random() < dt * 18) j.sparks.push({ x: a.x + (Math.random() - 0.5) * 40, y: a.y - 10 + (Math.random() - 0.5) * 30, t: 0, col: WORLD_COL[j.from] });
+    p.onGround = true; p.vy = 0;
+  } else if (j.t < 3.6) {                                                 // three hops: a parabola each
+    const k = Math.min(1, (j.t - 1.1) / 2.5), hops = 3, seg = k * hops, h = Math.floor(seg), f = seg - h;
+    const x0 = a.x + (b.x - a.x) * (h / hops), x1 = a.x + (b.x - a.x) * ((h + 1) / hops);
+    const y0 = a.y + (b.y - a.y) * (h / hops), y1 = a.y + (b.y - a.y) * ((h + 1) / hops);
+    const arc = Math.sin(f * Math.PI) * 46;
+    const nx = x0 + (x1 - x0) * f, ny = y0 + (y1 - y0) * f - arc;
+    p.vy = (ny - (p.y + p.h)) / Math.max(dt, 1e-3) * 0.6;                 // for the tilt / wings
+    p.x = nx - p.w / 2; p.y = ny - p.h; p.onGround = f > 0.96 || f < 0.04; p.facing = 1;
+    if (h !== j.hop) { j.hop = h; Sfx.jump(); p.sx = 1.3; p.sy = 0.7; }
+    if (f > 0.05 && f < 0.15) { p.sx = 0.75; p.sy = 1.3; }
+  } else {                                                               // landed at the next stop
+    p.x = b.x - p.w / 2; p.y = b.y - p.h; p.onGround = true; p.vy = 0;
+    if (j.hop !== 99) { j.hop = 99; Sfx.checkpoint(); p.sx = 1.3; p.sy = 0.7; Music.duck(0.4, 0.8); }
+    if (Math.random() < dt * 6) j.sparks.push({ x: b.x + (Math.random() - 0.5) * 30, y: b.y - 6, t: 0, col: WORLD_COL[j.to] });
+  }
+  p.sx += (1 - p.sx) * Math.min(1, dt * 10); p.sy += (1 - p.sy) * Math.min(1, dt * 10);
+  p.blink = p.blink > 0 ? p.blink - dt : (Math.random() < dt * 0.4 ? 0.12 : 0);
+  // the King croaks and puffs up now and then
+  j.croakT -= dt; j.puff = Math.max(0, j.puff - dt);
+  if (j.croakT <= 0) { j.croakT = 2 + Math.random() * 2; j.puff = 0.5; Sfx.tone(80, 60, 0.35, 'sawtooth', 0.08); Sfx.tone(95, 70, 0.4, 'sawtooth', 0.06, 0.15); }
+  if (j.t > 5.4 || j.skip) { const to = j.to; journey = null; startLevel(to); }
+}
+function drawJourney() {
+  const j = journey, p = player;
+  // sky, sun, clouds
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#7ec8ff'); g.addColorStop(0.6, '#cdeeff'); g.addColorStop(1, '#e9f7ff');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const sg = ctx.createRadialGradient(560, 60, 8, 560, 60, 90); sg.addColorStop(0, '#fff7c2'); sg.addColorStop(0.3, '#fff7c288'); sg.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = sg; ctx.fillRect(460, -40, 200, 200);
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  for (const c of j.clouds) { ctx.beginPath(); ctx.arc(c.x, c.y, 16 * c.s, 0, Math.PI * 2); ctx.arc(c.x + 20 * c.s, c.y - 8 * c.s, 20 * c.s, 0, Math.PI * 2); ctx.arc(c.x + 42 * c.s, c.y, 14 * c.s, 0, Math.PI * 2); ctx.fill(); }
+  // hills: far to near
+  ctx.fillStyle = '#a8dba8'; for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.arc(i * 150 - 20, 260, 120, Math.PI, 0); ctx.fill(); }
+  ctx.fillStyle = '#86c67e'; for (let i = 0; i < 5; i++) { ctx.beginPath(); ctx.arc(i * 190 + 40, 300, 150, Math.PI, 0); ctx.fill(); }
+  const gg = ctx.createLinearGradient(0, 200, 0, H); gg.addColorStop(0, '#6fbf5e'); gg.addColorStop(1, '#4f9f45'); ctx.fillStyle = gg;
+  ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(0, 300); for (let x = 0; x <= W; x += 40) ctx.quadraticCurveTo(x + 20, 286 + Math.sin(x / 90) * 10, x + 40, 300); ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+  // the pond at the end
+  const last = jStop(J_STOPS - 1);
+  ctx.fillStyle = '#3f9fe0'; ctx.beginPath(); ctx.ellipse(last.x + 10, last.y + 16, 62, 26, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#5bb5f0'; ctx.beginPath(); ctx.ellipse(last.x + 10, last.y + 16, 50, 18, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.ellipse(last.x + 10, last.y + 16, 34 + Math.sin(time * 2) * 2, 10, 0, 0, Math.PI * 2); ctx.stroke();
+  for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2; ctx.fillStyle = '#4caf50'; ctx.beginPath(); ctx.ellipse(last.x + 10 + Math.cos(a) * 44, last.y + 16 + Math.sin(a) * 16, 9, 5, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the winding dirt path
+  ctx.setLineDash([]); ctx.strokeStyle = 'rgba(120,85,50,0.55)'; ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < J_STOPS; i++) { const q = jStop(i); if (i === 0) ctx.moveTo(q.x, q.y + 6); else { const r = jStop(i - 1); ctx.bezierCurveTo(r.x + 40, r.y + 6, q.x - 40, q.y + 6, q.x, q.y + 6); } }
+  ctx.stroke();
+  ctx.setLineDash([5, 9]); ctx.strokeStyle = 'rgba(255,240,200,0.7)'; ctx.lineWidth = 2; ctx.stroke(); ctx.setLineDash([]); ctx.lineCap = 'butt';
+  // stops
+  for (let i = 0; i < J_STOPS; i++) {
+    const q = jStop(i), col = WORLD_COL[i], cleared = (starsWon[i] || 0) > 0 || i === j.from, isNext = i === j.to, stars = i === j.from ? j.stars : (starsWon[i] || 0);
+    if (i === J_STOPS - 1) continue;                                     // the King's lily pad is drawn separately
+    // shadow + stem
+    ctx.fillStyle = 'rgba(20,40,10,0.25)'; ctx.beginPath(); ctx.ellipse(q.x, q.y + 8, 14, 4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#3b8a44'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(q.x, q.y + 8); ctx.quadraticCurveTo(q.x + 3, q.y - 4, q.x, q.y - 12); ctx.stroke();
+    ellipseShaded(q.x - 7, q.y, 7, 3, -0.6, '#4caf50'); ellipseShaded(q.x + 7, q.y - 4, 7, 3, 0.6, '#4caf50');
+    if (cleared) {                                                       // a bloomed flower (bigger and fresher for the one just cleared)
+      const bloom = i === j.from ? Math.min(1, j.t / 0.8) : 1, rr = 11 * bloom;
+      for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2 + time * 0.4; ellipseShaded(q.x + Math.cos(a) * rr, q.y - 14 + Math.sin(a) * rr, 8 * bloom, 5 * bloom, a, col); }
+      ellipseShaded(q.x, q.y - 14, 6, 6, '#ffd93d'); specular(q.x + 2, q.y - 16, 1.5);
+    } else {                                                             // a bud, glowing if it is where we are heading
+      if (isNext) { const hg = ctx.createRadialGradient(q.x, q.y - 12, 2, q.x, q.y - 12, 26); hg.addColorStop(0, col + '88'); hg.addColorStop(1, col + '00'); ctx.fillStyle = hg; ctx.fillRect(q.x - 26, q.y - 38, 52, 52); }
+      ellipseShaded(q.x, q.y - 14, 8, 12, isNext ? col : '#9aa39a');
+      ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(q.x - 3, q.y - 22); ctx.quadraticCurveTo(q.x, q.y - 12, q.x - 2, q.y - 4); ctx.stroke();
+    }
+    // sign post with the level number
+    ctx.fillStyle = '#6b4423'; ctx.fillRect(q.x + 14, q.y - 8, 3, 18);
+    ctx.fillStyle = '#9a6535'; roundRect(q.x + 6, q.y - 16, 20, 12, 3);
+    ctx.fillStyle = '#fff4e0'; ctx.font = 'bold 9px Fredoka, "Trebuchet MS", system-ui'; ctx.textAlign = 'center'; ctx.fillText(String(i + 1), q.x + 16, q.y - 7);
+    if (cleared) { ctx.fillStyle = '#ffd93d'; ctx.font = 'bold 10px system-ui'; ctx.fillText('★'.repeat(stars) + '☆'.repeat(3 - stars), q.x, q.y + 22); }
+  }
+  // the Bullfrog King on his lily pad, looking fierce
+  const kx = last.x + 10, ky = last.y + 8, puff = 1 + j.puff * 0.25;
+  ctx.fillStyle = 'rgba(20,40,10,0.3)'; ctx.beginPath(); ctx.ellipse(kx, ky + 8, 36, 8, 0, 0, Math.PI * 2); ctx.fill();
+  ellipseShaded(kx, ky + 6, 40, 12, '#4caf50'); ctx.fillStyle = darken('#4caf50', 0.3); ctx.beginPath(); ctx.moveTo(kx, ky + 6); ctx.lineTo(kx + 40, ky + 2); ctx.lineTo(kx + 40, ky + 10); ctx.closePath(); ctx.fill();
+  const kw = 58 * puff, kh = 48 * puff;
+  drawFrogBody(kx - kw / 2, ky - kh + 4, kw, kh, '#4f8f3a', '#2f6a22', true, -1, true);
+  ctx.fillStyle = 'rgba(255,40,40,0.45)'; ctx.beginPath(); ctx.arc(kx - kw * 0.2, ky - kh + 4 + kh * 0.12, 8, 0, Math.PI * 2); ctx.arc(kx + kw * 0.2, ky - kh + 4 + kh * 0.12, 8, 0, Math.PI * 2); ctx.fill();   // red glare
+  ctx.strokeStyle = '#1e4a14'; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.beginPath();                                                                     // fierce brows
+  ctx.moveTo(kx - kw * 0.34, ky - kh + 4 + kh * 0.02); ctx.lineTo(kx - kw * 0.1, ky - kh + 4 + kh * 0.1); ctx.moveTo(kx + kw * 0.34, ky - kh + 4 + kh * 0.02); ctx.lineTo(kx + kw * 0.1, ky - kh + 4 + kh * 0.1); ctx.stroke(); ctx.lineCap = 'butt';
+  ctx.fillStyle = '#ffd36e'; ctx.beginPath();                                                                                                                 // crown
+  const cy0 = ky - kh + 2; ctx.moveTo(kx - 12, cy0); ctx.lineTo(kx - 12, cy0 - 14); ctx.lineTo(kx - 6, cy0 - 5); ctx.lineTo(kx, cy0 - 18); ctx.lineTo(kx + 6, cy0 - 5); ctx.lineTo(kx + 12, cy0 - 14); ctx.lineTo(kx + 12, cy0); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#ff5f7a'; ctx.beginPath(); ctx.arc(kx, cy0 - 6, 3, 0, Math.PI * 2); ctx.fill();
+  if (j.puff > 0.25) { ctx.fillStyle = '#fff4e0'; ctx.font = 'bold 14px Fredoka, "Trebuchet MS", system-ui'; ctx.textAlign = 'center'; ctx.fillText('CROAK!', kx + 30, ky - kh - 14); }
+  ctx.fillStyle = '#6b4423'; ctx.fillRect(last.x - 46, last.y - 6, 3, 22); ctx.fillStyle = '#9a6535'; roundRect(last.x - 62, last.y - 16, 36, 13, 3);
+  ctx.fillStyle = '#fff4e0'; ctx.font = 'bold 8px Fredoka, "Trebuchet MS", system-ui'; ctx.textAlign = 'center'; ctx.fillText('7 · KING', last.x - 44, last.y - 7);
+  // sparkles
+  for (const q of j.sparks) { ctx.globalAlpha = 1 - q.t; ctx.fillStyle = q.col; ctx.beginPath(); ctx.arc(q.x, q.y, 2.5 * (1 - q.t), 0, Math.PI * 2); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  // the grasshopper (drawn with the real character code so it hops, tilts and flutters)
+  const gy = p.y + p.h; ctx.fillStyle = 'rgba(20,40,10,0.28)'; ctx.beginPath(); ctx.ellipse(p.x + p.w / 2, jStop(j.from).y + (jStop(j.to).y - jStop(j.from).y) * Math.min(1, Math.max(0, (j.t - 1.1) / 2.5)) + 6, 16, 4, 0, 0, Math.PI * 2); ctx.fill();
+  camX = 0; camY = 0; drawPlayer();
+  // text: what you did, where you are going
+  woodPanel(W / 2 - 150, 14, 300, 54);
+  ctx.textAlign = 'center'; ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 13px Fredoka, "Trebuchet MS", system-ui';
+  ctx.fillText(`LEVEL ${j.from + 1} CLEARED  ${'★'.repeat(j.stars)}${'☆'.repeat(3 - j.stars)}`, W / 2, 36);
+  ctx.fillStyle = '#fff4e0'; ctx.font = 'bold 18px Fredoka, "Trebuchet MS", system-ui';
+  ctx.fillText(j.t < 3.6 ? `On to level ${j.to + 1} of 7…` : `Level ${j.to + 1}: ${LEVELS[j.to].name}`, W / 2, 58);
+  if (j.t > 1.2) { ctx.globalAlpha = 0.6 + 0.4 * Math.sin(time * 4); ctx.fillStyle = '#2b3a1e'; ctx.font = 'bold 12px Fredoka, "Trebuchet MS", system-ui'; ctx.fillText('tap to continue', W / 2, H - 12); ctx.globalAlpha = 1; }
+  ctx.fillStyle = vignette; ctx.fillRect(0, 0, W, H);
+}
+
 // ---------- the meadow map: a winding path with one spot per level ----------
 const mapCanvas = document.getElementById('map'), mctx = mapCanvas.getContext('2d');
 const MAP_W = 340, MAP_H = 150;
@@ -1726,8 +1865,8 @@ document.addEventListener("keydown", e => {
 document.getElementById('pause-btn').addEventListener('click', () => setPaused(!paused));
 skipBtn.addEventListener('click', skipAhead);
 document.addEventListener('pointerdown', () => { userTapped = true; }, { once: true });
-canvas.addEventListener('pointerdown', () => { if (paused) setPaused(false); else if (ending && ending.t > 1.5) finishEnding(); });          // tap anywhere to resume / skip the ending
-document.addEventListener('keydown', e => { if (ending && ending.t > 1.5 && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) finishEnding(); });
+canvas.addEventListener('pointerdown', () => { if (paused) setPaused(false); else if (ending && ending.t > 1.5) finishEnding(); else if (journey && journey.t > 1.2) journey.skip = true; });          // tap anywhere to resume / skip the ending
+document.addEventListener('keydown', e => { if (ending && ending.t > 1.5 && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) finishEnding(); if (journey && journey.t > 1.2 && (e.key === ' ' || e.key === 'Enter')) journey.skip = true; });
 document.addEventListener("visibilitychange", () => {                                    // auto-pause when the app goes to the background
   if (document.hidden) setPaused(true);
   else if (Sfx.ctx && !paused) Sfx.ctx.resume();
