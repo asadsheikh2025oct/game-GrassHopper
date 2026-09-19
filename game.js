@@ -36,10 +36,10 @@ const LEVELS = [
       "....................................o.o......................o.o................o.o..f.........................",
       "....................................####f...........o.o.........................####..............o.o..........",
       "....................o.o.........o.o.................####....................o.o...........BB......####.........",
-      "........o.o.o.......####.H..............====o..................................................................",
-      ".............................e..###............e............e.~.......S....####.........o.o.o.o.o...e..........",
-      "..P.......####.e............############wwww#######.......C.#####ww##################www....e.C..######.....G..",
-      "###################www##################wwww#######...###########ww##################www#######################",
+      "........o.o.o.......####.H..............====o..............................C...................................",
+      "................................###.........................e.~............####.........o.o.o.o.o..............",
+      "..P.......####.e.........C..#######################.......C.#####ww#####################......C..######.....G..",
+      "###################www#############################...###########ww############################################",
       "###################www#############################...#########################################################",
       "###################################################...#########################################################",
     ],
@@ -54,10 +54,10 @@ const LEVELS = [
       "..............................................o.o.o.o.....................................................................",
       "...........o.o............................o.of........................o.o...........................f.....................",
       "................o.o.BB.....o.o............####..M.........o.o.........####.f..................o.o.......o.o...............",
-      "................####....e..====.........................H.####..V...........o.o........BB.....####......####..............",
-      "......D................####...S..o.o................................e.......====..........................................",
-      "..........~....e....############......e.C...................#####www#######...........o.o.S..........e......S.............",
-      "..P.....####www#################wwwww######..........e...#%%%%###www###########....Ce....#####...########ww######G........",
+      "................####.....C.====.........................H.####..V...........o.o........BB.....####......####..............",
+      "......D................####......o.o................................e.......====..........................................",
+      "..........~....e....############......e.C...................#####www#######...........o.o.S.........Ce....................",
+      "..P.....####www#################wwwww######..............#%%%%###www###########....C.....#####...########ww######G........",
       "############www#################wwwww##########....############################wwww###########...########ww###############",
       "###############################################....############################wwww###########...#########################",
       "###############################################....###########################################...#########################",
@@ -74,8 +74,8 @@ const LEVELS = [
       "......................o.o.....................o.o...f.............####..............o.o........................",
       "....................f.####.....o.o.o.o........####..................................####f......................",
       "..........D....o.o.o..............M....................o.o.o............o.o.o.o............V........o.o........",
-      ".........o.o...=====.......e..H.S......................=====...e....S...M...........................====.......",
-      ".............e.............######.......Ce..................o.o######.........C..................e.............",
+      ".........o.o...=====.......eC.H........................=====...e....S...M...........................====.......",
+      ".............e.............######.......Ce..................o.o######.........C................................",
       "..P.........###wwwww####www######wwwwww###wwww..........####www######wwwwww####wwww............#####www.....G..",
       "########wwww###wwwww####www######wwwwww###wwww#####wwwww####www######wwwwww####wwww#######wwwww#####www########",
       "########wwww#######################################wwwww##################################wwwww################",
@@ -94,8 +94,8 @@ const LEVELS = [
       "........................o.o.................o.o...........=====.............o.o...............o.o.................",
       "........................####....M...........====....o.o.o...................####..............====........o.o.o...",
       "..................o.o.o.............o.o.o...........#####.............o.o.o.......V.....o.o.o.............#####...",
-      "..................#####.......f.....#####..............e......H.......#####.S...........#####.....f...............",
-      "......D.............e..S..............e.C..............####....######wwwww########.......C..e.....................",
+      "..................#####.......f.....#####..............e......H.......#####CS...........#####.....f...............",
+      "......D.............e..S...C..........e.C..............####....######wwwww########.......C..e.....................",
       "..P.................####www######....########wwww##########....######wwwww############www#########..........e...SG",
       "##########wwww##########www######....########wwww##########....#######################www#########################",
       "##########wwww###################....######################....###################################################",
@@ -113,8 +113,8 @@ const LEVELS = [
       "......................f.............o.o...............................o.o.......f..................o.o....o.o..............",
       "..................o.o........o.o....####.......M..f...o.o.............####...........o.o............f.....####.............",
       "..................####..BB...====.....................####....o.o..........o.o.......####...V..............................",
-      "......o.o....................e...S........................H...====................C........................................",
-      "...........^^...e.....###....#######...C....e.^^..................S.......e...^^.###....e.......^^......~.....S............",
+      "......o.o...............C....e...S........................H...====................C........................................",
+      "...........^^...e.....###....#######...C....e.^^..................S.......e...^^.###....e.......^^.C....~.....S............",
       "..P......####www#########....####%%%%###wwww######..........e.....####www################wwwww######....#######.....G......",
       "#############www#########....###########wwww###########.....##########www################wwwww######....###################",
       "#########################....##########################.....########################################....###################",
@@ -128,7 +128,7 @@ const LEVELS = [
       "..........................................................................................",
       "............................................................o.o.o.o.......................",
       "....................................................................o.o.o.o...........G...",
-      "............................................................M..........S.....V....########",
+      "............................................................M..........S..C..V....########",
       "..............................................o.o.o.o.=====.........#######.......########",
       "....................................................................#######...............",
       "..............................................#######.....................................",
@@ -136,7 +136,7 @@ const LEVELS = [
       "......................................e..C................................................",
       "..............................f.....#######........................V......................",
       "..........................o.o.o.o...#######...............................................",
-      "..........................................................o.o.o.o.o.......................",
+      "..........................C...............................o.o.o.o.o.......................",
       "....o.o.o.................#######.............................D...........................",
       "..P.......e.....S.........#######.........................#########.......................",
       "#####################.....................................#########.......................",
@@ -352,6 +352,23 @@ let butterflies = [], petals = [], nextButterfly = 4, nextPetal = 0;            
 // One-time tips shown in the world the first time something matters. Remembered in localStorage.
 const hintsSeen = JSON.parse(localStorage.getItem('hop-hints') || '{}');
 let hint = null, slowmo = 0;
+let ending = null;                                     // { t, swarm[], summary } while the finale plays
+// Stuck-assist: count deaths since the last checkpoint. After 3 the jump window widens and frogs slow down a little;
+// after 6 we offer a one-time skip to the next checkpoint. Nothing is announced for the first part.
+let deathsHere = 0, skipOffered = false, skipTimer = 0;
+const assistLevel = () => deathsHere >= 3 ? 1 : 0;
+const skipBtn = document.getElementById('skip-btn');
+function offerSkip() {
+  skipTimer = 8; skipBtn.style.display = 'inline-block';
+}
+function skipAhead() {
+  const p = player, ahead = checkpoints.filter(c => c.x > p.startX + 10).sort((a, b) => a.x - b.x)[0];
+  skipBtn.style.display = 'none'; skipTimer = 0; skipOffered = true; deathsHere = 0;
+  if (ahead) { ahead.lit = true; p.startX = ahead.x - 5; p.startY = ahead.y + TILE - p.h; }
+  else if (portal) { p.startX = portal.x - 80; p.startY = portal.y + portal.h - p.h; }
+  p.x = p.startX; p.y = p.startY; p.vx = 0; p.vy = 0; p.dead = 0; p.sinking = 0; p.invuln = 2;
+  camX = Math.max(0, Math.min(LEVEL_W - W, p.x - W / 2)); fade = 1; Sfx.checkpoint();
+}
 const isTouch = matchMedia('(pointer: coarse)').matches;
 const HINTS = {
   move:   isTouch ? 'Hold ▶ to run · tap ▲ to hop' : '← → to run · Space to hop',
@@ -397,9 +414,9 @@ function drawHint() {
   if (!hint) return;
   const a = Math.min(1, hint.t * 4, (hint.life - hint.t) * 2);
   const sx = hint.x - camX, sy = hint.y - camY, text = HINTS[hint.key];
-  ctx.save(); ctx.globalAlpha = a; ctx.font = 'bold 12px "Trebuchet MS", system-ui';
+  ctx.save(); ctx.globalAlpha = a; ctx.font = 'bold 12px Fredoka, "Trebuchet MS", system-ui';
   const w = ctx.measureText(text).width + 20, h = 26, bx = Math.max(6, Math.min(W - w - 6, sx - w / 2)), by = Math.max(40, sy - h - 12);
-  ctx.fillStyle = 'rgba(255,255,255,0.95)'; roundRect(bx, by, w, h, 9);
+  ctx.fillStyle = '#fff8ea'; roundRect(bx, by, w, h, 9); ctx.strokeStyle = '#6b4423'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(bx, by, w, h, 9) : ctx.rect(bx, by, w, h); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(Math.max(bx + 10, Math.min(bx + w - 10, sx)) - 6, by + h); ctx.lineTo(Math.max(bx + 10, Math.min(bx + w - 10, sx)), by + h + 7); ctx.lineTo(Math.max(bx + 10, Math.min(bx + w - 10, sx)) + 6, by + h); ctx.fill();
   ctx.fillStyle = '#2b3a1e'; ctx.textAlign = 'center'; ctx.fillText(text, bx + w / 2, by + 17);
   ctx.restore();
@@ -492,7 +509,7 @@ function loadLevel(i) {
     if (ch === 'e') enemies.push({ type: 'frog', x, y: y + 8, w: 30, h: 24, vx: 0, vy: 0, alive: true, squash: 0, seed: Math.random() * 6, sit: (1 + Math.random()) * (settings.easy ? 1.8 : 1), dir: -1 });
     if (ch === 'f') enemies.push({ type: 'dragonfly', x, y, baseY: y, w: 26, h: 20, vx: -80, vy: 0, alive: true, squash: 0, seed: Math.random() * 6 });
     if (ch === 'G') portal = { x: x + 4, y: y - TILE + 4, w: 24, h: TILE * 2 - 8 };
-    if (ch === 'K') boss = { x, y: y - 24, w: 64, h: 56, vx: 0, vy: 0, hp: 3, state: 'idle', t: 1.5, dir: -1, alive: true, jumpT: 3, flash: 0 };
+    if (ch === 'K') boss = { x, y: y - 24, w: 64, h: 56, vx: 0, vy: 0, hp: 3, state: 'idle', t: 1.5, dir: -1, alive: true, jumpT: 3, flash: 0, floats: true };   // floats: stands on the pond instead of sinking
     if (ch === '^') spikes.push({ x: x + 4, y: y + 14, w: TILE - 8, h: 18 });
   }
   totalOrbs = orbs.length + map.flat().filter(ch => ch === 'B').length; collected = 0;   // hidden bugs count too
@@ -510,6 +527,8 @@ function spawnPlayer(x, y) {
 function respawn() {
   const p = player;
   p.x = p.startX; p.y = p.startY; p.vx = 0; p.vy = 0; p.dead = 0; p.invuln = 1.5; p.sinking = 0;
+  deathsHere++;
+  if (deathsHere >= 6 && !skipOffered && checkpoints.length) offerSkip();
   camX = Math.max(0, p.x - W / 2); camY = Math.max(0, Math.min(LEVEL_H - H, p.y - H / 2));
 }
 
@@ -531,7 +550,7 @@ function moveBox(b, dx, dy) {
     const row = Math.floor((dir > 0 ? b.y + b.h : b.y) / TILE);
     for (let col = Math.floor(b.x / TILE); col <= Math.floor((b.x + b.w - 1) / TILE); col++) {
       // one-way ledges only catch you when falling onto them from above
-      const oneWayCatch = dir > 0 && isOneWay(col, row) && prevBottom <= row * TILE + 1;
+      const oneWayCatch = dir > 0 && (isOneWay(col, row) || (b.floats && map[row] && map[row][col] === 'w')) && prevBottom <= row * TILE + 1;
       if (isSolid(col, row) || oneWayCatch) {
         if (b === player && dir < 0 && map[row][col] === 'B') breakBlock(col, row);
         b.y = dir > 0 ? row * TILE - b.h : (row + 1) * TILE; if (dir > 0) b.onGround = true; b.vy = 0; break;
@@ -582,10 +601,12 @@ function update(dt) {
   }
   for (const pad of pads) if (pad.anim > 0) pad.anim -= dt;
 
+  if (ending) { updateEnding(dt); for (const q of particles) { q.life -= dt; q.x += q.vx * dt; q.y += q.vy * dt; } particles = particles.filter(q => q.life > 0); return; }
+
   // ----- player -----
   if (p.dead > 0) {
     p.dead -= dt;
-    if (p.dead <= 0) { if (lives > 0) respawn(); else gameOver(); }
+    if (p.dead <= 0) { if (lives <= 0) { lives = maxLives(); Sfx.checkpoint(); } respawn(); }   // out of hearts? refill and carry on from the checkpoint
   } else if (p.sinking > 0) {                                            // sinking in a puddle: no control, slow descent, bubbles
     p.sinking -= dt; p.y += 22 * dt; p.vx = 0; p.vy = 0;
     if (Math.random() < dt * 10) particles.push({ x: p.x + Math.random() * p.w, y: p.y + 4, vx: 0, vy: -30, life: 0.6, max: 0.6, color: 'rgba(255,255,255,0.7)', size: 2, gravity: false });
@@ -593,7 +614,7 @@ function update(dt) {
   } else if (finishing > 0) {
     finishing -= dt;
     p.sx += (0.2 - p.sx) * dt * 6; p.sy += (0.2 - p.sy) * dt * 6;       // shrink into the portal
-    if (finishing <= 0) levelComplete();
+    if (finishing <= 0) { if (levelIndex === LEVELS.length - 1 && !customMode) startEnding(); else levelComplete(); }
   } else {
     let target = 0;
     if (keys.left)  { target = -RUN_SPEED; p.facing = -1; }
@@ -606,7 +627,7 @@ function update(dt) {
     p.vx = target > p.vx ? Math.min(target, p.vx + accel * dt) : Math.max(target, p.vx - accel * dt);
     if (target === 0 && Math.abs(p.vx) < 12) p.vx = 0;
 
-    p.coyote  = p.onGround ? COYOTE_TIME : p.coyote - dt;
+    p.coyote  = p.onGround ? (assistLevel() ? 0.18 : COYOTE_TIME) : p.coyote - dt;   // wider jump window when someone is stuck
     p.jumpBuf = (keys.jump && !jumpHeld) ? JUMP_BUFFER : p.jumpBuf - dt;
     jumpHeld = keys.jump;
     if (p.jumpBuf > 0 && p.coyote > 0) {
@@ -655,6 +676,7 @@ function update(dt) {
     for (const c of checkpoints) {
       if (!c.lit && overlaps(p, c)) {
         c.lit = true; p.startX = c.x - 5; p.startY = c.y + TILE - p.h; showHint('checkpoint', c.x + 8, c.y - 6);
+        deathsHere = 0; skipOffered = false;
         Sfx.checkpoint(); burst(c.x + 8, c.y + 8, 14, theme.orb, 120, 0.7, 3);
       }
     }
@@ -677,7 +699,7 @@ function update(dt) {
           const toLeft = (p.x + p.w / 2 - bx) < (ex - (p.x + p.w / 2));
           p.x = toLeft ? bx - p.w - 2 : ex + 2; p.y = wt.surface - p.h - 4; p.vy = -420; p.vx = 0; p.invuln = 1.5; lives--;
           Sfx.splash(); shake = 4; buzz(40); burst(p.x + p.w / 2, wt.surface, 10, theme.water, 120, 0.5, 3);
-          if (lives <= 0) { p.dead = 0.9; }
+          if (lives <= 0) { lives = maxLives(); }
           break;
         }
         p.sinking = 1.1; Sfx.splash(); shake = 3; buzz(40);
@@ -729,10 +751,10 @@ function update(dt) {
       e.vy += GRAVITY * dt;
       const wasG = e.onGround;
       if (e.onGround) { e.sit -= dt; e.vx = 0; }
-      const near = Math.abs(player.x - e.x) < 420;
+      const near = e.x + e.w > camX - 20 && e.x < camX + W + 20 && Math.abs(player.x - e.x) < 420;   // only frogs you can see
       e.crouch = e.onGround && near && e.sit <= 0.22;                    // telegraph the hop
       if (e.onGround && e.sit <= 0 && near) {
-        e.dir = player.x > e.x ? 1 : -1; e.vx = e.dir * 120; e.vy = -360; e.sit = (1.2 + Math.random() * 0.9) * (settings.easy ? 1.8 : 1); e.crouch = false;
+        e.dir = player.x > e.x ? 1 : -1; e.vx = e.dir * 120; e.vy = -360; e.sit = (1.2 + Math.random() * 0.9) * (settings.easy ? 1.8 : 1) * (assistLevel() ? 1.4 : 1); e.crouch = false;
         if (Math.abs(player.x - e.x) < 300) Sfx.croak();
       }
       moveBox(e, e.vx * dt, e.vy * dt);
@@ -772,6 +794,8 @@ function update(dt) {
     petals = petals.filter(p => p.y < H + 20);
   }
 
+  if (skipTimer > 0) { skipTimer -= dt; if (skipTimer <= 0) skipBtn.style.display = 'none'; }
+
   // ----- little animation extras -----
   for (const rp of ripples) rp.t += dt;
   ripples = ripples.filter(rp => rp.t < rp.max);
@@ -795,7 +819,8 @@ function update(dt) {
   // ----- camera (smooth follow) -----
   const target = Math.max(0, Math.min(LEVEL_W - W, p.x - W / 2 + p.facing * 40));
   camX += (target - camX) * Math.min(1, dt * 5);
-  const targetY = Math.max(0, Math.min(LEVEL_H - H, p.y + p.h / 2 - H * 0.55));
+  const lookDown = p.vy > 250 ? Math.min(70, (p.vy - 250) / 6) : 0;                 // peek downwards while falling
+  const targetY = Math.max(0, Math.min(LEVEL_H - H, p.y + p.h / 2 - H * 0.55 + lookDown));
   camY += (targetY - camY) * Math.min(1, dt * 6);
 }
 
@@ -880,17 +905,34 @@ function draw() {
   ctx.restore();
   drawForeground();
   ctx.fillStyle = vignette; ctx.fillRect(0, 0, W, H);                   // darkens the edges, focuses the eye
+  if (ending) drawEnding();
   drawHint();
-  drawHUD();
+  if (!ending) drawHUD();
   if (fade > 0) { ctx.fillStyle = `rgba(20,40,20,${fade})`; ctx.fillRect(0, 0, W, H); }
   if (paused) {
     ctx.fillStyle = 'rgba(4,6,24,0.6)'; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#ffd36e'; ctx.textAlign = 'center'; ctx.font = 'bold 34px "Trebuchet MS", system-ui';
+    ctx.fillStyle = '#ffd36e'; ctx.textAlign = 'center'; ctx.font = 'bold 34px Fredoka, "Trebuchet MS", system-ui';
     ctx.fillText('PAUSED', W / 2, H / 2 - 6);
-    ctx.fillStyle = '#fff'; ctx.font = '15px "Trebuchet MS", system-ui';
+    ctx.fillStyle = '#fff'; ctx.font = '15px Fredoka, "Trebuchet MS", system-ui';
     ctx.fillText('Tap or press P to continue', W / 2, H / 2 + 24);
   }
 }
+
+// ---------- 2.5D shading: every object is lit from the top-right ----------
+let lightX = 1;                                                          // flips with the grasshopper so the light stays in world space
+function hexToRgb(h) { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; }
+function mixTo(hex, to, k) { const a = hexToRgb(hex); return `rgb(${a.map((v, i) => Math.round(v + (to[i] - v) * k)).join(',')})`; }
+const lighten = (h, k) => mixTo(h, [255, 255, 255], k), darken = (h, k) => mixTo(h, [0, 0, 0], k);
+function shade(cx, cy, rx, ry, hex, hi = 0.38, lo = 0.4) {
+  const g = ctx.createRadialGradient(cx + rx * 0.35 * lightX, cy - ry * 0.4, Math.min(rx, ry) * 0.12, cx, cy, Math.max(rx, ry) * 1.12);
+  g.addColorStop(0, lighten(hex, hi)); g.addColorStop(0.5, hex); g.addColorStop(1, darken(hex, lo)); return g;
+}
+function ellipseShaded(cx, cy, rx, ry, a, b) {
+  let hex = a, rot = b || 0; if (typeof a === 'number') { rot = a; hex = b; } ctx.fillStyle = shade(cx, cy, rx, ry, hex); ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, rot, 0, Math.PI * 2); ctx.fill(); }
+function rim(cx, cy, rx, ry, rot = 0, a = 0.45) {                       // thin bright edge on the lit side
+  ctx.strokeStyle = `rgba(255,255,255,${a})`; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.ellipse(cx, cy, rx - 1, ry - 1, rot, -Math.PI * 0.95 + (lightX < 0 ? Math.PI * 0.55 : 0), -Math.PI * 0.35 + (lightX < 0 ? Math.PI * 0.55 : 0)); ctx.stroke();
+}
+function specular(cx, cy, r) { ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill(); }
 
 // soft vignette, built once
 const vignette = (() => { const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.45, W / 2, H / 2, H * 0.95); g.addColorStop(0, 'rgba(10,20,5,0)'); g.addColorStop(1, 'rgba(10,20,5,0.38)'); return g; })();
@@ -931,36 +973,60 @@ function drawShadows() {
 function drawForeground() {
   const par = camX * 1.35, span = W + 80;
   ctx.lineCap = 'round';
+  // clover and dandelion heads just in front of the ground line
+  for (let i = 0; i < 12; i++) {
+    const x = ((i * 79 + 20 - camX * 1.25) % span + span) % span - 40, kind = i % 3;
+    if (kind === 0) {                                                    // clover
+      ctx.fillStyle = darken(theme.leaf, 0.1);
+      for (let k = 0; k < 3; k++) { const a = k / 3 * Math.PI * 2 - Math.PI / 2; ctx.beginPath(); ctx.ellipse(x + Math.cos(a) * 5, H - 14 + Math.sin(a) * 5, 5.5, 4.5, a, 0, Math.PI * 2); ctx.fill(); }
+      ctx.strokeStyle = darken(theme.leaf, 0.35); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x, H - 10); ctx.lineTo(x + 2, H + 2); ctx.stroke();
+    } else if (kind === 1) {                                             // dandelion clock
+      const hy = H - 34 - (i % 2) * 8;
+      ctx.strokeStyle = darken(theme.leaf, 0.3); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, H + 2); ctx.quadraticCurveTo(x + 3, hy + 14, x, hy + 6); ctx.stroke();
+      ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 1;
+      for (let k = 0; k < 14; k++) { const a = k / 14 * Math.PI * 2; ctx.beginPath(); ctx.moveTo(x, hy); ctx.lineTo(x + Math.cos(a) * 9, hy + Math.sin(a) * 9); ctx.stroke(); ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(x + Math.cos(a) * 9, hy + Math.sin(a) * 9, 1, 0, Math.PI * 2); ctx.fill(); }
+      ctx.fillStyle = '#e8d9bd'; ctx.beginPath(); ctx.arc(x, hy, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  // grass blades with dew drops
   for (let i = 0; i < 34; i++) {
     const x = ((i * 27 - par) % span + span) % span - 40;
     const hgt = 22 + (i * 37) % 30, sway = Math.sin(time * 1.3 + i * 0.7) * 5, wide = 3 + (i % 3);
-    ctx.strokeStyle = i % 4 === 0 ? theme.leaf + 'cc' : theme.leafDark + 'd0'; ctx.lineWidth = wide;
+    ctx.strokeStyle = i % 4 === 0 ? lighten(theme.leaf, 0.1) : darken(theme.leaf, 0.2); ctx.lineWidth = wide;
     ctx.beginPath(); ctx.moveTo(x, H + 4); ctx.quadraticCurveTo(x + sway, H - hgt * 0.55, x + sway * 2.2, H - hgt); ctx.stroke();
+    if (i % 5 === 2) {                                                   // dew drop catching the sun
+      const dx = x + sway * 1.3, dy = H - hgt * 0.62, glint = 0.5 + 0.5 * Math.sin(time * 2 + i);
+      ctx.fillStyle = 'rgba(200,235,255,0.7)'; ctx.beginPath(); ctx.ellipse(dx, dy, 2.6, 3.2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = `rgba(255,255,255,${0.5 + 0.5 * glint})`; ctx.beginPath(); ctx.arc(dx + 0.8, dy - 1.2, 1, 0, Math.PI * 2); ctx.fill();
+    }
     if (i % 9 === 4 && theme.flowers) {                                  // a tall flower in front
       const fx = x + sway * 2.2, fy = H - hgt - 12, col = theme.flowers[i % theme.flowers.length];
-      ctx.strokeStyle = theme.leafDark + 'd0'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x, H + 4); ctx.quadraticCurveTo(x + sway, H - hgt * 0.6, fx, fy + 6); ctx.stroke();
-      ctx.fillStyle = col + 'e0'; for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2 + time * 0.2; ctx.beginPath(); ctx.arc(fx + Math.cos(a) * 7, fy + Math.sin(a) * 7, 5, 0, Math.PI * 2); ctx.fill(); }
-      ctx.fillStyle = '#ffd93d'; ctx.beginPath(); ctx.arc(fx, fy, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = darken(theme.leaf, 0.3); ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x, H + 4); ctx.quadraticCurveTo(x + sway, H - hgt * 0.6, fx, fy + 6); ctx.stroke();
+      for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2 + time * 0.2; ellipseShaded(fx + Math.cos(a) * 7, fy + Math.sin(a) * 7, 5.5, 4, a, col); }
+      ellipseShaded(fx, fy, 4, 4, '#ffd93d');
     }
   }
   ctx.lineCap = 'butt';
-  for (const p of petals) {
-    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.col + 'cc';
-    ctx.beginPath(); ctx.ellipse(0, 0, 5, 3, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
-  }
+  for (const p of petals) { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.col + 'cc'; ctx.beginPath(); ctx.ellipse(0, 0, 5, 3, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
   for (const b of butterflies) {
     const flap = Math.abs(Math.sin(b.t * 14)), d = b.dir;
     ctx.save(); ctx.translate(b.x, b.y); ctx.scale(d, 1);
-    ctx.fillStyle = b.col;
-    ctx.beginPath(); ctx.ellipse(-6, -3, 7 * (0.35 + 0.65 * flap), 6, -0.4, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(6, -3, 7 * (0.35 + 0.65 * flap), 6, 0.4, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,0.35)'; ctx.beginPath(); ctx.arc(-6, -3, 2, 0, Math.PI * 2); ctx.arc(6, -3, 2, 0, Math.PI * 2); ctx.fill();
+    ellipseShaded(-6, -3, 7 * (0.35 + 0.65 * flap), 6, b.col, -0.4); ellipseShaded(6, -3, 7 * (0.35 + 0.65 * flap), 6, b.col, 0.4);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.beginPath(); ctx.arc(-6, -3, 2, 0, Math.PI * 2); ctx.arc(6, -3, 2, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#3a2a2a'; ctx.beginPath(); ctx.ellipse(0, 0, 1.6, 6, 0, 0, Math.PI * 2); ctx.fill();
     ctx.strokeStyle = '#3a2a2a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, -6); ctx.lineTo(3, -11); ctx.moveTo(0, -6); ctx.lineTo(-3, -11); ctx.stroke();
     ctx.restore();
   }
+  // very near, out-of-focus leaves in the corners (depth of field)
+  ctx.save(); ctx.filter = 'blur(3px)'; ctx.globalAlpha = 0.75;
+  const near = camX * 1.7, nspan = W + 420;
+  for (let i = 0; i < 5; i++) {
+    const x = ((i * 300 + 60 - near) % nspan + nspan) % nspan - 210, sway = Math.sin(time * 0.9 + i) * 8;
+    ctx.fillStyle = darken(theme.leaf, 0.45 - (i % 2) * 0.15);
+    ctx.beginPath(); ctx.moveTo(x, H + 30); ctx.quadraticCurveTo(x + 40 + sway, H - 30, x + 30 + sway * 1.5, H - 74); ctx.quadraticCurveTo(x + 90 + sway, H - 44, x + 120, H + 30); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
 }
-
 function drawBackground() {
   const g = ctx.createLinearGradient(0, 0, 0, H);
   g.addColorStop(0, theme.sky[0]); g.addColorStop(1, theme.sky[1]);
@@ -986,6 +1052,8 @@ function drawBackground() {
   // far hills
   ctx.fillStyle = theme.far;
   for (let i = 0; i < 7; i++) { const x = ((i * 300 - camX * 0.2) % (W + 600) + W + 600) % (W + 600) - 300; ctx.beginPath(); ctx.arc(x, H + 40, 190, Math.PI, 0); ctx.fill(); }
+  // depth haze over the far hills
+  { const hz = ctx.createLinearGradient(0, H * 0.45, 0, H); hz.addColorStop(0, theme.sky[1] + '00'); hz.addColorStop(1, theme.sky[1] + '99'); ctx.fillStyle = hz; ctx.fillRect(0, H * 0.45, W, H * 0.55); }
   // mid: bushes and tall grass blades
   ctx.fillStyle = theme.mid;
   for (let i = 0; i < 9; i++) { const x = ((i * 190 - camX * 0.45) % (W + 400) + W + 400) % (W + 400) - 200; ctx.beginPath(); ctx.arc(x, H + 30, 100, Math.PI, 0); ctx.fill(); }
@@ -1048,20 +1116,30 @@ function drawTiles() {
       if (leafBounce.t > 0 && Math.abs(x + TILE / 2 - leafBounce.x) < TILE * 2.5 && Math.abs(y - leafBounce.y) < 6) {
         y += Math.sin((0.5 - leafBounce.t) * 18) * 4 * (leafBounce.t / 0.5);   // springy dip
       }
-      ctx.fillStyle = theme.leaf;
+      // cast shadow on whatever is below
+      const gy = surfaceBelow(x + TILE / 2, y + TILE); if (gy !== null && gy - y < 220) { const k = 1 - (gy - y) / 220; ctx.fillStyle = `rgba(20,30,10,${0.18 * k})`; ctx.beginPath(); ctx.ellipse(x + TILE / 2, gy + 2, TILE * 0.55 * (0.6 + 0.4 * k), 3.5, 0, 0, Math.PI * 2); ctx.fill(); }
+      // underside (thickness), then the lit top surface
+      ctx.fillStyle = darken(theme.leaf, 0.35);
+      ctx.beginPath(); ctx.moveTo(x + (leftEnd ? 4 : 0), y + 12); ctx.lineTo(x + TILE - (rightEnd ? 4 : 0), y + 12); ctx.lineTo(x + TILE - (rightEnd ? 2 : 0), y + 26); ctx.quadraticCurveTo(x + TILE / 2, y + 33, x + (leftEnd ? 2 : 0), y + 26); ctx.closePath(); ctx.fill();
+      const lg = ctx.createLinearGradient(x, y - 2, x, y + 24); lg.addColorStop(0, lighten(theme.leaf, 0.3)); lg.addColorStop(0.5, theme.leaf); lg.addColorStop(1, darken(theme.leaf, 0.2));
+      ctx.fillStyle = lg;
       ctx.beginPath();
       ctx.moveTo(x + (leftEnd ? 6 : 0), y + 6);
       ctx.quadraticCurveTo(x + TILE / 2, y - 2, x + TILE - (rightEnd ? 6 : 0), y + 6);
       ctx.lineTo(x + TILE - (rightEnd ? 2 : 0), y + 22);
-      ctx.quadraticCurveTo(x + TILE / 2, y + 30, x + (leftEnd ? 2 : 0), y + 22);
+      ctx.quadraticCurveTo(x + TILE / 2, y + 28, x + (leftEnd ? 2 : 0), y + 22);
       ctx.closePath(); ctx.fill();
-      ctx.strokeStyle = theme.leafDark; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x, y + 15); ctx.lineTo(x + TILE, y + 15); ctx.stroke();
+      if (leftEnd)  { ctx.fillStyle = darken(theme.leaf, 0.3); ctx.beginPath(); ctx.moveTo(x + 6, y + 6); ctx.quadraticCurveTo(x - 2, y + 12, x + 2, y + 22); ctx.quadraticCurveTo(x + 6, y + 14, x + 6, y + 6); ctx.fill(); }   // curled edge
+      if (rightEnd) { ctx.fillStyle = lighten(theme.leaf, 0.15); ctx.beginPath(); ctx.moveTo(x + TILE - 6, y + 6); ctx.quadraticCurveTo(x + TILE + 3, y + 12, x + TILE - 2, y + 22); ctx.quadraticCurveTo(x + TILE - 6, y + 14, x + TILE - 6, y + 6); ctx.fill(); }
+      ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x + (leftEnd ? 8 : 0), y + 5); ctx.quadraticCurveTo(x + TILE / 2, y - 1, x + TILE - (rightEnd ? 8 : 0), y + 5); ctx.stroke();   // top highlight
+      ctx.strokeStyle = darken(theme.leaf, 0.3); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x, y + 15); ctx.lineTo(x + TILE, y + 15); ctx.stroke();
       if ((c + r) % 2 === 0) { ctx.beginPath(); ctx.moveTo(x + 10, y + 15); ctx.lineTo(x + 4, y + 9); ctx.moveTo(x + 22, y + 15); ctx.lineTo(x + 28, y + 9); ctx.stroke(); }
       continue;
     }
     // soil with pebbles, roots and an occasional stone
     const hsh = ((c * 73856093) ^ (r * 19349663)) >>> 0, rnd = k => ((hsh >> (k * 3)) & 255) / 255;
     ctx.fillStyle = theme.ground; ctx.fillRect(x, y, TILE, TILE);
+    ctx.fillStyle = 'rgba(0,0,0,0.08)'; ctx.fillRect(x, y + TILE / 2, TILE, TILE / 2);
     ctx.fillStyle = theme.groundDots;
     if (rnd(0) < 0.5) { ctx.beginPath(); ctx.ellipse(x + 6 + rnd(1) * 20, y + 8 + rnd(2) * 18, 2 + rnd(3) * 2.5, 1.5 + rnd(4) * 1.5, rnd(5) * 3, 0, Math.PI * 2); ctx.fill(); }
     if (rnd(6) < 0.35) { ctx.beginPath(); ctx.ellipse(x + 6 + rnd(7) * 20, y + 8 + rnd(0) * 18, 1.5 + rnd(1) * 2, 1 + rnd(2), rnd(3) * 3, 0, Math.PI * 2); ctx.fill(); }
@@ -1095,8 +1173,9 @@ function drawTiles() {
         ctx.fillStyle = '#ffd93d'; ctx.beginPath(); ctx.arc(fx, fy, 2.5, 0, Math.PI * 2); ctx.fill();
       } else if (deco === 7) {                                           // mushroom
         const mx = x + 20;
-        ctx.fillStyle = '#f3e6cf'; ctx.fillRect(mx - 3, y - 8, 6, 8);
-        ctx.fillStyle = '#e0524f'; ctx.beginPath(); ctx.arc(mx, y - 8, 8, Math.PI, 0); ctx.fill();
+        ctx.fillStyle = '#e8d9bd'; ctx.fillRect(mx - 3, y - 8, 6, 8); ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fillRect(mx - 3, y - 8, 2, 8);
+        ctx.fillStyle = shade(mx, y - 8, 8, 6, '#e0524f'); ctx.beginPath(); ctx.ellipse(mx, y - 8, 8.5, 6.5, 0, Math.PI, 0); ctx.fill();
+        ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(mx - 8, y - 9, 16, 2);
         ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(mx - 3, y - 11, 1.5, 0, Math.PI * 2); ctx.arc(mx + 3, y - 10, 1.5, 0, Math.PI * 2); ctx.fill();
       }
     }
@@ -1134,14 +1213,17 @@ function drawSpike(s) {                                                  // bram
   for (let i = 0; i < 4; i++) { const bx = s.x + 2 + i * 6, by = s.y + s.h - 6 - (i % 2) * 4; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + 3, by - 9); ctx.lineTo(bx + 6, by); ctx.fill(); }
 }
 function drawMover(m) {                                                  // floating lily pad
-  ctx.fillStyle = theme.leaf; ctx.beginPath(); ctx.ellipse(m.x + m.w / 2, m.y + 7, m.w / 2, 9, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = theme.leafDark; ctx.beginPath(); ctx.moveTo(m.x + m.w / 2, m.y + 7); ctx.lineTo(m.x + m.w - 4, m.y + 1); ctx.lineTo(m.x + m.w - 4, m.y + 13); ctx.closePath(); ctx.fill();
-  ctx.fillStyle = '#ffb3d1'; ctx.beginPath(); ctx.arc(m.x + 14, m.y + 4, 4, 0, Math.PI * 2); ctx.fill();
+  const gy = surfaceBelow(m.x + m.w / 2, m.y + m.h + 2); if (gy !== null && gy - m.y < 220) { const k = 1 - (gy - m.y) / 220; ctx.fillStyle = `rgba(20,30,10,${0.18 * k})`; ctx.beginPath(); ctx.ellipse(m.x + m.w / 2, gy + 2, m.w / 2 * (0.6 + 0.4 * k), 4, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = darken(theme.leaf, 0.35); ctx.beginPath(); ctx.ellipse(m.x + m.w / 2, m.y + 10, m.w / 2, 9, 0, 0, Math.PI * 2); ctx.fill();
+  ellipseShaded(m.x + m.w / 2, m.y + 7, m.w / 2, 9, theme.leaf);
+  ctx.fillStyle = darken(theme.leaf, 0.3); ctx.beginPath(); ctx.moveTo(m.x + m.w / 2, m.y + 7); ctx.lineTo(m.x + m.w - 4, m.y + 1); ctx.lineTo(m.x + m.w - 4, m.y + 13); ctx.closePath(); ctx.fill();
+  ellipseShaded(m.x + 14, m.y + 4, 4.5, 4, '#ffb3d1'); specular(m.x + 15.5, m.y + 2.5, 1.2);
 }
 function drawPad(pad) {                                                  // springy mushroom cap
   const squish = pad.anim > 0 ? 0.6 + pad.anim : 1, cx = pad.x + TILE / 2, base = pad.y + pad.h;
-  ctx.fillStyle = '#f3e6cf'; ctx.fillRect(cx - 4, base - 10 * squish, 8, 10 * squish);
-  ctx.fillStyle = theme.orb; ctx.beginPath(); ctx.ellipse(cx, base - 10 * squish, 14, 7 * squish, 0, Math.PI, 0); ctx.fill();
+  ctx.fillStyle = '#e8d9bd'; ctx.fillRect(cx - 4, base - 10 * squish, 8, 10 * squish); ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fillRect(cx - 4, base - 10 * squish, 2.5, 10 * squish);
+  ctx.fillStyle = shade(cx, base - 10 * squish, 14, 8, theme.orb); ctx.beginPath(); ctx.ellipse(cx, base - 10 * squish, 14, 7 * squish, 0, Math.PI, 0); ctx.fill();
+  ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(cx - 14, base - 10 * squish - 1, 28, 2);
   ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx - 5, base - 13 * squish, 2, 0, Math.PI * 2); ctx.arc(cx + 5, base - 12 * squish, 2, 0, Math.PI * 2); ctx.fill();
 }
 function drawLantern(c) {                                                // checkpoint: a dandelion that lights up
@@ -1165,9 +1247,10 @@ function drawOrb(o) {
     ctx.beginPath(); ctx.moveTo(cx, cy - 3); ctx.lineTo(cx - 7, cy - 6 - f); ctx.moveTo(cx, cy - 3); ctx.lineTo(cx + 7, cy - 6 - f); ctx.stroke();
   } else {                                                               // ladybug
     ctx.fillStyle = '#2a2a2a'; ctx.beginPath(); ctx.arc(cx - 5, cy, 3.5, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = theme.orb; ctx.beginPath(); ctx.ellipse(cx + 1, cy, 6.5, 5.5, 0, 0, Math.PI * 2); ctx.fill();
+    ellipseShaded(cx + 1, cy, 6.5, 5.5, theme.orb);
     ctx.strokeStyle = '#2a2a2a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx + 1, cy - 5.5); ctx.lineTo(cx + 1, cy + 5.5); ctx.stroke();
     ctx.fillStyle = '#2a2a2a'; ctx.beginPath(); ctx.arc(cx - 1, cy - 2, 1.3, 0, Math.PI * 2); ctx.arc(cx + 4, cy + 2, 1.3, 0, Math.PI * 2); ctx.arc(cx + 3, cy - 2.5, 1.1, 0, Math.PI * 2); ctx.fill();
+    specular(cx + 3.5, cy - 3, 1.2);
   }
 }
 function drawPortal() {                                                  // the goal: a big blooming flower
@@ -1213,16 +1296,18 @@ function drawBoss() {                                                    // the 
 
 // shared frog drawing: body, eyes on top, legs
 function drawFrogBody(x, y, w, h, col, dark, alive, dir, big) {
-  ctx.fillStyle = dark;                                                  // back legs
-  ctx.beginPath(); ctx.ellipse(x + w * 0.15, y + h * 0.85, w * 0.22, h * 0.22, -0.5, 0, Math.PI * 2); ctx.ellipse(x + w * 0.85, y + h * 0.85, w * 0.22, h * 0.22, 0.5, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = col;                                                   // body
+  ellipseShaded(x + w * 0.15, y + h * 0.85, w * 0.22, h * 0.22, dark, -0.5);   // back legs
+  ellipseShaded(x + w * 0.85, y + h * 0.85, w * 0.22, h * 0.22, dark, 0.5);
+  ctx.fillStyle = shade(x + w / 2, y + h * 0.6, w * 0.5, h * 0.5, col);       // body
   ctx.beginPath(); ctx.moveTo(x + w * 0.05, y + h); ctx.quadraticCurveTo(x, y + h * 0.3, x + w * 0.3, y + h * 0.15); ctx.quadraticCurveTo(x + w * 0.5, y, x + w * 0.7, y + h * 0.15); ctx.quadraticCurveTo(x + w, y + h * 0.3, x + w * 0.95, y + h); ctx.closePath(); ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.75, w * 0.3, h * 0.18, 0, 0, Math.PI * 2); ctx.fill();   // pale belly
+  ctx.fillStyle = 'rgba(255,255,255,0.28)'; ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.76, w * 0.3, h * 0.17, 0, 0, Math.PI * 2); ctx.fill();   // pale belly
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x + w * 0.7, y + h * 0.16); ctx.quadraticCurveTo(x + w * 0.92, y + h * 0.3, x + w * 0.93, y + h * 0.6); ctx.stroke();   // rim light
   if (!alive) return;
   const er = big ? 9 : 5, ey = y + h * 0.12, look = dir * (big ? 3 : 1.5);
-  ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x + w * 0.3, ey, er + 2, 0, Math.PI * 2); ctx.arc(x + w * 0.7, ey, er + 2, 0, Math.PI * 2); ctx.fill();   // eye bumps
+  ellipseShaded(x + w * 0.3, ey, er + 2, er + 2, col); ellipseShaded(x + w * 0.7, ey, er + 2, er + 2, col);   // eye bumps
   ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x + w * 0.3, ey, er, 0, Math.PI * 2); ctx.arc(x + w * 0.7, ey, er, 0, Math.PI * 2); ctx.fill();
   ctx.fillStyle = '#1a1a1a'; ctx.beginPath(); ctx.ellipse(x + w * 0.3 + look, ey, er * 0.35, er * 0.7, 0, 0, Math.PI * 2); ctx.ellipse(x + w * 0.7 + look, ey, er * 0.35, er * 0.7, 0, 0, Math.PI * 2); ctx.fill();
+  specular(x + w * 0.3 + er * 0.35, ey - er * 0.4, er * 0.28); specular(x + w * 0.7 + er * 0.35, ey - er * 0.4, er * 0.28);
   ctx.strokeStyle = dark; ctx.lineWidth = big ? 3 : 1.5; ctx.beginPath(); ctx.moveTo(x + w * 0.3, y + h * 0.5); ctx.quadraticCurveTo(x + w * 0.5, y + h * 0.62, x + w * 0.7, y + h * 0.5); ctx.stroke();   // mouth
 }
 function drawEnemy(e) {
@@ -1272,6 +1357,7 @@ function drawPlayer() {                                                  // Hop 
   ctx.save();
   ctx.translate(cx, bottom - (air ? 4 : 0));
   ctx.scale(p.sx * d, p.sy);                                             // flip with facing
+  lightX = d;
   const tilt = air ? Math.max(-0.35, Math.min(0.35, p.vy / 1100)) : (moving ? -0.06 : 0);   // nose up when rising, down when falling, lean into a run
   ctx.rotate(tilt);
   const ph = p.run, bob = ph ? Math.abs(Math.sin(ph)) * 1.5 : 0;
@@ -1300,71 +1386,89 @@ function drawPlayer() {                                                  // Hop 
     const kx = (side ? 4 : 9) + k * 4, ky = air ? -2 : -6 + Math.max(0, -k) * 3, fx = (side ? 7 : 12) + k * 5, fy = air ? 3 : 0;
     ctx.beginPath(); ctx.moveTo(side ? 2 : 6, bodyY + 5); ctx.lineTo(kx, ky); ctx.lineTo(fx, fy); ctx.stroke();
   }
-  // abdomen + thorax
-  ctx.fillStyle = sk.body;
-  ctx.beginPath(); ctx.ellipse(-4, bodyY + 1, 15, 6.5, -0.05, 0, Math.PI * 2); ctx.fill();
+  // abdomen + thorax (shaded)
+  ellipseShaded(-4, bodyY + 1, 15, 6.5, sk.body, -0.05);
   ctx.fillStyle = sk.dark; for (let i = 0; i < 4; i++) ctx.fillRect(-16 + i * 4, bodyY - 1, 1.5, 5);
-  ctx.fillStyle = sk.body; ctx.beginPath(); ctx.ellipse(8, bodyY - 1, 8, 7, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.beginPath(); ctx.ellipse(-3, bodyY - 3, 13, 3.5, -0.1, 0, Math.PI * 2); ctx.fill();
+  ellipseShaded(8, bodyY - 1, 8, 7, sk.body);
+  ctx.fillStyle = 'rgba(255,255,255,0.18)'; ctx.beginPath(); ctx.ellipse(-3, bodyY - 3, 13, 3.5, -0.1, 0, Math.PI * 2); ctx.fill();
+  rim(-4, bodyY + 1, 15, 6.5, -0.05, 0.35);
   // head + eye (pupil looks where you're going)
-  ctx.fillStyle = sk.body; ctx.beginPath(); ctx.ellipse(15, bodyY - 3, 6, 6.5, 0, 0, Math.PI * 2); ctx.fill();
+  ellipseShaded(15, bodyY - 3, 6, 6.5, sk.body);
   const look = moving ? 1 : 0, lookY = air ? (p.vy < 0 ? -1 : 1) : 0;
   if (p.blink > 0) { ctx.strokeStyle = sk.face; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(14, bodyY - 5); ctx.lineTo(19, bodyY - 5); ctx.stroke(); }
-  else { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(16.5, bodyY - 5, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = sk.face; ctx.beginPath(); ctx.arc(17 + look, bodyY - 5 + lookY, 2, 0, Math.PI * 2); ctx.fill(); }
+  else { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(16.5, bodyY - 5, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = sk.face; ctx.beginPath(); ctx.arc(17 + look, bodyY - 5 + lookY, 2, 0, Math.PI * 2); ctx.fill(); specular(18, bodyY - 6.5, 1); }
   ctx.strokeStyle = sk.face; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(17, bodyY, 2.5, 0.3, Math.PI - 0.6); ctx.stroke();
   // antennae trail behind movement and wag when idle
   ctx.strokeStyle = sk.dark; ctx.lineWidth = 1.5;
   const wag = Math.sin(time * 6) * 2, lag = p.antLag * d;
   ctx.beginPath(); ctx.moveTo(17, bodyY - 8); ctx.quadraticCurveTo(24 + lag, bodyY - 20, 30 + wag + lag * 1.6, bodyY - 22 + Math.abs(lag) * 0.5);
   ctx.moveTo(15, bodyY - 8); ctx.quadraticCurveTo(20 + lag, bodyY - 22, 24 + wag + lag * 1.6, bodyY - 26 + Math.abs(lag) * 0.5); ctx.stroke();
-  ctx.lineCap = 'butt';
+  ctx.lineCap = 'butt'; lightX = 1;
   if (p.shield) {
     ctx.strokeStyle = 'rgba(143,183,255,0.8)'; ctx.lineWidth = 2; ctx.fillStyle = 'rgba(143,183,255,0.15)';
     ctx.beginPath(); ctx.ellipse(2, -14, 24, 20 + Math.sin(time * 5) * 1.5, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
   }
   ctx.restore();
 }
-function drawHUD() {
-  ctx.font = 'bold 15px "Trebuchet MS", system-ui';
-  // lives pill
-  const nHearts = maxLives();
-  ctx.fillStyle = 'rgba(0,0,0,0.35)'; roundRect(10, 10, 24 + nHearts * 24, 28, 14);
-  for (let i = 0; i < nHearts; i++) drawHeart(30 + i * 24, 24, i < lives ? '#ff5f7a' : 'rgba(255,255,255,0.2)');
-  // orbs pill
-  ctx.fillStyle = 'rgba(0,0,0,0.35)'; roundRect(W - 116, 10, 106, 28, 14);
-  ctx.fillStyle = theme.orb; ctx.beginPath(); ctx.ellipse(W - 97, 24, 7, 5.5, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = '#2a2a2a'; ctx.beginPath(); ctx.arc(W - 103, 24, 3, 0, Math.PI * 2); ctx.arc(W - 96, 22, 1.3, 0, Math.PI * 2); ctx.arc(W - 93, 26, 1.3, 0, Math.PI * 2); ctx.fill();
-  const pop = hudPop > 0 ? 1 + Math.sin(hudPop / 0.35 * Math.PI) * 0.35 : 1;
-  ctx.save(); ctx.translate(W - 86, 29); ctx.scale(pop, pop);
-  ctx.fillStyle = '#fff'; ctx.textAlign = 'left'; ctx.fillText(`${collected} / ${totalOrbs}`, 0, 0);
+function drawLeafLife(x, y, full) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(full ? -0.4 : 0.5);
+  ctx.fillStyle = full ? shade(0, 0, 8, 11, '#5cb85c') : '#8a6a3a';
+  ctx.beginPath(); ctx.moveTo(0, -11); ctx.quadraticCurveTo(9, -4, 0, 11); ctx.quadraticCurveTo(-9, -4, 0, -11); ctx.fill();
+  ctx.strokeStyle = full ? 'rgba(20,60,20,0.5)' : 'rgba(60,40,20,0.5)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, -9); ctx.lineTo(0, 9); ctx.stroke();
   ctx.restore();
-  for (const bf of bugFlights) {                                         // caught bugs fly up into the counter
+}
+function woodPanel(x, y, w, h) {
+  ctx.fillStyle = 'rgba(40,26,12,0.35)'; roundRect(x + 2, y + 3, w, h, 10);
+  const g = ctx.createLinearGradient(x, y, x, y + h); g.addColorStop(0, '#9a6535'); g.addColorStop(1, '#6b4423');
+  ctx.fillStyle = g; roundRect(x, y, w, h, 10);
+  ctx.strokeStyle = 'rgba(255,220,160,0.35)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + 8, y + h * 0.35); ctx.lineTo(x + w - 8, y + h * 0.35); ctx.moveTo(x + 8, y + h * 0.7); ctx.lineTo(x + w - 8, y + h * 0.7); ctx.stroke();
+  ctx.strokeStyle = '#4a2e18'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, 10) : ctx.rect(x, y, w, h); ctx.stroke();
+}
+function drawHUD() {
+  ctx.font = 'bold 15px Fredoka, "Trebuchet MS", system-ui';
+  // lives: leaves that wilt when lost
+  const nHearts = maxLives();
+  woodPanel(10, 8, 20 + nHearts * 22, 32);
+  for (let i = 0; i < nHearts; i++) drawLeafLife(30 + i * 22, 24, i < lives);
+  // bugs: a jar that fills up
+  const jx = W - 118, jy = 8, jw = 108, jh = 32;
+  woodPanel(jx, jy, jw, jh);
+  const fill = totalOrbs ? collected / totalOrbs : 0;
+  ctx.fillStyle = 'rgba(200,240,255,0.25)'; roundRect(jx + 8, jy + 6, 18, 22, 4);                       // glass
+  ctx.fillStyle = theme.orb + 'bb'; ctx.fillRect(jx + 9, jy + 27 - 20 * fill, 16, 20 * fill);            // amber fill
+  ctx.fillStyle = 'rgba(255,255,255,0.35)'; ctx.fillRect(jx + 10, jy + 8, 3, 18);                        // glass highlight
+  ctx.fillStyle = '#a8845a'; ctx.fillRect(jx + 6, jy + 3, 22, 4);                                       // lid
+  const pop = hudPop > 0 ? 1 + Math.sin(hudPop / 0.35 * Math.PI) * 0.35 : 1;
+  ctx.save(); ctx.translate(jx + 34, jy + 22); ctx.scale(pop, pop);
+  ctx.fillStyle = '#fff4e0'; ctx.textAlign = 'left'; ctx.fillText(`${collected} / ${totalOrbs}`, 0, 0);
+  ctx.restore();
+  for (const bf of bugFlights) {                                         // caught bugs fly up into the jar
     const k = bf.t, e = 1 - Math.pow(1 - k, 3);
-    const x = bf.x + (W - 97 - bf.x) * e, y = bf.y + (24 - bf.y) * e - Math.sin(k * Math.PI) * 60;
-    ctx.fillStyle = theme.orb; ctx.beginPath(); ctx.ellipse(x, y, 6 * (1 - k * 0.4), 5 * (1 - k * 0.4), 0, 0, Math.PI * 2); ctx.fill();
+    const x = bf.x + (jx + 17 - bf.x) * e, y = bf.y + (jy + 16 - bf.y) * e - Math.sin(k * Math.PI) * 60;
+    ellipseShaded(x, y, 6 * (1 - k * 0.4), 5 * (1 - k * 0.4), theme.orb);
     ctx.fillStyle = '#2a2a2a'; ctx.beginPath(); ctx.arc(x - 5 * (1 - k * 0.4), y, 2.5, 0, Math.PI * 2); ctx.fill();
   }
-  // power-up icons next to the hearts
-  let ix = 46 + maxLives() * 24;
-  if (player.hasDouble) { ctx.fillStyle = 'rgba(0,0,0,0.35)'; roundRect(ix, 10, 28, 28, 14); ctx.strokeStyle = '#7df9ff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ix + 9, 22); ctx.lineTo(ix + 14, 16); ctx.lineTo(ix + 19, 22); ctx.moveTo(ix + 9, 29); ctx.lineTo(ix + 14, 23); ctx.lineTo(ix + 19, 29); ctx.stroke(); ix += 32; }
-  if (player.shield)    { ctx.fillStyle = 'rgba(0,0,0,0.35)'; roundRect(ix, 10, 28, 28, 14); ctx.strokeStyle = '#8fb7ff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(ix + 14, 24, 7, 0, Math.PI * 2); ctx.stroke(); }
-  // timer (bottom centre so it stays clear of the pause/mute buttons at the top)
-  ctx.fillStyle = 'rgba(0,0,0,0.35)'; roundRect(W / 2 - 40, H - 30, 80, 22, 11);
-  ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.textAlign = 'center'; ctx.font = 'bold 13px "Trebuchet MS", system-ui';
-  ctx.fillText(fmtTime(levelTime), W / 2, H - 14);
+  // power-up chips next to the leaves
+  let ix = 40 + nHearts * 22;
+  if (player.hasDouble) { woodPanel(ix, 8, 32, 32); ctx.strokeStyle = '#7df9ff'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(ix + 10, 21); ctx.lineTo(ix + 16, 14); ctx.lineTo(ix + 22, 21); ctx.moveTo(ix + 10, 30); ctx.lineTo(ix + 16, 23); ctx.lineTo(ix + 22, 30); ctx.stroke(); ix += 36; }
+  if (player.shield)    { woodPanel(ix, 8, 32, 32); ctx.strokeStyle = '#8fb7ff'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(ix + 16, 24, 8, 0, Math.PI * 2); ctx.stroke(); }
+  // timer on a little wooden sign at the bottom
+  ctx.fillStyle = '#5a3a20'; ctx.fillRect(W / 2 - 30, H - 14, 5, 14); ctx.fillRect(W / 2 + 25, H - 14, 5, 14);
+  woodPanel(W / 2 - 44, H - 34, 88, 24);
+  ctx.fillStyle = '#fff4e0'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Fredoka, "Trebuchet MS", system-ui';
+  ctx.fillText(fmtTime(levelTime), W / 2, H - 17);
   // level banner
   if (banner > 0) {
     const a = Math.min(1, banner, (2.2 - banner) * 2);
     ctx.globalAlpha = a;
-    ctx.fillStyle = 'rgba(0,0,0,0.45)'; roundRect(W / 2 - 150, H / 2 - 36, 300, 64, 18);
-    ctx.fillStyle = '#ffd36e'; ctx.textAlign = 'center'; ctx.font = 'bold 13px "Trebuchet MS", system-ui';
+    woodPanel(W / 2 - 150, H / 2 - 36, 300, 64);
+    ctx.fillStyle = '#ffe9a8'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Fredoka, "Trebuchet MS", system-ui';
     ctx.fillText(`LEVEL ${levelIndex + 1}`, W / 2, H / 2 - 12);
-    ctx.fillStyle = '#fff'; ctx.font = 'bold 24px "Trebuchet MS", system-ui';
+    ctx.fillStyle = '#fff4e0'; ctx.font = 'bold 24px Fredoka, "Trebuchet MS", system-ui';
     ctx.fillText(LEVELS[levelIndex].name, W / 2, H / 2 + 16);
     ctx.globalAlpha = 1;
   }
 }
-
 function drawHeart(x, y, color) {
   ctx.fillStyle = color; ctx.beginPath();
   ctx.moveTo(x, y + 6); ctx.bezierCurveTo(x - 9, y - 2, x - 4, y - 9, x, y - 4); ctx.bezierCurveTo(x + 4, y - 9, x + 9, y - 2, x, y + 6); ctx.fill();
@@ -1400,7 +1504,7 @@ function setPaused(on) {
 // ---------- 11. Screens & flow ----------
 function startLevel(i) {
   Sfx.init();
-  lives = maxLives();
+  lives = maxLives(); deathsHere = 0; skipOffered = false; skipTimer = 0; skipBtn.style.display = 'none';
   loadLevel(i);
   overlay.classList.add('hidden');
   Music.start(i);
@@ -1411,6 +1515,7 @@ function startLevel(i) {
 }
 
 function levelComplete() {
+  if (ending) { ending = null; }
   running = false; Music.stop();
   const next = levelIndex + 1;
   // stars: 3 for every orb, 2 for 60%+, 1 for finishing
@@ -1429,13 +1534,80 @@ Time ${fmtTime(levelTime)}`, 'Play Again', () => startLevel(0)); return; }
     unlocked = Math.max(unlocked, next + 1); localStorage.setItem('hop-unlocked', unlocked);
     showOverlay('Level Clear!', LEVELS[levelIndex].name, summary, 'Next Level', () => startLevel(next));
   } else {
-    showOverlay('You did it!', 'All levels complete', summary, 'Play Again', () => startLevel(0));
+    showOverlay('The meadow is safe!', 'All seven levels complete', summary, 'Play Again', () => startLevel(0));
   }
 }
-function gameOver() {
+function gameOver() {                                                   // (kept for custom levels / debugging - normal play never calls it)
   running = false; Music.stop();
   showOverlay('Game Over', LEVELS[levelIndex].name, `Bugs: ${collected} / ${totalOrbs}`, 'Try Again', () => startLevel(levelIndex));
 }
+// ---------- the finale: the flower blooms, the bugs swarm out, credits over the meadow ----------
+function startEnding() {
+  const p = player;
+  ending = { t: 0, swarm: [], done: false };
+  p.sx = 1; p.sy = 1; p.x = portal.x - 60; p.y = portal.y + portal.h - p.h; p.vy = 0; p.vx = 0; p.facing = 1;
+  finishing = 0; timeScale = 1; Music.duck(0.6, 3);
+  Sfx.tone(523, 523, 0.4, 'sine', 0.1); Sfx.tone(784, 784, 0.5, 'sine', 0.1, 0.3); Sfx.tone(1047, 1047, 0.8, 'triangle', 0.1, 0.6);
+}
+function updateEnding(dt) {
+  const e = ending, p = player;
+  e.t += dt;
+  // the flower releases a swarm of bugs in slow spirals
+  if (e.t > 0.8 && e.t < 6 && Math.random() < dt * 14) e.swarm.push({ x: portal.x + portal.w / 2, y: portal.y + 14, a: Math.random() * Math.PI * 2, r: 2, spin: (Math.random() < 0.5 ? 1 : -1) * (1.5 + Math.random()), t: 0, seed: Math.random() * 6 });
+  for (const b of e.swarm) { b.t += dt; b.a += b.spin * dt; b.r += 26 * dt; b.x += Math.cos(b.a) * b.r * dt * 1.2; b.y += (Math.sin(b.a) * b.r * dt * 0.7) - 18 * dt; }
+  e.swarm = e.swarm.filter(b => b.t < 9);
+  // the grasshopper hops for joy
+  p.vy += GRAVITY * dt; moveBox(p, 0, p.vy * dt);
+  if (p.onGround && e.t > 1.5 && Math.floor(e.t * 2) % 3 === 0 && p.vy >= 0) { p.vy = -420; p.sx = 0.7; p.sy = 1.35; }
+  p.sx += (1 - p.sx) * Math.min(1, dt * 10); p.sy += (1 - p.sy) * Math.min(1, dt * 10);
+  p.blink = p.blink > 0 ? p.blink - dt : (Math.random() < dt * 0.4 ? 0.12 : 0);
+  // camera drifts gently back across the arena
+  camX = Math.max(0, Math.min(LEVEL_W - W, camX - 12 * dt));
+  if (e.t > 14.5 && !e.done) finishEnding();
+}
+function finishEnding() {
+  ending.done = true; ending = null;
+  levelComplete();
+}
+function drawEnding() {
+  const e = ending;
+  ctx.save(); ctx.translate(-Math.round(camX), -Math.round(camY));
+  for (const b of e.swarm) {                                             // swarm bugs (fireflies at dusk)
+    const g = ctx.createRadialGradient(b.x, b.y, 1, b.x, b.y, 9); g.addColorStop(0, theme.orb + 'cc'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(b.x - 9, b.y - 9, 18, 18);
+    ctx.fillStyle = '#4a4a4a'; ctx.beginPath(); ctx.ellipse(b.x, b.y - 1, 2, 2.6, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = theme.orb; ctx.beginPath(); ctx.arc(b.x, b.y + 2, 2, 0, Math.PI * 2); ctx.fill();
+    const f = Math.sin(b.t * 30 + b.seed) * 3; ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(b.x, b.y - 2); ctx.lineTo(b.x - 5, b.y - 4 - f); ctx.moveTo(b.x, b.y - 2); ctx.lineTo(b.x + 5, b.y - 4 - f); ctx.stroke();
+  }
+  // the flower blooms: extra petal rings grow out over the first seconds
+  const cx = portal.x + portal.w / 2, cy = portal.y + 14, bloom = Math.min(1, e.t / 2.5);
+  for (let ring = 1; ring <= 2; ring++) {
+    const rr = (14 + ring * 12) * bloom; ctx.fillStyle = theme.portal + (ring === 1 ? 'cc' : '88');
+    for (let i = 0; i < 8 + ring * 4; i++) { const a = i / (8 + ring * 4) * Math.PI * 2 + time * 0.3 * (ring % 2 ? 1 : -1); ctx.beginPath(); ctx.ellipse(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr, 9 * bloom, 5 * bloom, a, 0, Math.PI * 2); ctx.fill(); }
+  }
+  ctx.restore();
+  // credits over the meadow
+  const lines = [
+    [2.5, 'HOP', 34, '#ffd36e', -10], [2.9, 'Grasshopper Meadow', 16, '#fff', 22],
+    [5.2, 'You reached the end of the meadow', 15, '#fff', 0],
+    [6.9, `${totalOrbsEver} bugs caught in total`, 15, '#fff', 24],
+    [8.6, 'The Bullfrog King will sulk for a while', 14, '#ffd36e', 0],
+    [10, 'Made with plain HTML, CSS and JavaScript', 12, 'rgba(255,255,255,0.8)', 24],
+    [11.6, 'Thanks for playing', 22, '#fff', 0],
+  ];
+  ctx.textAlign = 'center';
+  for (const [at, text, size, col, dy] of lines) {
+    const a = Math.min(1, Math.max(0, (e.t - at) * 1.5)) * Math.min(1, Math.max(0, (at + 3.0 - e.t)));
+    if (a <= 0) continue;
+    ctx.globalAlpha = a; ctx.font = `bold ${size}px Fredoka, "Trebuchet MS", system-ui`;
+    ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillText(text, W / 2 + 1, H * 0.3 + dy + 2 - (e.t - at) * 4);
+    ctx.fillStyle = col; ctx.fillText(text, W / 2, H * 0.3 + dy - (e.t - at) * 4);
+  }
+  ctx.globalAlpha = 0.6; ctx.font = '11px Fredoka, "Trebuchet MS", system-ui'; ctx.fillStyle = '#fff'; ctx.fillText('tap to skip', W / 2, H - 40);
+  ctx.globalAlpha = 1;
+}
+
 function showOverlay(title, sub, text, btn, onClick) {
   ovTitle.textContent = title; ovSub.textContent = sub; ovText.textContent = text; ovBtn.textContent = btn;
   ovBtn.onclick = onClick;
@@ -1456,9 +1628,72 @@ function buildSkinSelect() {
   });
   document.getElementById('orb-total').textContent = totalOrbsEver;
 }
+// ---------- the meadow map: a winding path with one spot per level ----------
+const mapCanvas = document.getElementById('map'), mctx = mapCanvas.getContext('2d');
+const MAP_W = 340, MAP_H = 150;
+mapCanvas.width = MAP_W * 2; mapCanvas.height = MAP_H * 2; mctx.scale(2, 2);
+const WORLD_COL = ['#5cb85c', '#5cb85c', '#3f9fe0', '#2f7a5a', '#ff8a5c', '#5ab0ff', '#7d3fd6'];
+function mapSpot(i) {                                                    // position of level i along the path
+  const t = (i + 0.5) / LEVELS.length;
+  return { x: 22 + t * (MAP_W - 44), y: 78 + Math.sin(t * Math.PI * 2.2 + 0.4) * 34 };
+}
+function drawMap() {
+  const c = mctx, n = LEVELS.length;
+  c.clearRect(0, 0, MAP_W, MAP_H);
+  const sky = c.createLinearGradient(0, 0, 0, MAP_H); sky.addColorStop(0, '#9fd8ff'); sky.addColorStop(1, '#dff5ff');
+  c.fillStyle = sky; roundRectOn(c, 0, 0, MAP_W, MAP_H, 14); c.fill();
+  c.fillStyle = '#a8dba8'; for (let i = 0; i < 5; i++) { c.beginPath(); c.arc(30 + i * 80, MAP_H + 30, 70, Math.PI, 0); c.fill(); }
+  c.fillStyle = '#7cc47a'; c.fillRect(0, MAP_H - 46, MAP_W, 46);
+  c.fillStyle = '#5cb85c'; for (let i = 0; i < 7; i++) { c.beginPath(); c.arc(i * 60 - 10, MAP_H - 46, 34, Math.PI, 0); c.fill(); }
+  // the pond at the end (boss)
+  const last = mapSpot(n - 1); c.fillStyle = '#4fa8e8'; c.beginPath(); c.ellipse(last.x + 6, last.y + 10, 34, 16, 0, 0, Math.PI * 2); c.fill();
+  c.strokeStyle = 'rgba(255,255,255,0.6)'; c.lineWidth = 1.5; c.beginPath(); c.ellipse(last.x + 6, last.y + 10, 24, 9, 0, 0, Math.PI * 2); c.stroke();
+  // winding path (dotted)
+  c.setLineDash([4, 5]); c.strokeStyle = 'rgba(107,74,46,0.8)'; c.lineWidth = 3; c.beginPath();
+  for (let i = 0; i < n; i++) { const p = mapSpot(i); if (i === 0) c.moveTo(p.x, p.y + 8); else { const q = mapSpot(i - 1); c.bezierCurveTo(q.x + 24, q.y + 8, p.x - 24, p.y + 8, p.x, p.y + 8); } }
+  c.stroke(); c.setLineDash([]);
+  // spots
+  for (let i = 0; i < n; i++) {
+    const p = mapSpot(i), open = i + 1 <= unlocked, stars = starsWon[i] || 0, current = i === levelIndex, col = WORLD_COL[i];
+    if (current) { c.fillStyle = 'rgba(255,211,110,0.35)'; c.beginPath(); c.arc(p.x, p.y, 20 + Math.sin(time * 4) * 2, 0, Math.PI * 2); c.fill(); }
+    c.strokeStyle = '#3b8a44'; c.lineWidth = 2; c.beginPath(); c.moveTo(p.x, p.y + 14); c.lineTo(p.x, p.y + 4); c.stroke();   // stem
+    if (i === n - 1) {                                                   // the boss: a crowned lily pad
+      c.fillStyle = open ? '#4caf50' : '#8a9a8a'; c.beginPath(); c.ellipse(p.x, p.y + 4, 14, 8, 0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = open ? '#ffd36e' : '#aaa'; c.beginPath(); c.moveTo(p.x - 8, p.y + 2); c.lineTo(p.x - 8, p.y - 8); c.lineTo(p.x - 4, p.y - 3); c.lineTo(p.x, p.y - 10); c.lineTo(p.x + 4, p.y - 3); c.lineTo(p.x + 8, p.y - 8); c.lineTo(p.x + 8, p.y + 2); c.closePath(); c.fill();
+    } else if (stars > 0) {                                              // cleared: a bloomed flower
+      c.fillStyle = col; for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2 + time * 0.4; c.beginPath(); c.ellipse(p.x + Math.cos(a) * 7, p.y + Math.sin(a) * 7, 5, 3.5, a, 0, Math.PI * 2); c.fill(); }
+      c.fillStyle = '#ffd93d'; c.beginPath(); c.arc(p.x, p.y, 4, 0, Math.PI * 2); c.fill();
+    } else if (open) {                                                   // reachable but not cleared: a glowing bud
+      c.fillStyle = col; c.beginPath(); c.ellipse(p.x, p.y, 6, 9, 0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = 'rgba(255,255,255,0.5)'; c.beginPath(); c.ellipse(p.x - 2, p.y - 3, 2, 3, 0, 0, Math.PI * 2); c.fill();
+    } else {                                                             // locked: a grey bud
+      c.fillStyle = '#9aa39a'; c.beginPath(); c.ellipse(p.x, p.y, 5, 8, 0, 0, Math.PI * 2); c.fill();
+    }
+    c.fillStyle = open ? '#2b3a1e' : 'rgba(43,58,30,0.45)'; c.font = 'bold 10px Fredoka, "Trebuchet MS", system-ui'; c.textAlign = 'center'; c.fillText(String(i + 1), p.x, p.y + 30);
+    if (open) { c.fillStyle = '#e0a020'; c.font = '9px system-ui'; c.fillText('★'.repeat(stars) + '☆'.repeat(3 - stars), p.x, p.y + 41); }
+  }
+  // grasshopper marker on the current spot
+  const cur = mapSpot(Math.min(levelIndex, n - 1)); c.fillStyle = skin().body;
+  c.beginPath(); c.ellipse(cur.x + 16, cur.y - 14 + Math.sin(time * 5) * 2, 7, 4, -0.2, 0, Math.PI * 2); c.fill();
+  c.beginPath(); c.arc(cur.x + 22, cur.y - 16 + Math.sin(time * 5) * 2, 3.5, 0, Math.PI * 2); c.fill();
+  c.fillStyle = '#fff'; c.beginPath(); c.arc(cur.x + 23, cur.y - 17 + Math.sin(time * 5) * 2, 1.5, 0, Math.PI * 2); c.fill();
+}
+function roundRectOn(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+mapCanvas.addEventListener('click', ev => {
+  const r = mapCanvas.getBoundingClientRect(), x = (ev.clientX - r.left) * MAP_W / r.width, y = (ev.clientY - r.top) * MAP_H / r.height;
+  for (let i = 0; i < LEVELS.length; i++) { const p = mapSpot(i); if (Math.hypot(x - p.x, y - (p.y + 8)) < 22 && i + 1 <= unlocked) { startLevel(i); return; } }
+});
+mapCanvas.addEventListener('mousemove', ev => {
+  const r = mapCanvas.getBoundingClientRect(), x = (ev.clientX - r.left) * MAP_W / r.width, y = (ev.clientY - r.top) * MAP_H / r.height;
+  let tip = ''; for (let i = 0; i < LEVELS.length; i++) { const p = mapSpot(i); if (Math.hypot(x - p.x, y - (p.y + 8)) < 22) tip = (i + 1 <= unlocked ? LEVELS[i].name + (bestTimes[i] ? ' · best ' + fmtTime(bestTimes[i]) : '') : 'Locked'); }
+  mapCanvas.title = tip; mapCanvas.style.cursor = tip && tip !== 'Locked' ? 'pointer' : 'default';
+});
+
 function buildLevelSelect() {
   buildSkinSelect();
+  drawMap();
   lvlSel.innerHTML = '';
+  if (customMode || LEVELS.length !== 7) { mapCanvas.style.display = 'none'; } else { mapCanvas.style.display = 'block'; return; }
   LEVELS.forEach((L, i) => {
     const b = document.createElement('button');
     b.className = 'lvl' + (i + 1 > unlocked ? ' locked' : '') + (i === levelIndex ? ' active' : '');
@@ -1489,8 +1724,10 @@ document.addEventListener("keydown", e => {
   if (e.key === "p" || e.key === "P" || e.key === "Escape") setPaused(!paused);
 });
 document.getElementById('pause-btn').addEventListener('click', () => setPaused(!paused));
+skipBtn.addEventListener('click', skipAhead);
 document.addEventListener('pointerdown', () => { userTapped = true; }, { once: true });
-canvas.addEventListener('pointerdown', () => { if (paused) setPaused(false); });          // tap anywhere to resume
+canvas.addEventListener('pointerdown', () => { if (paused) setPaused(false); else if (ending && ending.t > 1.5) finishEnding(); });          // tap anywhere to resume / skip the ending
+document.addEventListener('keydown', e => { if (ending && ending.t > 1.5 && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) finishEnding(); });
 document.addEventListener("visibilitychange", () => {                                    // auto-pause when the app goes to the background
   if (document.hidden) setPaused(true);
   else if (Sfx.ctx && !paused) Sfx.ctx.resume();
@@ -1518,6 +1755,7 @@ function idleLoop(now) {
     player.blink = player.blink > 0 ? player.blink - dt : (Math.random() < dt * 0.4 ? 0.12 : 0);
     for (const e of enemies) if (e.alive && e.type !== 'flit') { e.vy += GRAVITY * dt; moveBox(e, e.vx * dt, e.vy * dt); const ahead = Math.floor((e.vx > 0 ? e.x + e.w + 1 : e.x - 1) / TILE); if (e.hitWall || (e.onGround && !standable(ahead, Math.floor((e.y + e.h + 1) / TILE)))) e.vx = -e.vx; e.hitWall = false; }
     draw();
+    if (!overlay.classList.contains('hidden') && mapCanvas.style.display !== 'none') drawMap();
   }
   requestAnimationFrame(idleLoop);
 }

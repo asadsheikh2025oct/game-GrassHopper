@@ -12,6 +12,9 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png">
   <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,6 +30,8 @@
     <div class="touch right">
       <button class="pad jump" data-key="jump">▲</button>
     </div>
+
+    <button id="skip-btn" class="skip" style="display:none">Stuck? Skip to the next checkpoint →</button>
 
     <div class="topbtns">
       <button id="pause-btn" class="mute" title="Pause (P)">⏸</button>
@@ -45,6 +50,7 @@
         <h1 id="ov-title">HOP</h1>
         <p id="ov-sub" class="sub">Grasshopper Meadow</p>
         <p id="ov-text" class="pre">Hop through the meadow, catch the bugs and reach the flower.<br>Jump over the frogs or bounce on their heads. Mind the puddles!</p>
+        <canvas id="map" class="map" width="680" height="300"></canvas>
         <div id="level-select" class="levels"></div>
         <div class="skins-row"><span class="label">Colour · <span id="orb-total">0</span> bugs</span><div id="skin-select" class="skins"></div></div>
         <div class="opts">
@@ -81,6 +87,7 @@
     }
     document.getElementById("ov-btn").addEventListener("click", goLandscape);
     document.getElementById("level-select").addEventListener("click", goLandscape);
+    document.getElementById("map").addEventListener("click", goLandscape);
   </script>
 </body>
 </html>
