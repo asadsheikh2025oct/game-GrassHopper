@@ -93,8 +93,8 @@ const LEVELS = [
       "..........................................................o.o.o...................................................",
       "..................o.o.o.o.o.........o.o.o...o.o...........=====.............o.o...............o.o.................",
       "..................#####.####....M...#####...====..o.o.o.....................####..............====........o.o.o...",
-      "..................................................#####...............o.o.o.......V.....o.o.o.............#####...",
-      "..............................f........................e......H.......#####CS...........#####.....f...............",
+      "..................................................#####...............o.o.o.......V...o.o.o...............#####...",
+      "..............................f........................e......H.......#####CS.........#####.......f...............",
       "......D.............e..S...C..........e.C..............####....######wwwww########.......C..e.....................",
       "..P.................####www######....########wwww##########....######wwwww############www#########..........e...SG",
       "##########wwww##########www######....########wwww##########....#######################www#########################",
@@ -113,7 +113,7 @@ const LEVELS = [
       "...................o.of.............####..............................o.o.......f....####..........o.o....o.o..............",
       "..................####.......o.o...............M..f...................####..........................f.....####.............",
       ".............................====.............................o.o..........o.o..............V..............................",
-      "......o.o...............C....e...S.......................oHo..====................C........................................",
+      "......o.o...............C........S.e.....................oHo..====................C........................................",
       "...........^^...e.....###....#######...C....e............###......S.......e...^^.###....e.......^^.C....~.....S............",
       "..P......####www#########....####%%%%###wwww######..........e.....####www################wwwww######....#######.....G......",
       "#############www#########....###########wwww###########.....##########www################wwwww######....###################",
@@ -386,6 +386,7 @@ const HINTS = {
 };
 function showHint(key, x, y, follow) {
   if (hintsSeen[key] || (hint && hint.key === key)) return;
+  if (hint && hint.t < 1.2) return;                                     // let the current tip be read before another replaces it
   hint = { key, x, y, follow, t: 0, life: 4.2 };
 }
 function updateHints(dt) {
@@ -398,7 +399,7 @@ function updateHints(dt) {
   }
   if (p.dead > 0 || finishing > 0 || banner > 1.4) return;
   const head = () => ({ x: p.x + p.w / 2, y: p.y - 6 });
-  if (!hintsSeen.move && levelTime < 8) { showHint('move', 0, 0, head); if (hint && hint.key === 'move' && (Math.abs(p.vx) > 50 && !p.onGround)) hint.life = Math.min(hint.life, hint.t + 0.6); }
+  if (!hintsSeen.move && levelTime < 8) { showHint('move', 0, 0, head); if (hint && hint.key === 'move' && (Math.abs(p.vx) > 50 && !p.onGround)) { hint.life = Math.min(hint.life, hint.t + 0.6); hintsSeen.move = 1; localStorage.setItem('hop-hints', JSON.stringify(hintsSeen)); } }   // you can move: tip done
   for (const e of enemies) {
     if (!e.alive || Math.abs(e.x - p.x) > 230) continue;
     if (e.type === 'frog' && e.crouch) showHint('frog', 0, 0, () => ({ x: e.x + e.w / 2, y: e.y - 8 }));
@@ -507,7 +508,7 @@ function loadLevel(i) {
     if (ch === 'M') movers.push({ ox: x, oy: y, x, y, px: x, py: y, w: TILE * 3, h: 14, axis: 'x', range: TILE * 3, speed: 1.2, seed: c });
     if (ch === 'V') movers.push({ ox: x, oy: y, x, y, px: x, py: y, w: TILE * 2, h: 14, axis: 'y', range: TILE * 2.5, speed: 1.0, seed: c });
     if (ch === 'o') orbs.push({ x: x + 8, y: y + 8, w: 16, h: 16, taken: false, seed: Math.random() * 6 });
-    if (ch === 'e') enemies.push({ type: 'frog', x, y: y + 8, w: 30, h: 24, vx: 0, vy: 0, alive: true, squash: 0, seed: Math.random() * 6, sit: (1 + Math.random()) * (settings.easy ? 1.8 : 1), dir: -1 });
+    if (ch === 'e') enemies.push({ type: 'frog', x, y: y + 8, w: 30, h: 24, vx: 0, vy: 0, alive: true, squash: 0, seed: Math.random() * 6, floats: true, sit: (1 + Math.random()) * (settings.easy ? 1.8 : 1), dir: -1 });
     if (ch === 'f') enemies.push({ type: 'dragonfly', x, y, baseY: y, w: 26, h: 20, vx: -80, vy: 0, alive: true, squash: 0, seed: Math.random() * 6 });
     if (ch === 'G') portal = { x: x + 4, y: y - TILE + 4, w: 24, h: TILE * 2 - 8 };
     if (ch === 'K') boss = { x, y: y - 24, w: 64, h: 56, vx: 0, vy: 0, hp: 3, state: 'idle', t: 1.5, dir: -1, alive: true, jumpT: 3, flash: 0, floats: true };   // floats: stands on the pond instead of sinking
@@ -553,7 +554,7 @@ function moveBox(b, dx, dy) {
       // one-way ledges only catch you when falling onto them from above
       const oneWayCatch = dir > 0 && (isOneWay(col, row) || (b.floats && map[row] && map[row][col] === 'w')) && prevBottom <= row * TILE + 1;
       if (isSolid(col, row) || oneWayCatch) {
-        if (b === player && dir < 0 && map[row][col] === 'B') breakBlock(col, row);
+        if (b === player && dir < 0 && map[row] && map[row][col] === 'B') breakBlock(col, row);
         b.y = dir > 0 ? row * TILE - b.h : (row + 1) * TILE; if (dir > 0) b.onGround = true; b.vy = 0; break;
       }
     }
@@ -693,7 +694,7 @@ function update(dt) {
     if (p.y > LEVEL_H + 80) { hurt(true); }
     // landed in water?
     for (const wt of water) {
-      if (p.x + p.w / 2 > wt.x && p.x + p.w / 2 < wt.x + wt.w && p.y + p.h > wt.surface + 6 && p.y < wt.y + wt.h) {
+      if (p.x + p.w / 2 >= wt.x && p.x + p.w / 2 < wt.x + wt.w && p.y + p.h > wt.surface + 6 && p.y < wt.y + wt.h) {
         if (settings.easy && p.invuln <= 0) {                             // easy mode: lose a heart and get tossed back onto the bank
           const leftBank = p.x + p.w / 2 - wt.x, rightBank = wt.x + wt.w - (p.x + p.w / 2);
           let bank = wt; for (const o of water) { if (o.surface !== wt.surface) continue; }   // (puddle columns share a surface)
@@ -1028,15 +1029,25 @@ function drawForeground() {
     ctx.strokeStyle = '#3a2a2a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, -6); ctx.lineTo(3, -11); ctx.moveTo(0, -6); ctx.lineTo(-3, -11); ctx.stroke();
     ctx.restore();
   }
-  // very near, out-of-focus leaves in the corners (depth of field)
-  ctx.save(); ctx.filter = 'blur(3px)'; ctx.globalAlpha = 0.75;
+  // very near, out-of-focus leaves in the corners (depth of field). The blur is baked into a sprite once per
+  // colour (a live ctx.filter every frame can stall the canvas for hundreds of ms); the sway is a small shear.
+  ctx.save(); ctx.globalAlpha = 0.75;
   const near = camX * 1.7, nspan = W + 420;
   for (let i = 0; i < 5; i++) {
     const x = ((i * 300 + 60 - near) % nspan + nspan) % nspan - 210, sway = Math.sin(time * 0.9 + i) * 8;
-    ctx.fillStyle = darken(theme.leaf, 0.45 - (i % 2) * 0.15);
-    ctx.beginPath(); ctx.moveTo(x, H + 30); ctx.quadraticCurveTo(x + 40 + sway, H - 30, x + 30 + sway * 1.5, H - 74); ctx.quadraticCurveTo(x + 90 + sway, H - 44, x + 120, H + 30); ctx.closePath(); ctx.fill();
+    const img = nearLeaf(darken(theme.leaf, 0.45 - (i % 2) * 0.15));
+    ctx.setTransform(1, 0, -sway * 1.5 / 104, 1, x - 10, H + 30);           // shear about the leaf's base
+    ctx.drawImage(img, 0, -114);
   }
   ctx.restore();
+}
+const leafSprites = {};
+function nearLeaf(col) {                                                 // one pre-blurred leaf per colour
+  if (leafSprites[col]) return leafSprites[col];
+  const c = document.createElement('canvas'); c.width = 140; c.height = 124;
+  const g = c.getContext('2d'); g.filter = 'blur(3px)'; g.fillStyle = col;
+  g.beginPath(); g.moveTo(10, 114); g.quadraticCurveTo(50, 54, 40, 10); g.quadraticCurveTo(100, 40, 130, 114); g.closePath(); g.fill();
+  return leafSprites[col] = c;
 }
 function drawBackground() {
   const g = ctx.createLinearGradient(0, 0, 0, H);

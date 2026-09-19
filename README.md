@@ -14,6 +14,7 @@ Built with plain HTML, CSS and JavaScript — no engine, no libraries, all art d
 | `tune-levels.js` | one-off pass that thinned early levels and spaced checkpoints ~25 tiles apart (safe to re-run) |
 | `playbot.js` | play-test bot: in the browser console run `eval(await (await fetch("playbot.js")).text()); playLevel(0)` — tries real moves and reports stuck spots / deaths |
 | `fix-platforms.js` | `node fix-platforms.js` lowers any leaf platform that is too high to jump onto from the direction of travel |
+| `test-phase1.js` … `test-phase5.js` | feature test suites, run in the browser console: `eval(await (await fetch("test-phase1.js")).text()); phase1()` (phase 5 also has `await phase5async()`, `phase5custom()` and, inside editor.html, `phase5editor()`). Each returns a list of {feature, pass, detail}. Mute first; the test runs overwrite saved progress in that browser |
 | `sw.js`, `manifest.json`, `icon-*.png` | PWA: offline cache, install metadata, app icons |
 
 ## Editing levels

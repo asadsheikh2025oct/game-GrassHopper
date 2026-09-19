@@ -47,24 +47,29 @@
     <!-- Message box: title / level complete / game over -->
     <div id="overlay" class="overlay">
       <div class="card">
-        <h1 id="ov-title">HOP</h1>
-        <p id="ov-sub" class="sub">Grasshopper Meadow</p>
-        <p id="ov-text" class="pre">Hop through the meadow, catch the bugs and reach the flower.<br>Jump over the frogs or bounce on their heads. Mind the puddles!</p>
-        <canvas id="map" class="map" width="680" height="300"></canvas>
-        <div id="level-select" class="levels"></div>
-        <div class="skins-row"><span class="label">Colour · <span id="orb-total">0</span> bugs</span><div id="skin-select" class="skins"></div></div>
-        <div class="opts">
-          <button id="opt-lefty" class="opt">Right-handed</button>
-          <button id="opt-size" class="opt">Normal buttons</button>
+        <!-- .col wrappers are invisible on tall screens (display: contents); on a phone held sideways they become two columns -->
+        <div class="col intro">
+          <h1 id="ov-title">HOP</h1>
+          <p id="ov-sub" class="sub">Grasshopper Meadow</p>
+          <p id="ov-text" class="pre">Hop through the meadow, catch the bugs and reach the flower.<br>Jump over the frogs or bounce on their heads. Mind the puddles!</p>
+          <button id="ov-btn" class="big-btn">Play</button>
+          <button id="install-btn" class="opt" style="display:none">⬇ Install app</button>
+          <p class="tiny">Keyboard: ← → or A D to move · Space / ↑ / W to jump · <a href="editor.html" target="_blank" style="color:#ffd36e">Level editor</a> <a id="exit-custom" href="#" style="color:#ff8e53; display:none">· Exit custom level</a></p>
         </div>
-        <div class="opts">
-          <button id="opt-easy" class="opt" title="5 hearts, patient frogs, puddles toss you back out">Easy mode: off</button>
-          <button id="opt-slow" class="opt" title="Everything runs at 70% speed">Slow motion: off</button>
-          <button id="opt-contrast" class="opt" title="Outlines around the grasshopper, enemies, bugs and water">High contrast: off</button>
+        <div class="col extras">
+          <canvas id="map" class="map" width="680" height="300"></canvas>
+          <div id="level-select" class="levels"></div>
+          <div class="skins-row"><span class="label">Colour · <span id="orb-total">0</span> bugs</span><div id="skin-select" class="skins"></div></div>
+          <div class="opts">
+            <button id="opt-lefty" class="opt">Right-handed</button>
+            <button id="opt-size" class="opt">Normal buttons</button>
+          </div>
+          <div class="opts">
+            <button id="opt-easy" class="opt" title="5 hearts, patient frogs, puddles toss you back out">Easy mode: off</button>
+            <button id="opt-slow" class="opt" title="Everything runs at 70% speed">Slow motion: off</button>
+            <button id="opt-contrast" class="opt" title="Outlines around the grasshopper, enemies, bugs and water">High contrast: off</button>
+          </div>
         </div>
-        <button id="ov-btn" class="big-btn">Play</button>
-        <button id="install-btn" class="opt" style="display:none">⬇ Install app</button>
-        <p class="tiny">Keyboard: ← → or A D to move · Space / ↑ / W to jump · <a href="editor.html" target="_blank" style="color:#ffd36e">Level editor</a> <a id="exit-custom" href="#" style="color:#ff8e53; display:none">· Exit custom level</a></p>
       </div>
     </div>
   </div>

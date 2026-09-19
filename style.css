@@ -32,6 +32,10 @@ canvas {
   background: rgba(4,6,24,0.55); padding: 20px;
 }
 .overlay.hidden { display: none; }
+/* The card's two .col wrappers only matter on short landscape phones (see the media query below);
+   elsewhere they vanish and the Play button is ordered after the map and options. */
+.col { display: contents; }
+#ov-btn, #install-btn, .tiny { order: 2; }
 .card {
   background: linear-gradient(160deg, #1c1f4a, #121433);
   border: 1px solid rgba(255,255,255,0.12);
@@ -104,6 +108,13 @@ canvas {
 .card { max-height: 100%; overflow-y: auto; }
 @media (max-height: 460px) {
   .card { padding: 12px 18px; gap: 6px; border-radius: 16px; }
+  /* wide but short (a phone on its side): title + Play on the left, map + options on the right */
+  @media (min-width: 620px) {
+    .card { flex-direction: row; align-items: stretch; max-width: 720px; gap: 18px; }
+    .col { display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center; flex: 1 1 0; }
+    .col.intro { order: 0; } .col.extras { order: 1; }
+    #ov-btn { order: 0; }
+  }
   .card h1 { font-size: 1.6rem; letter-spacing: 3px; }
   .sub { margin-top: -4px; }
   #ov-text { font-size: 0.8rem; }

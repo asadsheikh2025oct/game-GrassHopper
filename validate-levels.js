@@ -52,13 +52,25 @@ for (const L of LEVELS) {
     if (map[r][c] !== '#' || solid(c, r + 1)) continue;
     const here = surfaceOf(c, r + 1); if (here.kind !== 'ground') continue;
     const gap = here.row - (r + 1); if (gap > 3) continue;
-    for (let d = 1; d <= 5; d++) {
+    // Only the take-off tiles matter: a leaf two or more tiles before the edge leaves the jump clear.
+    for (let d = 1; d <= 2; d++) {
       const cc = c + d; if (cc >= C) break;
       const s2 = surfaceOf(cc, r + 1);
       if (s2.kind === 'ground' && s2.row < here.row) { const k = here.row - s2.row; if (k >= gap) { traps.push({ col: c, row: r, gap, what: k + '-row step-up at col ' + cc }); } break; }
-      if (s2.kind !== 'ground') { let w = 0; while (cc + w < C && surfaceOf(cc + w, r + 1).kind !== 'ground') w++; if (w >= 3 && gap <= 2 || w >= 4 && gap <= 3) traps.push({ col: c, row: r, gap, what: w + '-wide ' + s2.kind + ' at col ' + cc }); break; }
+      if (s2.kind !== 'ground') { let w = 0; while (cc + w < C && surfaceOf(cc + w, r + 1).kind !== 'ground') w++; const bridged = map.some(row => row.slice(cc, cc + w).split('').some(ch => 'MV~'.includes(ch))); if (!bridged && (w >= 3 && gap <= 2 || w >= 4 && gap <= 3)) traps.push({ col: c, row: r, gap, what: w + '-wide ' + s2.kind + ' at col ' + cc }); break; }
     }
   }
   const uniq = traps.filter((t, i) => !traps.slice(0, i).some(u => Math.abs(u.col - t.col) < 4 && u.what === t.what));
   if (uniq.length) console.log(`${L.name.padEnd(16)} LOW-CEILING: ` + uniq.map(t => `leaf at col ${t.col} row ${t.row} allows ${t.gap} rows of rise but ${t.what} needs more`).join('; '));
+}
+
+// ---------- frogs under low leaves: cannot be stomped from above ----------
+for (const L of LEVELS) {
+  const len = Math.max(...L.map.map(r => r.length)); const map = L.map.map(r => r.padEnd(len, '.'));
+  const bad = [];
+  for (let r = 0; r < map.length; r++) for (let c = 0; c < len; c++) {
+    if (map[r][c] !== 'e') continue;
+    for (let up = 1; up <= 2; up++) if (r - up >= 0 && '#%B='.includes(map[r - up][c])) { bad.push(`frog col ${c} row ${r} has a leaf ${up} tile(s) above it`); break; }
+  }
+  if (bad.length) console.log(`${L.name.padEnd(16)} UNSTOMPABLE: ` + bad.join('; '));
 }
