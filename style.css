@@ -14,15 +14,15 @@ canvas {
 }
 
 /* ===== Touch controls ===== */
-.touch { position: absolute; bottom: calc(env(safe-area-inset-bottom) + 16px); display: none; gap: 12px; }
-.touch.left  { left: 16px; }
-.touch.right { right: 16px; }
+.touch { position: absolute; bottom: calc(env(safe-area-inset-bottom) + 14px); display: none; gap: 14px; }
+.touch.left  { left: 14px; }
+.touch.right { right: 14px; flex-direction: column; }      /* ◀ on top, ▶ underneath */
 .pad {
-  width: 64px; height: 64px; border-radius: 50%;
+  width: 84px; height: 84px; border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.45); background: rgba(10,12,40,0.45);
-  color: #fff; font-size: 1.6rem; touch-action: none; backdrop-filter: blur(4px);
+  color: #fff; font-size: 2rem; touch-action: none; backdrop-filter: blur(4px);
 }
-.pad.jump { width: 80px; height: 80px; border-color: #ffd36e; }
+.pad.jump { width: 104px; height: 104px; border-color: #ffd36e; }
 .pad:active, .pad.down { background: rgba(255,255,255,0.35); }
 @media (pointer: coarse) { .touch { display: flex; } }
 
@@ -92,10 +92,15 @@ canvas {
 .opt { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 10px; padding: 6px 10px; font-size: 0.72rem; cursor: pointer; }
 
 /* Accessibility: swap control sides, larger buttons */
-.stage.lefty .touch.left  { left: auto; right: 16px; }
-.stage.lefty .touch.right { right: auto; left: 16px; }
-.stage.bigbtn .pad { width: 84px; height: 84px; font-size: 2rem; }
-.stage.bigbtn .pad.jump { width: 104px; height: 104px; }
+.stage.lefty .touch.left  { left: auto; right: 14px; }
+.stage.lefty .touch.right { right: auto; left: 14px; }
+.stage.bigbtn .pad { width: 104px; height: 104px; font-size: 2.2rem; }
+.stage.bigbtn .pad.jump { width: 128px; height: 128px; }
+/* short phones: keep the stacked run buttons clear of the top of the screen */
+@media (max-height: 400px) {
+  .stage.bigbtn .pad { width: 92px; height: 92px; }
+  .stage.bigbtn .pad.jump { width: 116px; height: 116px; }
+}
 
 /* ===== "Rotate your phone" screen: only on touch devices held upright ===== */
 .rotate { display: none; position: absolute; inset: 0; z-index: 20; background: #1f3d2b; color: #fff; text-align: center; flex-direction: column; align-items: center; justify-content: center; gap: 12px; font-size: 1.1rem; line-height: 1.5; }

@@ -23,12 +23,13 @@
     <canvas id="game" width="640" height="360"></canvas>
 
     <!-- On-screen buttons for phones (only shown on touch screens) -->
+    <!-- Layout from player feedback: hop on the left thumb; run buttons stacked on the right (◀ above ▶) -->
     <div class="touch left">
-      <button class="pad" data-key="left">◀</button>
-      <button class="pad" data-key="right">▶</button>
+      <button class="pad jump" data-key="jump">▲</button>
     </div>
     <div class="touch right">
-      <button class="pad jump" data-key="jump">▲</button>
+      <button class="pad" data-key="left">◀</button>
+      <button class="pad" data-key="right">▶</button>
     </div>
 
     <button id="skip-btn" class="skip" style="display:none">Stuck? Skip to the next checkpoint →</button>

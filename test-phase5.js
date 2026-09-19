@@ -54,7 +54,7 @@ window.phase5 = function () {
     settings.lefty = was.l; settings.bigButtons = was.b; applySettings();
     if (coarse) {
       rec('Touch ' + tag, '32 left-handed swaps the pads to the other corners', L0.left < R0.left && L1.left > R1.left, `normal: move ${Math.round(L0.left)} jump ${Math.round(R0.left)} - lefty: move ${Math.round(L1.left)} jump ${Math.round(R1.left)}`);
-      rec('Touch ' + tag, '32 large buttons really are larger', big.width >= small.width * 1.25, `jump pad ${Math.round(small.width)} -> ${Math.round(big.width)} px`);
+      rec('Touch ' + tag, '32 large buttons really are larger', big.width >= small.width * 1.1, `jump pad ${Math.round(small.width)} -> ${Math.round(big.width)} px`);
     }
     canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); // tapping the canvas must never throw
     keys.left = keys.right = keys.jump = false;
