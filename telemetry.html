@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hop play data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #24301d; --muted: #6b7566; --line: #e0e5d8; --card: #fff; --bg: #f3f6ee; --green: #5cb85c; --red: #d64545; --pink: #f08fa0; --orange: #f0a030; --blue: #7ec8ff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Fredoka, "Segoe UI", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+  header { padding: 18px 24px; background: linear-gradient(180deg, #9a6535, #7a4f2a); color: #fff4e0; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 3px; }
+  header p { margin: 0; opacity: 0.85; font-size: 0.9rem; }
+  header code { background: rgba(0,0,0,0.25); color: #ffe9a8; }
+  main { padding: 18px 24px 60px; max-width: 1200px; margin: 0 auto; }
+  .drop { display: block; border: 2px dashed #9aa58f; border-radius: 14px; padding: 26px; text-align: center; background: var(--card); cursor: pointer; transition: background 0.15s; }
+  .drop.over { background: #e6f2e0; border-color: var(--green); }
+  .drop input { display: none; }
+  .drop strong { color: #3b6d2e; }
+  section { margin-top: 26px; }
+  h2 { font-size: 1.15rem; margin: 0 0 10px; }
+  h2 small { font-weight: 400; color: var(--muted); font-size: 0.85rem; margin-left: 8px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .tile .n { font-size: 1.7rem; font-weight: 700; line-height: 1.1; }
+  .tile .l { color: var(--muted); font-size: 0.8rem; }
+  table { border-collapse: collapse; width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 0.9rem; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { background: #eef2e6; font-weight: 600; font-size: 0.8rem; color: #3d4a36; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  .bar { display: inline-block; height: 10px; border-radius: 4px; background: var(--green); vertical-align: middle; margin-right: 6px; }
+  .maps { display: grid; gap: 16px; }
+  .map { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; overflow-x: auto; }
+  .map h3 { margin: 0 0 6px; font-size: 1rem; }
+  .map h3 small { color: var(--muted); font-weight: 400; margin-left: 8px; }
+  .map canvas { display: block; image-rendering: pixelated; border-radius: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 0.8rem; color: var(--muted); margin: 8px 0 12px; flex-wrap: wrap; }
+  .legend span::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+  .legend .d::before { background: var(--red); } .legend .h::before { background: var(--pink); } .legend .q::before { background: var(--orange); border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .legend .c::before { background: #ffd36e; border-radius: 2px; }
+  .tip { position: fixed; pointer-events: none; background: #24301d; color: #fff; font-size: 0.8rem; padding: 6px 9px; border-radius: 8px; display: none; white-space: pre; z-index: 5; }
+  .hidden { display: none; }
+  .note { color: var(--muted); font-size: 0.85rem; }
+  code { background: #eef2e6; padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>HOP · play data</h1>
+  <p>Drop the <code>hop-play-….json</code> files testers send you. Everything stays in this browser; nothing is uploaded.</p>
+</header>
+<main>
+  <label class="drop" id="drop">
+    <input type="file" id="files" multiple accept=".json,.txt,application/json">
+    <strong>Drop files here</strong> or click to choose · you can add more files at any time
+    <div class="note" id="loaded">No files loaded yet</div>
+  </label>
+
+  <div id="report" class="hidden">
+    <section>
+      <h2>Overview <small id="range"></small></h2>
+      <div class="tiles" id="tiles"></div>
+    </section>
+
+    <section>
+      <h2>Levels <small>an attempt = one Play/journey start; “left” = the app was closed or backgrounded mid-level and the level was never finished in that attempt</small></h2>
+      <table id="levels"></table>
+    </section>
+
+    <section>
+      <h2>Where players struggle <small>every fatal death, non-fatal hit and mid-level exit, placed on the level map</small></h2>
+      <div class="legend"><span class="d">death (size = how many)</span><span class="h">hit, not fatal</span><span class="q">left the level here</span><span class="c">checkpoint lantern</span></div>
+      <div class="maps" id="maps"></div>
+    </section>
+
+    <section>
+      <h2>Players &amp; devices</h2>
+      <table id="players"></table>
+    </section>
+
+    <section>
+      <h2>Tips shown <small>how often each tutorial tip appeared (each player sees a tip once)</small></h2>
+      <table id="hints"></table>
+    </section>
+
+    <section>
+      <h2>Errors <small>JavaScript errors caught on players' devices</small></h2>
+      <table id="errors"></table>
+    </section>
+  </div>
+</main>
+<div class="tip" id="tip"></div>
+
+<script>
+// ---------- level maps straight from the game, so the heat-maps match what players saw ----------
+let LEVELS = [];
+fetch('game.js').then(r => r.text()).then(src => {
+  const m = src.match(/const LEVELS = (\[[\s\S]*?\n\]);/);
+  if (!m) return;
+  LEVELS = new Function('return ' + m[1])();
+  const ORDER = ['Morning Meadow', 'Dewy Garden', 'Pond Shore', 'Lily Pond', 'Sunset Field', 'Tall Grass', 'The Bullfrog King'];
+  LEVELS.sort((a, b) => ORDER.indexOf(a.name) - ORDER.indexOf(b.name));
+  if (files.length) render();
+}).catch(() => {});
+
+// ---------- loading ----------
+const files = [];                       // { name, pid, events[] }
+const seen = new Set();                 // pid:i - the same file dropped twice, or a newer export, never double counts
+const drop = document.getElementById('drop'), input = document.getElementById('files');
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); load([...e.dataTransfer.files]); });
+input.addEventListener('change', () => { load([...input.files]); input.value = ''; });
+async function load(list) {
+  for (const f of list) {
+    try {
+      const data = JSON.parse(await f.text());
+      if (!data || data.format !== 'hop-telemetry-1' || !Array.isArray(data.events)) throw new Error('not a Hop play-data file');
+      const fresh = data.events.filter(ev => { const k = data.pid + ':' + ev.i; if (seen.has(k)) return false; seen.add(k); return true; });
+      files.push({ name: f.name, pid: data.pid, version: data.version, events: fresh });
+    } catch (err) { alert(f.name + ': ' + err.message); }
+  }
+  document.getElementById('loaded').textContent = `${files.length} file(s) loaded · ${allEvents().length} events`;
+  render();
+}
+const allEvents = () => files.flatMap(f => f.events.map(ev => Object.assign({ pid: f.pid }, ev)));
+
+// ---------- analysis ----------
+// Group each player's events into attempts: level_start opens one, level_done closes it; anything else
+// between them belongs to it. An attempt that never reaches level_done was abandoned.
+function attempts(events) {
+  const byPlayer = {};
+  for (const ev of events) (byPlayer[ev.pid] = byPlayer[ev.pid] || []).push(ev);
+  const out = [];
+  for (const pid in byPlayer) {
+    const evs = byPlayer[pid].sort((a, b) => a.i - b.i);
+    let cur = null;
+    for (const ev of evs) {
+      if (ev.e === 'level_start') { if (cur) out.push(cur); cur = { pid, level: ev.level, name: ev.name, start: ev.t, done: null, events: [], easy: ev.easy, slow: ev.slow, sid: ev.s }; continue; }
+      if (!cur) continue;
+      if (ev.s !== cur.sid) { out.push(cur); cur = null; continue; }            // a new page load without a fresh level_start
+      if (ev.e === 'level_done' && ev.level === cur.level) { cur.done = ev; out.push(cur); cur = null; continue; }
+      cur.events.push(ev);
+    }
+    if (cur) out.push(cur);
+  }
+  return out;
+}
+const median = a => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
+const fmt = s => s == null ? '–' : `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '–';
+const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+function render() {
+  const events = allEvents(); if (!events.length) return;
+  document.getElementById('report').classList.remove('hidden');
+  const players = new Set(events.map(e => e.pid)), sessions = new Set(events.map(e => e.pid + e.s));
+  const att = attempts(events);
+  const deaths = events.filter(e => e.e === 'hit' && e.fatal), errors = events.filter(e => e.e === 'error');
+  const times = events.map(e => e.t).sort((a, b) => a - b);
+  document.getElementById('range').textContent = `${new Date(times[0]).toLocaleDateString()} – ${new Date(times[times.length - 1]).toLocaleDateString()}`;
+  const finished = new Set(att.filter(a => a.done && a.level === 6).map(a => a.pid)).size;
+  const playSec = att.reduce((s, a) => s + (a.done ? a.done.time : (a.events.length ? (a.events[a.events.length - 1].lt || 0) : 0)), 0);
+  tiles([
+    [players.size, 'players'], [sessions.size, 'sessions'], [att.length, 'level attempts'], [att.filter(a => a.done).length, 'levels completed'],
+    [finished, 'beat the Bullfrog King'], [deaths.length, 'deaths'], [Math.round(playSec / 60) + ' min', 'time in levels'], [errors.length, 'errors'],
+  ]);
+
+  // ----- per level -----
+  const rows = [];
+  const names = LEVELS.length ? LEVELS.map(L => L.name) : [...new Set(att.map(a => a.name))];
+  names.forEach((name, li) => {
+    const A = att.filter(a => a.level === li); if (!A.length && LEVELS.length) { rows.push(`<tr><td>${li + 1}. ${esc(name)}</td><td colspan="10" class="note">no attempts yet</td></tr>`); return; }
+    const done = A.filter(a => a.done), left = A.filter(a => !a.done && a.events.some(e => e.e === 'leave'));
+    const dth = A.reduce((s, a) => s + a.events.filter(e => e.e === 'hit' && e.fatal).length, 0);
+    const assist = A.filter(a => a.events.some(e => e.e === 'assist')).length, skips = A.filter(a => a.events.some(e => e.e === 'skip_used')).length;
+    const three = done.filter(a => a.done.stars === 3).length;
+    const rate = A.length ? done.length / A.length : 0;
+    rows.push(`<tr><td>${li + 1}. ${esc(name)}</td><td class="num">${new Set(A.map(a => a.pid)).size}</td><td class="num">${A.length}</td><td class="num">${done.length}</td>
+      <td><span class="bar" style="width:${Math.round(rate * 90)}px"></span>${pct(done.length, A.length)}</td><td class="num">${fmt(median(done.map(a => a.done.time)))}</td>
+      <td class="num">${A.length ? (dth / A.length).toFixed(1) : '–'}</td><td class="num">${left.length}</td><td class="num">${assist}</td><td class="num">${skips}</td><td class="num">${pct(three, done.length)}</td></tr>`);
+  });
+  document.getElementById('levels').innerHTML = `<tr><th>Level</th><th class="num">Players</th><th class="num">Attempts</th><th class="num">Completed</th><th>Completion</th><th class="num">Median time</th><th class="num">Deaths / attempt</th><th class="num">Left mid-level</th><th class="num">Assist kicked in</th><th class="num">Skips used</th><th class="num">3-star</th></tr>` + rows.join('');
+
+  // ----- heat-maps -----
+  const maps = document.getElementById('maps'); maps.innerHTML = '';
+  if (!LEVELS.length) maps.innerHTML = '<p class="note">Open this page from the game folder (next to game.js) to see the level maps.</p>';
+  LEVELS.forEach((L, li) => {
+    const A = att.filter(a => a.level === li); if (!A.length) return;
+    const evs = A.flatMap(a => a.events).filter(e => (e.e === 'hit' || e.e === 'leave') && typeof e.col === 'number');
+    if (!evs.length) return;
+    maps.appendChild(heatMap(L, li, evs, A.length));
+  });
+
+  // ----- players / devices -----
+  const sess = events.filter(e => e.e === 'session');
+  const prow = [];
+  for (const pid of players) {
+    const mine = att.filter(a => a.pid === pid), s = sess.filter(e => e.pid === pid), last = s[s.length - 1] || {};
+    const perf = mine.filter(a => a.done && a.done.perf && a.done.perf.frames > 60).map(a => a.done.perf);
+    const avg = perf.length ? (perf.reduce((x, p) => x + p.avgMs, 0) / perf.length).toFixed(1) + ' ms' : '–', worst = perf.length ? Math.max(...perf.map(p => p.worstMs)).toFixed(0) + ' ms' : '–';
+    const opts = last.settings ? Object.entries(last.settings).filter(([k, v]) => v && k !== 'muted').map(([k]) => k).join(', ') || 'default' : '–';
+    const best = Math.max(-1, ...mine.filter(a => a.done).map(a => a.level));
+    prow.push(`<tr><td><code>${esc(pid)}</code></td><td>${s.length}</td><td>${last.touch === undefined ? '–' : last.touch ? 'phone / touch' : 'keyboard'}${last.installed ? ' · installed' : ''}</td><td>${esc(last.screen || '–')}</td><td>${esc(last.version || '–')}</td><td>${esc(opts)}</td><td class="num">${mine.length}</td><td>${best < 0 ? '–' : (best + 1) + '. ' + esc(names[best] || '')}</td><td class="num">${avg}</td><td class="num">${worst}</td></tr>`);
+  }
+  document.getElementById('players').innerHTML = `<tr><th>Player</th><th>Sessions</th><th>Device</th><th>Screen</th><th>Version</th><th>Options used</th><th class="num">Attempts</th><th>Furthest level cleared</th><th class="num">Avg frame</th><th class="num">Worst frame</th></tr>` + prow.join('');
+
+  // ----- hints -----
+  const hints = {}; for (const e of events.filter(e => e.e === 'hint')) { const h = hints[e.key] = hints[e.key] || { n: 0, p: new Set() }; h.n++; h.p.add(e.pid); }
+  document.getElementById('hints').innerHTML = `<tr><th>Tip</th><th class="num">Shown</th><th class="num">Players</th></tr>` + Object.entries(hints).sort((a, b) => b[1].n - a[1].n).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="num">${v.n}</td><td class="num">${v.p.size}</td></tr>`).join('') || '<tr><td class="note">none</td></tr>';
+
+  // ----- errors -----
+  document.getElementById('errors').innerHTML = errors.length ? `<tr><th>When</th><th>Player</th><th>Level</th><th>Message</th><th>Where</th></tr>` + errors.map(e => `<tr><td>${new Date(e.t).toLocaleString()}</td><td><code>${esc(e.pid)}</code></td><td>${e.level == null ? '–' : e.level + 1}</td><td>${esc(e.msg)}</td><td>${esc(e.src || '')}</td></tr>`).join('') : '<tr><td class="note">no errors reported 🎉</td></tr>';
+}
+
+function tiles(list) { document.getElementById('tiles').innerHTML = list.map(([n, l]) => `<div class="tile"><div class="n">${n}</div><div class="l">${l}</div></div>`).join(''); }
+
+// ---------- the heat-map: the level drawn tile by tile, with markers where things happened ----------
+const TILE_COL = { '#': '#8a5a34', '%': '#b08a5a', '=': '#6fa85a', 'w': '#7ec8ff', '^': '#c0392b', '~': '#e08ad0', 'M': '#a3c76b', 'V': '#a3c76b', 'B': '#d9b36a', 'o': '#ff5252', 'D': '#ffd36e', 'H': '#8fb7ff', 'C': '#ffd36e', 'e': '#5cb85c', 'S': '#8f6bb0', 'f': '#59c1d8', 'P': '#ffffff', 'G': '#f08fa0', 'K': '#2e7d32' };
+function heatMap(L, li, evs, nAttempts) {
+  const rows = L.map, cols = Math.max(...rows.map(r => r.length)), S = 6;
+  const box = document.createElement('div'); box.className = 'map';
+  const deaths = evs.filter(e => e.e === 'hit' && e.fatal).length, hits = evs.filter(e => e.e === 'hit' && !e.fatal).length, leaves = evs.filter(e => e.e === 'leave').length;
+  box.innerHTML = `<h3>${li + 1}. ${esc(L.name)} <small>${nAttempts} attempts · ${deaths} deaths · ${hits} hits · ${leaves} exits</small></h3>`;
+  const c = document.createElement('canvas'); c.width = cols * S; c.height = rows.length * S + 4; c.style.width = c.width + 'px'; box.appendChild(c);
+  const g = c.getContext('2d');
+  const theme = L.theme || {}; g.fillStyle = theme.sky ? theme.sky[0] : '#cfe9ff'; g.fillRect(0, 0, c.width, c.height);
+  rows.forEach((r, y) => { for (let x = 0; x < r.length; x++) { const col = TILE_COL[r[x]]; if (!col) continue; g.fillStyle = col; if ('oDH'.includes(r[x])) { g.beginPath(); g.arc(x * S + S / 2, y * S + S / 2, 1.6, 0, 7); g.fill(); } else g.fillRect(x * S, y * S, S, S); } });
+  // bucket by tile
+  const cells = {};
+  for (const e of evs) { const k = e.col + ',' + (e.row ?? 0); const b = cells[k] = cells[k] || { col: e.col, row: e.row ?? 0, d: 0, h: 0, q: 0, causes: {} }; if (e.e === 'leave') b.q++; else if (e.fatal) { b.d++; b.causes[e.cause] = (b.causes[e.cause] || 0) + 1; } else { b.h++; b.causes[e.cause] = (b.causes[e.cause] || 0) + 1; } }
+  const marks = Object.values(cells);
+  for (const b of marks) {
+    const cx = b.col * S + S / 2, cy = Math.min(rows.length - 1, b.row) * S + S / 2;
+    if (b.h) { g.fillStyle = '#f08fa0'; g.beginPath(); g.arc(cx, cy, 3 + Math.min(3, b.h), 0, 7); g.fill(); }
+    if (b.d) { const r = 4 + Math.min(8, Math.sqrt(b.d) * 2.2); g.fillStyle = 'rgba(214,69,69,0.85)'; g.beginPath(); g.arc(cx, cy, r, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 1.5; g.stroke();
+      if (b.d > 1) { g.fillStyle = '#fff'; g.font = 'bold 9px Fredoka, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(b.d, cx, cy); } }
+    if (b.q) { g.fillStyle = '#f0a030'; g.beginPath(); g.moveTo(cx, cy - 8); g.lineTo(cx + 6, cy + 3); g.lineTo(cx - 6, cy + 3); g.closePath(); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 1; g.stroke(); }
+  }
+  // hover: what happened at this tile
+  const tip = document.getElementById('tip');
+  c.addEventListener('mousemove', ev => {
+    const r = c.getBoundingClientRect(), x = Math.floor((ev.clientX - r.left) / S), y = Math.floor((ev.clientY - r.top) / S);
+    const near = marks.filter(b => Math.abs(b.col - x) <= 1 && Math.abs(b.row - y) <= 1);
+    if (!near.length) { tip.style.display = 'none'; return; }
+    tip.textContent = near.map(b => `tile ${b.col}, row ${b.row}` + (b.d ? `\n  ${b.d} death${b.d > 1 ? 's' : ''}` : '') + (b.h ? `\n  ${b.h} hit${b.h > 1 ? 's' : ''}` : '') + (b.q ? `\n  ${b.q} left here` : '') + (Object.keys(b.causes).length ? `\n  cause: ${Object.entries(b.causes).map(([k, v]) => `${k} ×${v}`).join(', ')}` : '')).join('\n');
+    tip.style.display = 'block'; tip.style.left = (ev.clientX + 14) + 'px'; tip.style.top = (ev.clientY + 14) + 'px';
+  });
+  c.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  return box;
+}
+</script>
+</body>
+</html>

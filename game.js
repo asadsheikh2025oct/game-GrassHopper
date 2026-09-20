@@ -424,11 +424,11 @@ let deathsHere = 0, skipOffered = false, skipTimer = 0;
 const assistLevel = () => deathsHere >= 3 ? 1 : 0;
 const skipBtn = document.getElementById('skip-btn');
 function offerSkip() {
-  skipTimer = 8; skipBtn.style.display = 'inline-block';
+  skipTimer = 8; skipBtn.style.display = 'inline-block'; Telemetry.log('skip_offered', Telemetry.where());
 }
 function skipAhead() {
   const p = player, ahead = checkpoints.filter(c => c.x > p.startX + 10).sort((a, b) => a.x - b.x)[0];
-  skipBtn.style.display = 'none'; skipTimer = 0; skipOffered = true; deathsHere = 0;
+  skipBtn.style.display = 'none'; skipTimer = 0; skipOffered = true; deathsHere = 0; Telemetry.log('skip_used', Telemetry.where());
   if (ahead) { ahead.lit = true; p.startX = ahead.gx - 5; p.startY = ahead.gy + TILE - p.h; }
   else if (portal) { p.startX = portal.x - 80; p.startY = portal.y + portal.h - p.h; }
   p.x = p.startX; p.y = p.startY; p.vx = 0; p.vy = 0; p.dead = 0; p.sinking = 0; p.invuln = 2;
@@ -452,6 +452,7 @@ function showHint(key, x, y, follow) {
   if (hintsSeen[key] || (hint && hint.key === key)) return;
   if (hint && hint.t < 1.2) return;                                     // let the current tip be read before another replaces it
   hint = { key, x, y, follow, t: 0, life: 4.2 };
+  Telemetry.log('hint', Object.assign({ key }, Telemetry.where()));
 }
 function updateHints(dt) {
   const p = player;
@@ -497,6 +498,39 @@ const bestTimes = JSON.parse(localStorage.getItem('hop-best') || '{}');
 const starsWon  = JSON.parse(localStorage.getItem('hop-stars') || '{}');
 const fmtTime = s => `${Math.floor(s / 60)}:${(s % 60).toFixed(1).padStart(4, '0')}`;
 let userTapped = false;
+// ---------- Play telemetry ----------
+// Small anonymous events kept on this device (localStorage) and sent to the developer by hand with the
+// "Send play data" button on the title card. Nothing leaves the phone on its own. No names, no location:
+// just a random player id, what happened in which level and where. telemetry.html reads the files.
+const GAME_VERSION = 'v25';
+const Telemetry = {
+  KEY: 'hop-telemetry', MAX: 4000,
+  pid: localStorage.getItem('hop-pid') || (() => { const id = Math.random().toString(36).slice(2, 10); localStorage.setItem('hop-pid', id); return id; })(),
+  sid: Math.random().toString(36).slice(2, 8),                           // this page load
+  events: (() => { try { return JSON.parse(localStorage.getItem('hop-telemetry') || '[]'); } catch (e) { return []; } })(),
+  seq: Number(localStorage.getItem('hop-telemetry-seq') || 0),
+  frames: 0, frameMs: 0, worstMs: 0,                                      // frame-time sample for the current level
+  log(e, data = {}) {
+    const ev = Object.assign({ i: ++this.seq, t: Date.now(), s: this.sid, e }, data);
+    if (running && !journey && !ending && typeof levelIndex === 'number' && !('level' in data)) { ev.level = levelIndex; }
+    this.events.push(ev);
+    if (this.events.length > this.MAX) this.events.splice(0, this.events.length - this.MAX);   // keep the newest
+    this.save();
+  },
+  save() { try { localStorage.setItem(this.KEY, JSON.stringify(this.events)); localStorage.setItem('hop-telemetry-seq', this.seq); } catch (e) {} },
+  where() { const p = player; return { col: Math.floor((p.x + p.w / 2) / TILE), row: Math.floor((p.y + p.h - 1) / TILE), lt: Math.round(levelTime * 10) / 10 }; },
+  frame(ms) { this.frames++; this.frameMs += ms; if (ms > this.worstMs) this.worstMs = ms; },
+  perf() { const out = { frames: this.frames, avgMs: this.frames ? Math.round(this.frameMs / this.frames * 100) / 100 : 0, worstMs: Math.round(this.worstMs * 10) / 10 }; this.frames = 0; this.frameMs = 0; this.worstMs = 0; return out; },
+  session() {
+    this.log('session', { version: GAME_VERSION, touch: isTouch, screen: innerWidth + 'x' + innerHeight, dpr: Math.round(devicePixelRatio * 10) / 10,
+      installed: matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches, ua: navigator.userAgent.slice(0, 120),
+      settings: { easy: settings.easy, slow: settings.slow, lefty: settings.lefty, big: settings.bigButtons, contrast: settings.contrast, muted: Music.muted },
+      unlocked, custom: customMode, lang: navigator.language });
+  },
+  export() { return { format: 'hop-telemetry-1', pid: this.pid, version: GAME_VERSION, exported: new Date().toISOString(), events: this.events }; },
+};
+window.addEventListener('error', e => { try { Telemetry.log('error', { msg: String(e.message).slice(0, 200), src: String(e.filename || '').split('/').pop() + ':' + e.lineno }); } catch (x) {} });
+window.addEventListener('unhandledrejection', e => { try { Telemetry.log('error', { msg: String(e.reason && e.reason.message || e.reason).slice(0, 200) }); } catch (x) {} });
 const buzz = pattern => { if (userTapped && navigator.vibrate) navigator.vibrate(pattern); };   // phone haptics
 const keys = { left: false, right: false, jump: false };
 let jumpHeld = false;
@@ -594,6 +628,7 @@ function respawn() {
   const p = player;
   p.x = p.startX; p.y = p.startY; p.vx = 0; p.vy = 0; p.dead = 0; p.invuln = 1.5; p.sinking = 0;
   deathsHere++;
+  if (deathsHere === 3) Telemetry.log('assist', Telemetry.where());                     // the quiet helping hand kicked in
   if (deathsHere >= 6 && !skipOffered && checkpoints.length) offerSkip();
   camX = Math.max(0, p.x - W / 2); camY = Math.max(0, Math.min(LEVEL_H - H, p.y - H / 2));
 }
@@ -677,7 +712,7 @@ function update(dt) {
   } else if (p.sinking > 0) {                                            // sinking in a puddle: no control, slow descent, bubbles
     p.sinking -= dt; p.y += 22 * dt; p.vx = 0; p.vy = 0;
     if (Math.random() < dt * 10) particles.push({ x: p.x + Math.random() * p.w, y: p.y + 4, vx: 0, vy: -30, life: 0.6, max: 0.6, color: 'rgba(255,255,255,0.7)', size: 2, gravity: false });
-    if (p.sinking <= 0) hurt(true);
+    if (p.sinking <= 0) hurt(true, null, 'water');
   } else if (finishing > 0) {
     finishing -= dt;
     p.sx += (0.2 - p.sx) * dt * 6; p.sy += (0.2 - p.sy) * dt * 6;       // shrink into the portal
@@ -743,7 +778,7 @@ function update(dt) {
     // checkpoints
     for (const c of checkpoints) {
       if (!c.lit && overlaps(p, c)) {
-        c.lit = true; p.startX = c.gx - 5; p.startY = c.gy + TILE - p.h; showHint('checkpoint', c.gx + 8, c.gy - 6);
+        c.lit = true; p.startX = c.gx - 5; p.startY = c.gy + TILE - p.h; showHint('checkpoint', c.gx + 8, c.gy - 6); Telemetry.log('checkpoint', Telemetry.where());
         deathsHere = 0; skipOffered = false; lives = maxLives();                 // fresh hearts for the next stretch
         Sfx.checkpoint(); burst(c.gx + 8, c.gy + 8, 14, theme.orb, 120, 0.7, 3);
       }
@@ -755,7 +790,7 @@ function update(dt) {
     p.invuln = Math.max(0, p.invuln - dt);
     p.blink = p.blink > 0 ? p.blink - dt : (Math.random() < dt * 0.4 ? 0.12 : 0);
 
-    if (p.y > LEVEL_H + 80) { hurt(true); }
+    if (p.y > LEVEL_H + 80) { hurt(true, null, 'pit'); }
     // landed in water?
     for (const wt of water) {
       if (p.x + p.w / 2 >= wt.x && p.x + p.w / 2 < wt.x + wt.w && p.y + p.h > wt.surface + 6 && p.y < wt.y + wt.h) {
@@ -786,7 +821,7 @@ function update(dt) {
       u.taken = true; Sfx.power(); burst(u.x + 10, u.y + 10, 14, u.type === 'double' ? '#7df9ff' : '#8fb7ff', 130, 0.6, 3);
       if (u.type === 'double') { p.hasDouble = true; showHint('double', 0, 0, () => ({ x: p.x + p.w / 2, y: p.y - 6 })); } else { p.shield = true; showHint('shield', 0, 0, () => ({ x: p.x + p.w / 2, y: p.y - 6 })); }
     }
-    if (p.invuln <= 0) for (const s of spikes) if (overlaps(p, s)) { hurt(false, s.x + s.w / 2); break; }
+    if (p.invuln <= 0) for (const s of spikes) if (overlaps(p, s)) { hurt(false, s.x + s.w / 2, 'bramble'); break; }
 
     for (const e of enemies) {
       if (!e.alive || p.dead > 0) continue;
@@ -797,7 +832,7 @@ function update(dt) {
           Sfx.stomp(); burst(e.x + e.w / 2, e.y + e.h / 2, 12, '#7bc96f', 140, 0.5);
           if (!hintsSeen.firstStomp) { hintsSeen.firstStomp = 1; localStorage.setItem('hop-hints', JSON.stringify(hintsSeen)); slowmo = 0.55; }   // savour the first squash
           shake = 4; buzz(30);
-        } else if (p.invuln <= 0) { hurt(false, e.x + e.w / 2); }
+        } else if (p.invuln <= 0) { hurt(false, e.x + e.w / 2, e.type === 'flit' ? 'dragonfly' : e.type); }
       }
     }
 
@@ -928,12 +963,14 @@ function bossCollide(p, prevBottom) {
     }
   } else if (stomping) {
     p.vy = -STOMP_BOUNCE; p.jumping = false;                             // bounce off while he is dazed
-  } else if (p.invuln <= 0) { hurt(false, b.x + b.w / 2); }
+  } else if (p.invuln <= 0) { hurt(false, b.x + b.w / 2, 'boss'); }
 }
 
-function hurt(fell = false, fromX = null) {                             // fell: pit/water (always back to the lantern); fromX: where the hit came from
+function hurt(fell = false, fromX = null, cause = fell ? 'pit' : 'enemy') {   // fell: pit/water (always back to the lantern); fromX: where the hit came from
   const p = player;
   if (p.dead > 0) return;
+  const fatal = fell || (lives - 1 <= 0 && !(p.shield && !fell));
+  if (!(p.shield && !fell)) Telemetry.log('hit', Object.assign({ cause, fatal, hearts: lives - 1, assist: assistLevel() }, Telemetry.where()));
   if (p.shield && !fell) {                                               // shield takes the hit instead
     p.shield = false; p.invuln = 1.5; shake = 5; Sfx.shieldPop(); buzz(40);
     burst(p.x + p.w / 2, p.y + p.h / 2, 16, '#8fb7ff', 160, 0.6, 3);
@@ -1576,6 +1613,7 @@ function loop(now) {
     update(dt * timeScale);
   }
   draw();
+  Telemetry.frame(performance.now() - now);
   frameReq = requestAnimationFrame(loop);
 }
 
@@ -1592,6 +1630,7 @@ function startLevel(i) {
   Sfx.init();
   lives = maxLives(); deathsHere = 0; skipOffered = false; skipTimer = 0; skipBtn.style.display = 'none';
   loadLevel(i);
+  Telemetry.perf(); Telemetry.log('level_start', { level: i, name: LEVELS[i].name, easy: settings.easy, slow: settings.slow });
   overlay.classList.add('hidden');
   Music.start(i);
   cancelAnimationFrame(frameReq);                                       // never run two loops at once
@@ -1607,6 +1646,7 @@ function levelComplete() {
   // stars: 3 for every orb, 2 for 60%+, 1 for finishing
   const ratio = totalOrbs ? collected / totalOrbs : 1;
   const stars = ratio >= 1 ? 3 : ratio >= 0.6 ? 2 : 1;
+  Telemetry.log('level_done', { level: levelIndex, time: Math.round(levelTime * 10) / 10, bugs: collected, of: totalOrbs, stars, deaths: deathsHere, skip: skipOffered, assist: assistOn(), perf: Telemetry.perf() });
   if (customMode) { showOverlay('Level Clear!', 'Custom level', `${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}   Bugs ${collected} / ${totalOrbs}
 Time ${fmtTime(levelTime)}`, 'Play Again', () => startLevel(0)); return; }
   starsWon[levelIndex] = Math.max(starsWon[levelIndex] || 0, stars);
@@ -1955,6 +1995,7 @@ if (splash) { splash.addEventListener('pointerdown', e => { e.preventDefault(); 
 canvas.addEventListener('pointerdown', () => { if (paused) setPaused(false); else if (ending && ending.t > 1.5) finishEnding(); else if (journey && journey.t > 1.2) journey.skip = true; });          // tap anywhere to resume / skip the ending
 document.addEventListener('keydown', e => { if (ending && ending.t > 1.5 && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) finishEnding(); if (journey && journey.t > 1.2 && (e.key === ' ' || e.key === 'Enter')) journey.skip = true; });
 document.addEventListener("visibilitychange", () => {                                    // auto-pause when the app goes to the background
+  if (document.hidden && running && !journey && !ending) Telemetry.log('leave', Object.assign({ hearts: lives }, Telemetry.where()));
   if (document.hidden) setPaused(true);
   else if (Sfx.ctx && !paused) Sfx.ctx.resume();
 });
@@ -1969,6 +2010,23 @@ if (customMode) { ovSub.textContent = 'Custom level from the editor'; const ex =
 ovBtn.onclick = () => startLevel(0);
 buildLevelSelect(); applySettings();
 loadLevel(0); lives = 3; fade = 0; banner = 0; draw();
+Telemetry.session();
+// "Send play data": on a phone this opens the share sheet (WhatsApp, email...) with a small JSON file;
+// on a desktop browser it downloads the file instead.
+const shareBtn = document.getElementById('share-btn');
+async function sharePlayData() {
+  const data = Telemetry.export(), text = JSON.stringify(data);
+  const name = `hop-play-${Telemetry.pid}-${new Date().toISOString().slice(0, 10)}.json`;
+  const done = () => { shareBtn.textContent = `Sent ✓ (${data.events.length} events)`; setTimeout(() => { shareBtn.textContent = '📤 Send play data'; }, 4000); };
+  try {
+    const file = new File([text], name, { type: 'application/json' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: 'Hop play data' }); return done(); }
+    if (navigator.share && isTouch) { await navigator.share({ title: 'Hop play data', text }); return done(); }
+  } catch (e) { if (e && e.name === 'AbortError') return; }              // the player closed the share sheet
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); done();
+}
+shareBtn.addEventListener('click', sharePlayData);
 let idleLast = performance.now();
 function idleLoop(now) {
   const dt = Math.min((now - idleLast) / 1000, 0.05); idleLast = now;

@@ -35,7 +35,7 @@ canvas {
 /* The card's two .col wrappers only matter on short landscape phones (see the media query below);
    elsewhere they vanish and the Play button is ordered after the map and options. */
 .col { display: contents; }
-#ov-btn, #install-btn, .tiny { order: 2; }
+#ov-btn, #install-btn, #share-btn, .tiny { order: 2; }
 .card {
   background: linear-gradient(160deg, #1c1f4a, #121433);
   border: 1px solid rgba(255,255,255,0.12);

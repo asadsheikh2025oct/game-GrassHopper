@@ -16,6 +16,7 @@ Built with plain HTML, CSS and JavaScript — no engine, no libraries, all art d
 | `fix-platforms.js` | `node fix-platforms.js` lowers any leaf platform that is too high to jump onto from the direction of travel |
 | `test-phase1.js` … `test-phase5.js` | feature test suites, run in the browser console: `eval(await (await fetch("test-phase1.js")).text()); phase1()` (phase 5 also has `await phase5async()`, `phase5custom()` and, inside editor.html, `phase5editor()`). Each returns a list of {feature, pass, detail}. Mute first; the test runs overwrite saved progress in that browser |
 | `sw.js`, `manifest.json`, `icon-*.png` | PWA: offline cache, install metadata, app icons |
+| `telemetry.html` | play-data viewer: drop the `hop-play-*.json` files testers send you (the **Send play data** button on the title card shares them via WhatsApp/email) — completion funnel, death heat-maps per level, devices, tips, errors. Open it from the game folder so it can read the level maps from game.js |
 
 ## Editing levels
 Levels are text maps near the top of `game.js`; the legend is in the comments there (`#` ground, `w` water, `o` bug, `e` frog, `G` flower, …).
