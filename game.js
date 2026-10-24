@@ -1,5 +1,5 @@
 // =====================================================================
-//  HOP — a grasshopper platformer
+//  GRASSHOPPER — a platformer
 //  Hop the grasshopper bounds through a meadow collecting bugs, dodging
 //  (or squashing) frogs, avoiding puddles, and reaching the flower at the end.
 //  All art is drawn in code; all sounds are synthesized. Nothing borrowed.
@@ -310,7 +310,7 @@ const TRACKS = [
                c5 - d5 - eb5 - e5 - g5 - bb5 - b5 - - -`) },
 ];
 // The title-screen tune: gentle and hummable, loops under the menu
-const TITLE_TRACK = { name: 'Hop! (title)', bpm: 108, wave: 'triangle', bassWave: 'triangle', arpWave: 'sine', arpVol: 0.03, filter: 2200, drums: 'k.h...h.s.h...h.',
+const TITLE_TRACK = { name: 'GrassHopper (title)', bpm: 108, wave: 'triangle', bassWave: 'triangle', arpWave: 'sine', arpVol: 0.03, filter: 2200, drums: 'k.h...h.s.h...h.',
   bass: N('c3 c3 g2 g2   a2 a2 e2 e2   f2 f2 c3 c3   g2 g2 g2 g2'),
   arp:  N('c5 e5 g5 e5 c5 e5 g5 e5   a4 c5 e5 c5 a4 c5 e5 c5   f4 a4 c5 a4 f4 a4 c5 a4   g4 b4 d5 b4 g4 b4 d5 b4'),
   melody: N(`g5 - - - e5 - g5 - c6 - - - - - - -
@@ -1675,7 +1675,7 @@ function drawEnding() {
   ctx.restore();
   // credits over the meadow
   const lines = [
-    [2.5, 'HOP', 34, '#ffd36e', -10], [2.9, 'Grasshopper Meadow', 16, '#fff', 22],
+    [2.5, 'GRASSHOPPER', 30, '#ffd36e', -10], [2.9, 'Meadow Adventure', 16, '#fff', 22],
     [5.2, 'You reached the end of the meadow', 15, '#fff', 0],
     [6.9, `${totalOrbsEver} bugs caught in total`, 15, '#fff', 24],
     [8.6, 'The Bullfrog King will sulk for a while', 14, '#ffd36e', 0],

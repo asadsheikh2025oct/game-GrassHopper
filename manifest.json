@@ -1,6 +1,6 @@
 {
-  "name": "Hop: Grasshopper Meadow",
-  "short_name": "Hop",
+  "name": "GrassHopper",
+  "short_name": "GrassHopper",
   "description": "A grasshopper platformer: hop through the meadow, catch bugs, dodge frogs and puddles.",
   "start_url": "./index.html",
   "scope": "./",

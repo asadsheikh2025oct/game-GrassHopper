@@ -1,4 +1,4 @@
-# Hop: Glowlands
+# GrassHopper
 
 A small original platformer for phones and desktop: run, jump, gather glowing orbs, squash Grumps and reach the portal.
 Built with plain HTML, CSS and JavaScript — no engine, no libraries, all art drawn in code, all audio synthesized.
