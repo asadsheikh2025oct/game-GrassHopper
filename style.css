@@ -15,8 +15,8 @@ canvas {
 
 /* ===== Touch controls ===== */
 .touch { position: absolute; bottom: calc(env(safe-area-inset-bottom) + 14px); display: none; gap: 14px; }
-.touch.left  { left: 14px; }
-.touch.right { right: 14px; flex-direction: column; }      /* ◀ on top, ▶ underneath */
+.touch.left  { left: 14px; flex-direction: column; }       /* ◀ on top, ▶ underneath */
+.touch.right { right: 14px; }                              /* the hop button */
 .pad {
   width: 84px; height: 84px; border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.45); background: rgba(10,12,40,0.45);

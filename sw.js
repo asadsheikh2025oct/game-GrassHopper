@@ -1,7 +1,7 @@
 // Service worker: caches the whole game so it loads instantly and works offline.
 // (The hop-* localStorage keys keep their old names on purpose - renaming them would wipe saved progress.)
 // Bump CACHE_VERSION whenever you change the game files so players get the new version.
-const CACHE_VERSION = 'grasshopper-v27';
+const CACHE_VERSION = 'grasshopper-v28';
 const FILES = ['./', './index.html', './style.css', './game.js', './editor.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 // The title font comes from Google Fonts; cache its stylesheet and font files too so it survives offline.
